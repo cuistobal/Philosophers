@@ -15,7 +15,7 @@ static bool	i_wanna_fork_on_the_table(t_tabl **table)
 			(*table)->fork = forks;
 			while (index < (*table)->params[CNT])
 			{
-				if (pthread_create(forks[index], NULL, routine, NULL) != 0)
+				if (pthread_create(&forks[index], NULL, routine, NULL) != 0)
 					return (false);
 				index++;
 			}
