@@ -7,6 +7,7 @@ INCLUDES = includes
 
 SOURCES = \
 	philosophers.c \
+	sources/initialisation/table_initialisation.c \
 	utilities/atoi.c
 
 OBJ = $(SOURCES:.c=.o)
