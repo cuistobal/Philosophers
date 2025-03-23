@@ -3,11 +3,14 @@
 //
 int	main(int argc, char **argv)
 {
-	t_tabl	*table;
+	pthread_mutex_t	mutex;
+	t_tabl			*table;
 
 	table = NULL;
 	if (argc == 5 || argc == 6)
 	{
+		if (pthread_mutex_init(&mutex, NULL) != 0)
+			return -1;
 		if (init_table(&table, argv + 1))
 		{
 			lets_get_this_party_started(table);
@@ -38,6 +41,7 @@ int	main(int argc, char **argv)
 			*/
 						
 		}
+		pthread_mutex_destroy(&mutex);
 		return 0;
 	}
 	return (printf("%s\n", ARGC));

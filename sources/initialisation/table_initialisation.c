@@ -3,17 +3,20 @@
 //
 static bool	i_wanna_fork_on_the_table(t_tabl **table)
 {
-	int	index;
+	int			index;
+	pthread_t	*forks;
 
 	index = 0;
 	if (*table)
 	{
-		(*table)->fork = malloc(sizeof(t_fork) * (*table)->params[CNT]);
-		if ((*table)->fork)
+		forks = malloc(sizeof(pthread_t) * (*table)->params[CNT]);
+		if (forks)
 		{
+			(*table)->fork = forks;
 			while (index < (*table)->params[CNT])
 			{
-				(*table)->fork[index].status = false;
+				if (pthread_create(forks[index], NULL, routine, NULL) != 0)
+					return (false);
 				index++;
 			}
 		}

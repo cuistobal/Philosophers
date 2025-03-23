@@ -3,7 +3,7 @@
 
 typedef struct	fork
 {
-	bool			status;
+	pthread_mutex_t
 }	t_fork;
 
 typedef struct	philo
@@ -14,7 +14,7 @@ typedef struct	philo
 typedef struct	table
 {
 	int				params[PARAMS];
-	struct	fork	*fork;
+	pthread_mutex_t	*fork;
 	struct	philo	*philo;
 }	t_tabl;
 
