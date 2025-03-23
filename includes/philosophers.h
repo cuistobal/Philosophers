@@ -2,7 +2,10 @@
 # define PHILOSOPHERS_H
 
 # include "standard_headers.h"
-# include "structures_h"
-# include "global_variables_h"
+# include "global_variables.h"
+# include "structures.h"
+# include "utilities.h"
+
+int main(int argc, char **argv);
 
 #endif
