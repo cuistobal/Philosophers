@@ -1,5 +1,17 @@
 #include "philosophers.h"
 
+static bool alive_and_not_full(t_tabl *table)
+{
+    bool    full;
+    int     index;
+
+    index = 0;
+    while (index < table->params[CNT])
+    {
+        if ()
+        index++;
+    }
+}
 //
 int	main(int argc, char **argv)
 {
@@ -10,11 +22,13 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv + 1))
 		{
-		//	lets_get_this_party_started(table);
-		//	the_show_must_go_on(table);
-	        (cleanup(&table, NULL));	
+            while (alive_and_not_full(table))
+                continue ;
+	        cleanup(&table, NULL);
+            return 0;
         }
 		return (cleanup(&table, INIT_TABLE));
 	}
-	return (printf("%s\n", ARGC));
+	return (cleanup(&table, ARGC));
+//	return (printf("%s\n", ARGC));
 }
