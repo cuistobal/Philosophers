@@ -3,19 +3,19 @@
 //
 static bool	i_wanna_fork_on_the_table(t_tabl **table)
 {
-	int			index;
-	pthread_t	*forks;
+	int			    index;
+	pthread_mutex_t *forks;
 
 	index = 0;
 	if (*table)
 	{
-		forks = malloc(sizeof(pthread_t) * (*table)->params[CNT]);
+		forks = malloc(sizeof(pthread_mutex_t) * (*table)->params[CNT]);
 		if (forks)
 		{
 			(*table)->fork = forks;
 			while (index < (*table)->params[CNT])
 			{
-				if (pthread_create(&forks[index], NULL, routine, NULL) != 0)
+                if (pthread_mutex_init(&forks[index], NULL) != 0)
 					return (false);
 				index++;
 			}
@@ -30,18 +30,23 @@ static bool	i_wanna_fork_on_the_table(t_tabl **table)
 static bool	the_emergence_of_philosophy(t_tabl **table)
 {
 	int		pos;
+    t_phil  *philos;
 
 	pos = 0;
-	if (*table)
+    philos = NULL;	
+    if (*table)
 	{
-		(*table)->philo = malloc(sizeof(t_phil) * (*table)->params[CNT]);
-		if ((*table)->philo)
+		philos = malloc(sizeof(t_phil) * (*table)->params[CNT]);
+		if (philos)
 		{
+		    (*table)->philo = philos;
 			while (pos < (*table)->params[CNT])
 			{
-				(*table)->philo[pos].stats[POSTN] = pos + 1 ;
-				(*table)->philo[pos].stats[LMEAL] = 0;		
-				(*table)->philo[pos].stats[EATEN] = 0;		
+				philos[pos].stats[POSTN] = pos + 1 ;
+				philos[pos].stats[LMEAL] = 0;
+				philos[pos].stats[EATEN] = 0;
+				if (pthread_create(&philos[pos].thread, NULL, routine, NULL) != 0)
+                    return (false);
 				pos++;
 			}
 		}

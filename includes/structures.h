@@ -8,7 +8,8 @@ typedef struct	fork
 
 typedef struct	philo
 {
-	int				stats[STATS];
+	int			stats[STATS];
+    pthread_t   thread;
 }	t_phil;
 
 typedef struct	table
