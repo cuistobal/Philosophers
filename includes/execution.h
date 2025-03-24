@@ -3,4 +3,6 @@
 
 bool	init_table(t_tabl **table, char **argv);
 
+void    *routine(void *arg);
+
 #endif

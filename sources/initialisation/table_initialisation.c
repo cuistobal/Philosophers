@@ -1,6 +1,7 @@
 #include "philosophers.h"
 
-//
+//I wish you know about this video. Otherwise check it out (Italian guy goes 
+//to vacation in Malta).
 static bool	i_wanna_fork_on_the_table(t_tabl **table)
 {
 	int			    index;
@@ -25,34 +26,57 @@ static bool	i_wanna_fork_on_the_table(t_tabl **table)
 	return (*table);
 }
 
+static bool a_wild_philosophers_appears(t_tabl **table, t_phil **philo, int pos, int pcount)
+{
+    int index;
+
+    index = 0;
+    if (*philo)
+    {
+        while (index < PARAMS)
+        {
+            (*philo)[pos].params[index] = (*table)->params[index];
+            index++;
+        }
+        (*philo)[pos].stats[POSTN] = pos + 1;
+		(*philo)[pos].stats[LMEAL] = 0;
+		(*philo)[pos].stats[EATEN] = 0;
+        (*philo)[pos].lfork = &(*table)->fork[pos];
+        (*philo)[pos].rfork = &(*table)->fork[(pos + 1) % pcount];
+        if (pthread_create(&(*philo)[pos].thread, NULL, routine, &(*philo)[pos]) != 0)
+            return (cleanup(table, THREAD_CREATE));
+        return (true);
+    }
+    return (false);
+}
+
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
 //pretend to think while trying to access the neighbours fork to eat pasta.
 static bool	the_emergence_of_philosophy(t_tabl **table)
 {
 	int		pos;
+    int     pcount; 
     t_phil  *philos;
 
 	pos = 0;
-    philos = NULL;	
+    philos = NULL;
+    pcount = (*table)->params[CNT];
     if (*table)
 	{
-		philos = malloc(sizeof(t_phil) * (*table)->params[CNT]);
+		philos = malloc(sizeof(t_phil) * pcount);
 		if (philos)
 		{
 		    (*table)->philo = philos;
-			while (pos < (*table)->params[CNT])
+			while (pos < pcount)
 			{
-				philos[pos].stats[POSTN] = pos + 1 ;
-				philos[pos].stats[LMEAL] = 0;
-				philos[pos].stats[EATEN] = 0;
-				if (pthread_create(&philos[pos].thread, NULL, routine, NULL) != 0)
+                if (!a_wild_philosophers_appears(table, &philos, pos, pcount))
                     return (false);
-				pos++;
+                pos++;
 			}
+            return (true);
 		}
-		return ((*table)->philo);
 	}
-	return (*table);
+    return (false);
 }
 
 //How would you sit and share a meal if it wasn't for a table to be dressed up!
@@ -70,10 +94,11 @@ static bool	append_table_parameters(t_tabl **table, char **argv)
 		{
 			temp = my_atoi(argv[index]);
 			if (temp < 0)
-				return (free(*table), *table = NULL, false);		
+                return (cleanup(table, ATOI, argv[index]));
 			(*table)->params[index] = my_atoi(argv[index]);	
 			index++;
 		}
+		(*table)->fork = NULL;
 		(*table)->philo = NULL;
 	}
 	return (*table);
@@ -87,9 +112,9 @@ bool	init_table(t_tabl **table, char **argv)
 	{
 		if (!append_table_parameters(table, argv))
 			return (false);
-		if (!the_emergence_of_philosophy(table))
+		if (!i_wanna_fork_on_the_table(table))
 			return (false);
-		return (i_wanna_fork_on_the_table(table));
+		return (the_emergence_of_philosophy(table));
 	}
 	return (*table);
 }

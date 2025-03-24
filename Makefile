@@ -8,6 +8,8 @@ INCLUDES = includes
 SOURCES = \
 	philosophers.c \
 	sources/initialisation/table_initialisation.c \
+	sources/routines.c \
+	utilities/cleanup.c \
 	utilities/atoi.c
 
 OBJ = $(SOURCES:.c=.o)
