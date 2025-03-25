@@ -102,6 +102,7 @@ static bool	append_table_parameters(t_tabl **table, char **argv)
 		}
 		(*table)->fork = NULL;
 		(*table)->philo = NULL;
+		pthread_mutex_init(&(*table)->monitoring, NULL);
 	}
 	return (*table);
 }

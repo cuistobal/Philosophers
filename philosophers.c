@@ -2,16 +2,22 @@
 
 static bool alive_and_not_full(t_tabl *table)
 {
-    u_int64_t	index;
+	int		index;
 
-    index = 0;
-    while (index < table->params[CNT])
-    {
-		if (pthread_join(table->philo[index].thread, NULL) != 0) 
-	//		return (error_message());	 
-			return false;
-		index++;
-    }
+	while (1)
+	{
+    	index = 0;
+		pthread_mutex_lock(&table->monitoring);
+    	while (index < (int)table->params[CNT])
+    	{
+		//	No join yet
+		//	if (pthread_join(table->philo[index].thread, NULL) != 0) 
+		//		return (error_message());	 
+				return false;
+			index++;
+    	}
+		pthread_mutex_unlock(&table->monitoring);
+	}
 	return (true);
 }
 
@@ -30,11 +36,12 @@ int	main(int argc, char **argv)
 				if (!alive_and_not_full(table))
 					break ;
 			}
+			//
+			//join
 	        cleanup(&table, NULL);
             return 0;
         }
 		return (cleanup(&table, INIT_TABLE));
 	}
 	return (cleanup(&table, ARGC));
-//	return (printf("%s\n", ARGC));
 }

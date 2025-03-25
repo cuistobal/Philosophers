@@ -12,6 +12,7 @@
 %.o	Makefile	/^%.o: %.c$/;"	t
 ARGC	includes/global_variables.h	/^# define ARGC /;"	d
 ATOI	includes/global_variables.h	/^# define ATOI /;"	d
+BGN	includes/global_variables.h	/^# define BGN /;"	d
 CC	Makefile	/^CC = gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)$/;"	m
 CNT	includes/global_variables.h	/^# define CNT /;"	d
@@ -40,6 +41,7 @@ STANDARD_HEARDERS_H	includes/standard_headers.h	/^# define STANDARD_HEARDERS_H$/
 STATS	includes/global_variables.h	/^# define STATS /;"	d
 STRUCTURES_H	includes/structures.h	/^# define STRUCTURES_H$/;"	d
 SUCCESS	includes/global_variables.h	/^# define SUCCESS /;"	d
+TABLES	includes/global_variables.h	/^# define TABLES /;"	d
 THNK	includes/global_variables.h	/^# define THNK /;"	d
 THREAD_CREATE	includes/global_variables.h	/^# define THREAD_CREATE /;"	d
 UTILITIES_H	includes/utilities.h	/^# define UTILITIES_H$/;"	d
@@ -52,7 +54,7 @@ cleanup	utilities/cleanup.c	/^bool    cleanup(t_tabl **table, ...)$/;"	f	typeref
 fclean	Makefile	/^fclean : clean$/;"	t
 fork	includes/structures.h	/^	pthread_mutex_t	*fork;$/;"	m	struct:table	typeref:typename:pthread_mutex_t *
 free_table	utilities/cleanup.c	/^static bool free_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
-get_timestamp	utilities/timestamps.c	/^bool	get_timestamp(int *time)$/;"	f	typeref:typename:bool
+get_timestamp	utilities/timestamps.c	/^void	get_timestamp(u_int64_t *time)$/;"	f	typeref:typename:void
 i_wanna_fork_on_the_table	sources/initialisation/table_initialisation.c	/^static bool	i_wanna_fork_on_the_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 init_table	sources/initialisation/table_initialisation.c	/^bool	init_table(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool
 is_sign	utilities/atoi.c	/^static bool	is_sign(char **argv, int *sign)$/;"	f	typeref:typename:bool	file:
@@ -60,19 +62,19 @@ lets_get_this_party_started	sources/initialisation/lets_get_this_party_started.c
 lfork	includes/structures.h	/^    pthread_mutex_t *lfork;$/;"	m	struct:philo	typeref:typename:pthread_mutex_t *
 main	philosophers.c	/^int	main(int argc, char **argv)$/;"	f	typeref:typename:int
 my_atoi	utilities/atoi.c	/^int	my_atoi(char *argv)$/;"	f	typeref:typename:int
-params	includes/structures.h	/^	int				params[PARAMS];$/;"	m	struct:philo	typeref:typename:int[]
-params	includes/structures.h	/^	int				params[PARAMS];$/;"	m	struct:table	typeref:typename:int[]
+params	includes/structures.h	/^	u_int64_t		params[PARAMS];$/;"	m	struct:philo	typeref:typename:u_int64_t[]
+params	includes/structures.h	/^	u_int64_t		params[TABLES];$/;"	m	struct:table	typeref:typename:u_int64_t[]
 philo	includes/structures.h	/^	struct	philo	*philo;$/;"	m	struct:table	typeref:struct:philo *
 philo	includes/structures.h	/^typedef struct	philo$/;"	s
 re	Makefile	/^re : fclean all$/;"	t
 rfork	includes/structures.h	/^    pthread_mutex_t *rfork;$/;"	m	struct:philo	typeref:typename:pthread_mutex_t *
 routine	sources/routines.c	/^void    *routine(void *arg)$/;"	f	typeref:typename:void *
-simulation	includes/structures.h	/^	int				simulation[SIMULATION];$/;"	m	struct:table	typeref:typename:int[]
 skip_spaces_get_sign	utilities/atoi.c	/^static void	skip_spaces_get_sign(char **argv, int *sign)$/;"	f	typeref:typename:void	file:
 start_eating	sources/initialisation/lets_get_this_party_started.c	/^static bool	start_eating()$/;"	f	typeref:typename:bool	file:
-stats	includes/structures.h	/^	int			    stats[STATS];$/;"	m	struct:philo	typeref:typename:int[]
+stats	includes/structures.h	/^	u_int64_t	    stats[STATS];$/;"	m	struct:philo	typeref:typename:u_int64_t[]
 t_phil	includes/structures.h	/^}	t_phil;$/;"	t	typeref:struct:philo
 t_tabl	includes/structures.h	/^}	t_tabl;$/;"	t	typeref:struct:table
 table	includes/structures.h	/^typedef struct	table$/;"	s
 the_emergence_of_philosophy	sources/initialisation/table_initialisation.c	/^static bool	the_emergence_of_philosophy(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 thread	includes/structures.h	/^    pthread_t       thread;$/;"	m	struct:philo	typeref:typename:pthread_t
+you_are_dead	sources/routines.c	/^bool	you_are_dead(t_phil	*philo)$/;"	f	typeref:typename:bool
