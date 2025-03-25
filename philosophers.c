@@ -9,7 +9,7 @@ static bool alive_and_not_full(t_tabl *table)
     {
 		if (pthread_join(table->philo[index].thread, NULL) != 0) 
 	//		return (error_message());	 
-		return false;
+			return false;
 		index++;
     }
 	return (true);
