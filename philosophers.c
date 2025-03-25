@@ -10,10 +10,8 @@ static bool alive_and_not_full(t_tabl *table)
 		pthread_mutex_lock(&table->monitoring);
     	while (index < table->params[CNT])
     	{
-		//	No join yet
-		//	if (pthread_join(table->philo[index].thread, NULL) != 0) 
-		//		return (error_message());	 
-				return false;
+			//if (you_are_dead(table->philo[index])) 
+			//	return false;
 			index++;
     	}
 		pthread_mutex_unlock(&table->monitoring);

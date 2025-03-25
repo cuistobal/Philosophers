@@ -33,5 +33,5 @@
 
 //Misc
 # define SUCCESS "Greaaaaat suucceeeeeees.\n"
-
+# define MSEC 1000
 #endif
