@@ -8,7 +8,7 @@ static bool alive_and_not_full(t_tabl *table)
 	{
     	index = 0;
 		pthread_mutex_lock(&table->monitoring);
-    	while (index < (int)table->params[CNT])
+    	while (index < table->params[CNT])
     	{
 		//	No join yet
 		//	if (pthread_join(table->philo[index].thread, NULL) != 0) 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	table = NULL;
 	if (argc == 5 || argc == 6)
 	{
-		if (init_table(&table, argv + 1))
+		if (init_table(&table, argv))
 		{
             while (1)
 			{

@@ -1,21 +1,31 @@
 #include "philosophers.h"
-/*
+
 static bool	sleeping(t_phil *philosopher)
 {
-
+	status(philosopher, SLEP);
+	usleep(philosopher->table->params[SLP]);
+	return true;
 }
 
 //
 static bool	eating(t_phil *philosopher)
-{
-	
+{	
+	status(philosopher, EATS);
+	pthread_mutex_unlock(philosopher->lfork);
+	pthread_mutex_unlock(philosopher->rfork);
+	return true;
 }
 
 //
 static bool	thinking(t_phil	*philosopher)
-{
-				
-}*/
+{	
+	status(philosopher, THNK);
+	pthread_mutex_lock(philosopher->lfork);
+	status(philosopher, FORK);
+	pthread_mutex_lock(philosopher->rfork);	
+	status(philosopher, FORK);
+	return true;
+}
 
 
 //static inline bool delcared in the .h instead
@@ -31,52 +41,48 @@ inline static bool	you_are_dead(t_phil	*philo)
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
 void    *routine(void *arg)
 {
-	bool		status;
     t_phil		*philosopher;
 
-	status = true;
     philosopher = (t_phil *)arg;
-    while (status)
+    while (1)
     {
-		printf("%ld %ld %s\n",get_timestamp, philosopher->stats[POSTN], THNK);
+		pthread_mutex_lock(&philosopher->table->monitoring);
+//		if ()
+//		{
+//			pthread_mutex_unlock();
+//			break ;
+//		}
+		pthread_mutex_unlock(&philosopher->table->monitoring);
+		//Acceder a la variable de monitoring
+		//Verifier que simulation peut continuer
+		//Rendre la variable de monitoring
 
-		if (!you_are_dead(philosopher))
-			break ;
+		//Pense -> Mange -> Dort	
+		thinking(philosopher);
+		eating(philosopher);
+		sleeping(philosopher);
+
+		/*
+		printf("%ld %d %s\n", (long int)get_timestamp, philosopher->stats[POSTN], THNK);
+
         //tries to get the forks
         pthread_mutex_lock(philosopher->lfork); 
-		printf("%ld %ld %s\n", time, philosopher->stats[POSTN], FORK);
+		printf("%ld %d %s\n", (long int)get_timestamp, philosopher->stats[POSTN], FORK);
 		
-		if (!you_are_dead(philosopher))
-		{
-        
-			pthread_mutex_unlock(philosopher->lfork);
-			break ;
-		}
         pthread_mutex_lock(philosopher->rfork);
-        printf("%ld %ld %s\n", time, philosopher->stats[POSTN], FORK);
+        printf("%ld %d %s\n", (long int)get_timestamp, philosopher->stats[POSTN], FORK);
 
-		if (!you_are_dead(philosopher))
-		{
-        	pthread_mutex_unlock(philosopher->lfork);
-        	pthread_mutex_unlock(philosopher->rfork);
-			break ;
-		}
-
-        printf("%ld %ld %s\n", time, philosopher->stats[POSTN], EATS);
+        printf("%ld %d %s\n", (long int)get_timestamp, philosopher->stats[POSTN], EATS);
         usleep(philosopher->params[EAT]);
 	
         //forks releasing
         pthread_mutex_unlock(philosopher->lfork);
         pthread_mutex_unlock(philosopher->rfork);
-
-		get_timestamp(&time);
-		philosopher->stats[LMEAL] = time;
         
-		printf("%ld %ld %s\n", time, philosopher->stats[POSTN], SLEP);
+		printf("%ld %d %s\n", (long int)get_timestamp, philosopher->stats[POSTN], SLEP);
         
         usleep(philosopher->params[SLP]);
-	
+		*/	
     }
-	pthread_detach(philosopher->thread);
     return NULL;
 }

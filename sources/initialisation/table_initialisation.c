@@ -4,7 +4,7 @@
 //to vacation in Malta).
 static bool	i_wanna_fork_on_the_table(t_tabl **table)
 {
-	u_int64_t	    index;
+	int			    index;
 	pthread_mutex_t *forks;
 
 	index = 0;
@@ -26,24 +26,20 @@ static bool	i_wanna_fork_on_the_table(t_tabl **table)
 	return (*table);
 }
 
-static bool a_wild_philosopher_appears(t_tabl **table, t_phil **philo, int pos, int pcount)
+static bool a_wild_philosopher_appears(t_tabl **table, int pos, int pcount)
 {
-    int index;
+    t_phil  *philo;
 
-    index = 0;
-    if (*philo)
+	philo = &(*table)->philo[pos];	
+    if (philo)
     {
-        while (index < PARAMS)
-        {
-            (*philo)[pos].params[index] = (*table)->params[index];
-            index++;
-        }
-        (*philo)[pos].stats[POSTN] = pos + 1;
-		(*philo)[pos].stats[LMEAL] = 0;
-		(*philo)[pos].stats[EATEN] = 0;
-        (*philo)[pos].lfork = &(*table)->fork[pos];
-        (*philo)[pos].rfork = &(*table)->fork[(pos + 1) % pcount];
-        if (pthread_create(&(*philo)[pos].thread, NULL, routine, &(*philo)[pos]) != 0)
+        philo->table = *table;
+        philo->stats[POSTN] = pos + 1;
+		philo->stats[LMEAL] = 0;
+		philo->stats[EATEN] = 0;
+        philo->lfork = &(*table)->fork[pos];
+        philo->rfork = &(*table)->fork[(pos + 1) % pcount];
+        if (pthread_create(&philo->thread, NULL, routine, philo) != 0)
             return (cleanup(table, THREAD_CREATE));
         return (true);
     }
@@ -66,12 +62,11 @@ static bool	the_emergence_of_philosophy(t_tabl **table)
 		philos = malloc(sizeof(t_phil) * pcount);
 		if (philos)
 		{
-			get_timestamp(&(*table)->params[BGN]);
-		//	= get_timestamp();
+			(*table)->params[STS] = get_timestamp();
 		    (*table)->philo = philos;
 			while (pos < pcount)
 			{
-                if (!a_wild_philosopher_appears(table, &philos, pos, pcount))
+                if (!a_wild_philosopher_appears(table, pos, pcount))
                     return (false);
                 pos++;
 			}
@@ -89,10 +84,10 @@ static bool	append_table_parameters(t_tabl **table, char **argv)
 	int	index;
 
 	temp = 0;
-	index = 0;
+	index = 1;
 	if (*table)
 	{
-		while (index < PARAMS)
+		while (index < TABLES)
 		{
 			temp = my_atoi(argv[index]);
 			if (temp < 0)
