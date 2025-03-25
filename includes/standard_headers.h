@@ -8,5 +8,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 #endif

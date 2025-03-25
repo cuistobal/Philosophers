@@ -18,13 +18,11 @@
 # define EATEN 2
 
 //Routine messages
-# define PHILO "Philosopher"
-# define THINK "starts thinking."
-# define LFORK "takes left fork."
-# define RFORK "takes right fork."
-# define EATS "starts eating."
-# define SLEEP "starts sleeping."
-# define DIES "dies."
+# define THNK "is thinking\n"
+# define FORK "has taken a fork\n"
+# define EATS "is eating\n"
+# define SLEP "is sleeping\n"
+# define DIED "died\n"
 
 //Error messages
 # define ARGC "Usage: ./philosophers philos die eat sleep [min eat].\n"

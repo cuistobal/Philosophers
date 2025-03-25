@@ -8,12 +8,14 @@
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
 void    *routine(void *arg)
 {
+	int		time;
     t_phil  *philosopher;
 
     philosopher = (t_phil *)arg;
     while (1)
     {
-        printf("%s %d %s\n", PHILO, philosopher->stats[POSTN], THINK);
+		get_timestamp(&time);
+        printf("%d %d %s\n", philosopher->stats[] ,philosopher->stats[POSTN], THINK);
         
         //tries to get the forks
         pthread_mutex_lock(philosopher->lfork);

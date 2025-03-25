@@ -2,13 +2,14 @@
 
 static bool alive_and_not_full(t_tabl *table)
 {
-    bool    full;
     int     index;
+			ret_val;
 
     index = 0;
     while (index < table->params[CNT])
     {
-        if ()
+		if (pthread_join(table->philo[index].thread, &ret_val) != 0) 
+	//		return (error_message());
         index++;
     }
 }

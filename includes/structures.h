@@ -13,6 +13,7 @@ typedef struct	philo
 typedef struct	table
 {
 	int				params[PARAMS];
+	int				simulation[SIMULATION];
 	pthread_mutex_t	*fork;
 	struct	philo	*philo;
 }	t_tabl;

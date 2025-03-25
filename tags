@@ -4,23 +4,28 @@
 !_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
 !_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
-!_TAG_PROC_CWD	/home/cuistobal/Code/Philosophers/	//
+!_TAG_PROC_CWD	/home/chrleroy/Desktop/repos/Github/Philosophers/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.9.0	//
 %.o	Makefile	/^%.o: %.c$/;"	t
 ARGC	includes/global_variables.h	/^# define ARGC /;"	d
+ATOI	includes/global_variables.h	/^# define ATOI /;"	d
 CC	Makefile	/^CC = gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)$/;"	m
 CNT	includes/global_variables.h	/^# define CNT /;"	d
 DIE	includes/global_variables.h	/^# define DIE /;"	d
+DIED	includes/global_variables.h	/^# define DIED /;"	d
 EAT	includes/global_variables.h	/^# define EAT /;"	d
 EATEN	includes/global_variables.h	/^# define EATEN /;"	d
+EATS	includes/global_variables.h	/^# define EATS /;"	d
 END	includes/global_variables.h	/^# define END /;"	d
 EXECUTION_H	includes/execution.h	/^# define EXECUTION_H$/;"	d
+FORK	includes/global_variables.h	/^# define FORK /;"	d
 GLOBAL_VARIABLES_H	includes/global_variables.h	/^# define GLOBAL_VARIABLES_H$/;"	d
 INCLUDES	Makefile	/^INCLUDES = includes$/;"	m
+INIT_TABLE	includes/global_variables.h	/^# define INIT_TABLE /;"	d
 LMEAL	includes/global_variables.h	/^# define LMEAL /;"	d
 NAME	Makefile	/^NAME : $(OBJ)$/;"	t
 NAME	Makefile	/^NAME = philosophers$/;"	m
@@ -28,36 +33,46 @@ OBJ	Makefile	/^OBJ = $(SOURCES:.c=.o)$/;"	m
 PARAMS	includes/global_variables.h	/^# define PARAMS /;"	d
 PHILOSOPHERS_H	includes/philosophers.h	/^# define PHILOSOPHERS_H$/;"	d
 POSTN	includes/global_variables.h	/^# define POSTN /;"	d
+SLEP	includes/global_variables.h	/^# define SLEP /;"	d
 SLP	includes/global_variables.h	/^# define SLP /;"	d
 SOURCES	Makefile	/^SOURCES = \\$/;"	m
 STANDARD_HEARDERS_H	includes/standard_headers.h	/^# define STANDARD_HEARDERS_H$/;"	d
 STATS	includes/global_variables.h	/^# define STATS /;"	d
 STRUCTURES_H	includes/structures.h	/^# define STRUCTURES_H$/;"	d
+SUCCESS	includes/global_variables.h	/^# define SUCCESS /;"	d
+THNK	includes/global_variables.h	/^# define THNK /;"	d
+THREAD_CREATE	includes/global_variables.h	/^# define THREAD_CREATE /;"	d
 UTILITIES_H	includes/utilities.h	/^# define UTILITIES_H$/;"	d
+a_wild_philosopher_appears	sources/initialisation/table_initialisation.c	/^static bool a_wild_philosopher_appears(t_tabl **table, t_phil **philo, int pos, int pcount)$/;"	f	typeref:typename:bool	file:
+alive_and_not_full	philosophers.c	/^static bool alive_and_not_full(t_tabl *table)$/;"	f	typeref:typename:bool	file:
 all	Makefile	/^all : $(NAME)$/;"	t
 append_table_parameters	sources/initialisation/table_initialisation.c	/^static bool	append_table_parameters(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool	file:
 clean	Makefile	/^clean :$/;"	t
-eating	sources/routines.c	/^void	eating(t_tabl **table)$/;"	f	typeref:typename:void
+cleanup	utilities/cleanup.c	/^bool    cleanup(t_tabl **table, ...)$/;"	f	typeref:typename:bool
 fclean	Makefile	/^fclean : clean$/;"	t
 fork	includes/structures.h	/^	pthread_mutex_t	*fork;$/;"	m	struct:table	typeref:typename:pthread_mutex_t *
+free_table	utilities/cleanup.c	/^static bool free_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
+get_timestamp	utilities/timestamps.c	/^bool	get_timestamp(int *time)$/;"	f	typeref:typename:bool
 i_wanna_fork_on_the_table	sources/initialisation/table_initialisation.c	/^static bool	i_wanna_fork_on_the_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 init_table	sources/initialisation/table_initialisation.c	/^bool	init_table(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool
 is_sign	utilities/atoi.c	/^static bool	is_sign(char **argv, int *sign)$/;"	f	typeref:typename:bool	file:
 lets_get_this_party_started	sources/initialisation/lets_get_this_party_started.c	/^bool	lets_get_this_party_started(t_tabl **table)$/;"	f	typeref:typename:bool
+lfork	includes/structures.h	/^    pthread_mutex_t *lfork;$/;"	m	struct:philo	typeref:typename:pthread_mutex_t *
 main	philosophers.c	/^int	main(int argc, char **argv)$/;"	f	typeref:typename:int
 my_atoi	utilities/atoi.c	/^int	my_atoi(char *argv)$/;"	f	typeref:typename:int
+params	includes/structures.h	/^	int				params[PARAMS];$/;"	m	struct:philo	typeref:typename:int[]
 params	includes/structures.h	/^	int				params[PARAMS];$/;"	m	struct:table	typeref:typename:int[]
 philo	includes/structures.h	/^	struct	philo	*philo;$/;"	m	struct:table	typeref:struct:philo *
 philo	includes/structures.h	/^typedef struct	philo$/;"	s
 re	Makefile	/^re : fclean all$/;"	t
-routine	sources/routines.c	/^void    routine(t_tabl **table)$/;"	f	typeref:typename:void
+rfork	includes/structures.h	/^    pthread_mutex_t *rfork;$/;"	m	struct:philo	typeref:typename:pthread_mutex_t *
+routine	sources/routines.c	/^void    *routine(void *arg)$/;"	f	typeref:typename:void *
+simulation	includes/structures.h	/^	int				simulation[SIMULATION];$/;"	m	struct:table	typeref:typename:int[]
 skip_spaces_get_sign	utilities/atoi.c	/^static void	skip_spaces_get_sign(char **argv, int *sign)$/;"	f	typeref:typename:void	file:
-sleeping	sources/routines.c	/^void	sleeping()$/;"	f	typeref:typename:void
 start_eating	sources/initialisation/lets_get_this_party_started.c	/^static bool	start_eating()$/;"	f	typeref:typename:bool	file:
-stats	includes/structures.h	/^	int			stats[STATS];$/;"	m	struct:philo	typeref:typename:int[]
+stats	includes/structures.h	/^	int			    stats[STATS];$/;"	m	struct:philo	typeref:typename:int[]
 t_phil	includes/structures.h	/^}	t_phil;$/;"	t	typeref:struct:philo
 t_tabl	includes/structures.h	/^}	t_tabl;$/;"	t	typeref:struct:table
 table	includes/structures.h	/^typedef struct	table$/;"	s
 the_emergence_of_philosophy	sources/initialisation/table_initialisation.c	/^static bool	the_emergence_of_philosophy(t_tabl **table)$/;"	f	typeref:typename:bool	file:
-thinking	sources/routines.c	/^void	thinking()$/;"	f	typeref:typename:void
-thread	includes/structures.h	/^    pthread_t   thread;$/;"	m	struct:philo	typeref:typename:pthread_t
+thread	includes/structures.h	/^    pthread_t       thread;$/;"	m	struct:philo	typeref:typename:pthread_t

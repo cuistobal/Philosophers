@@ -10,6 +10,7 @@ SOURCES = \
 	sources/initialisation/table_initialisation.c \
 	sources/routines.c \
 	utilities/cleanup.c \
+	utilities/timestamps.c \
 	utilities/atoi.c
 
 OBJ = $(SOURCES:.c=.o)

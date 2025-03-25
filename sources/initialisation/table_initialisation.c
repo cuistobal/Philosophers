@@ -26,7 +26,7 @@ static bool	i_wanna_fork_on_the_table(t_tabl **table)
 	return (*table);
 }
 
-static bool a_wild_philosophers_appears(t_tabl **table, t_phil **philo, int pos, int pcount)
+static bool a_wild_philosopher_appears(t_tabl **table, t_phil **philo, int pos, int pcount)
 {
     int index;
 
@@ -66,10 +66,11 @@ static bool	the_emergence_of_philosophy(t_tabl **table)
 		philos = malloc(sizeof(t_phil) * pcount);
 		if (philos)
 		{
+		//	(*table)->params[START]get_timestamps()
 		    (*table)->philo = philos;
 			while (pos < pcount)
 			{
-                if (!a_wild_philosophers_appears(table, &philos, pos, pcount))
+                if (!a_wild_philosopher_appears(table, &philos, pos, pcount))
                     return (false);
                 pos++;
 			}
