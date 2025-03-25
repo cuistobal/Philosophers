@@ -1,13 +1,11 @@
 #include "philosophers.h"
 
-bool	get_timestamp(int *time)
+void	get_timestamp(u_int64_t *time)
 {
 	struct timeval	current;
 
 	if (gettimeofday(&current, NULL))
-	{
-		*time = current.tv_usec;
-		return (true);
-	}
-	return (false);	
+		//error message -> failed tor etrieve timesta,p;
+		return ;
+	*time =	current.tv_sec * (u_int64_t)1000 + (current.tv_usec / 1000);
 }

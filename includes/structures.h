@@ -3,8 +3,8 @@
 
 typedef struct	philo
 {
-	int				params[PARAMS];
-	int			    stats[STATS];
+	u_int64_t		params[PARAMS];
+	u_int64_t	    stats[STATS];
     pthread_t       thread;
     pthread_mutex_t *lfork;
     pthread_mutex_t *rfork;
@@ -12,8 +12,7 @@ typedef struct	philo
 
 typedef struct	table
 {
-	int				params[PARAMS];
-	int				simulation[SIMULATION];
+	u_int64_t		params[TABLES];
 	pthread_mutex_t	*fork;
 	struct	philo	*philo;
 }	t_tabl;

@@ -3,7 +3,7 @@
 //
 static bool free_table(t_tabl **table)
 {
-    int index;
+    u_int64_t	index;
 
     index = 0;
     if (*table)

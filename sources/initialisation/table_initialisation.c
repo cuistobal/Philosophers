@@ -4,7 +4,7 @@
 //to vacation in Malta).
 static bool	i_wanna_fork_on_the_table(t_tabl **table)
 {
-	int			    index;
+	u_int64_t	    index;
 	pthread_mutex_t *forks;
 
 	index = 0;
@@ -66,7 +66,8 @@ static bool	the_emergence_of_philosophy(t_tabl **table)
 		philos = malloc(sizeof(t_phil) * pcount);
 		if (philos)
 		{
-		//	(*table)->params[START]get_timestamps()
+			get_timestamp(&(*table)->params[BGN]);
+		//	= get_timestamp();
 		    (*table)->philo = philos;
 			while (pos < pcount)
 			{

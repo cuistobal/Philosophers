@@ -2,6 +2,8 @@
 # define GLOBAL_VARIABLES_H
 
 //Table macros
+# define TABLES 6
+
 # define PARAMS 5
 
 # define CNT 0
@@ -9,6 +11,8 @@
 # define SLP 2
 # define DIE 3
 # define END 4
+
+# define BGN 5
 
 //Philo macros
 # define STATS 3

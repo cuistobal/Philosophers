@@ -1,5 +1,21 @@
 #include "philosophers.h"
+/*
+static bool	sleeping(t_phil *philosopher)
+{
 
+}
+
+//
+static bool	eating(t_phil *philosopher)
+{
+	
+}
+
+//
+static bool	thinking(t_phil	*philosopher)
+{
+				
+}*/
 
 //This is an accurate description of an hungover philosopher's routine. At 
 //first, they try to grab the fork on their left. If it fails, they pretend life
@@ -8,32 +24,37 @@
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
 void    *routine(void *arg)
 {
-	int		time;
-    t_phil  *philosopher;
+	u_int64_t	time;
+	bool		status;
+    t_phil		*philosopher;
 
+	status = true;
     philosopher = (t_phil *)arg;
-    while (1)
+    while (status)
     {
 		get_timestamp(&time);
-        printf("%d %d %s\n", philosopher->stats[] ,philosopher->stats[POSTN], THINK);
-        
-        //tries to get the forks
-        pthread_mutex_lock(philosopher->lfork);
-        printf("%s %d %s\n", PHILO, philosopher->stats[POSTN], LFORK);
+  
+		printf("%ld %ld %s\n", time, philosopher->stats[POSTN], THNK);
 
+        //tries to get the forks
+        pthread_mutex_lock(philosopher->lfork); 
+		printf("%ld %ld %s\n", time, philosopher->stats[POSTN], FORK);
+		
         pthread_mutex_lock(philosopher->rfork);
-        printf("%s %d %s\n", PHILO, philosopher->stats[POSTN], RFORK);
+        printf("%ld %ld %s\n", time, philosopher->stats[POSTN], FORK);
     
-        printf("%s %d %s\n", PHILO, philosopher->stats[POSTN], EATS);
+        printf("%ld %ld %s\n", time, philosopher->stats[POSTN], EATS);
         usleep(philosopher->params[EAT]);
         
         //forks releasing
         pthread_mutex_unlock(philosopher->rfork);
         pthread_mutex_unlock(philosopher->lfork);
 
-        printf("%s %d %s\n", PHILO, philosopher->stats[POSTN], SLEEP);
+        printf("%ld %ld %s\n", time, philosopher->stats[POSTN], SLEP);
         
         usleep(philosopher->params[SLP]);
+		
+			
     }
     return NULL;
 }
