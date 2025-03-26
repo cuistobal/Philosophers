@@ -28,12 +28,12 @@ static bool	thinking(t_phil	*philosopher)
 	return true;
 }
 
-
+/*
 //static inline bool delcared in the .h instead
 inline static bool	you_are_dead(t_phil	*philo)
 {
 	return ((get_timestamp() - philo->last_meal) < 0);
-}
+}*/
 
 /*
 inline static bool	diner_is_over(t_phil *philosopher)
@@ -61,7 +61,8 @@ void    *routine(void *arg)
 		//Verifier que simulation peut continuer
 		//Rendre la variable de monitoring
 
-		if (you_are_dead(philosopher))
+		//if (the_show_must_go_on(philosopher))
+		if (you_are_dead(philosopher))	
 		{
 			pthread_mutex_unlock(&philosopher->table->monitoring);
 			printf("Why are you dead %d\n", philosopher->stats[POSTN]);

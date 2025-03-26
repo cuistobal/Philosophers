@@ -7,8 +7,9 @@ INCLUDES = includes
 
 SOURCES = \
 	philosophers.c \
-	sources/initialisation/table_initialisation.c \
 	sources/routines.c \
+	sources/monitoring.c \
+	sources/initialisation.c \
 	utilities/status.c \
 	utilities/cleanup.c \
 	utilities/timestamps.c \

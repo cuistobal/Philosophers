@@ -1,22 +1,30 @@
 #include "philosophers.h"
 
-static bool alive_and_not_full(t_tabl *table)
+//
+static void	dinner_time(t_tabl	**table)
 {
 	int		index;
+	t_phil	*philo;
 
-	while (1)
+	index = 0;
+	philo = NULL;
+	while (index < (*table)->params[CNT])
 	{
-    	index = 0;
-		pthread_mutex_lock(&table->monitoring);
-    	while (index < table->params[CNT])
-    	{
-			//if (you_are_dead(table->philo[index])) 
-			//	return false;
-			index++;
-    	}
-		pthread_mutex_unlock(&table->monitoring);
+		philo = &(*table)->philo[index];
+		philo->last_meal = get_timestamp();
+		if (pthread_create(&philo->thread, NULL, routine, philo) != 0)
+			cleanup(table, THREAD_CREATE);
+		index++;
 	}
-	return (true);
+	if (!alive_and_not_full(*table))
+		return ;
+	index = 0;
+	while (index < (*table)->params[CNT])
+	{
+		if (pthread_join(philo[index].thread, NULL) != 0)	
+			cleanup(table, THREAD_CREATE);
+		index++;
+	}
 }
 
 //
@@ -29,13 +37,12 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv))
 		{
+			dinner_time(&table);
             while (1)
 			{
 				if (!alive_and_not_full(table))
 					break ;
 			}
-			//
-			//join
 	        cleanup(&table, NULL);
             return 0;
         }

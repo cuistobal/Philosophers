@@ -45,10 +45,10 @@ TABLES	includes/global_variables.h	/^# define TABLES /;"	d
 THNK	includes/global_variables.h	/^# define THNK /;"	d
 THREAD_CREATE	includes/global_variables.h	/^# define THREAD_CREATE /;"	d
 UTILITIES_H	includes/utilities.h	/^# define UTILITIES_H$/;"	d
-a_wild_philosopher_appears	sources/initialisation/table_initialisation.c	/^static bool a_wild_philosopher_appears(t_tabl **table, int pos, int pcount)$/;"	f	typeref:typename:bool	file:
-alive_and_not_full	philosophers.c	/^static bool alive_and_not_full(t_tabl *table)$/;"	f	typeref:typename:bool	file:
+a_wild_philosopher_appears	sources/initialisation.c	/^static bool a_wild_philosopher_appears(t_tabl **table, int pos, int pcount)$/;"	f	typeref:typename:bool	file:
+alive_and_not_full	sources/monitoring.c	/^bool	alive_and_not_full(t_tabl *table)$/;"	f	typeref:typename:bool
 all	Makefile	/^all : $(NAME)$/;"	t
-append_table_parameters	sources/initialisation/table_initialisation.c	/^static bool	append_table_parameters(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool	file:
+append_table_parameters	sources/initialisation.c	/^static bool	append_table_parameters(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool	file:
 clean	Makefile	/^clean :$/;"	t
 cleanup	utilities/cleanup.c	/^bool    cleanup(t_tabl **table, ...)$/;"	f	typeref:typename:bool
 eating	sources/routines.c	/^static bool	eating(t_phil *philosopher)$/;"	f	typeref:typename:bool	file:
@@ -56,10 +56,11 @@ fclean	Makefile	/^fclean : clean$/;"	t
 fork	includes/structures.h	/^	pthread_mutex_t	*fork;$/;"	m	struct:table	typeref:typename:pthread_mutex_t *
 free_table	utilities/cleanup.c	/^static bool free_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 get_timestamp	utilities/timestamps.c	/^suseconds_t	get_timestamp(void)$/;"	f	typeref:typename:suseconds_t
-i_wanna_fork_on_the_table	sources/initialisation/table_initialisation.c	/^static bool	i_wanna_fork_on_the_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
-init_table	sources/initialisation/table_initialisation.c	/^bool	init_table(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool
+i_m_full_daddy	sources/monitoring.c	/^bool	i_m_full_daddy(t_phil *philosopher)$/;"	f	typeref:typename:bool
+i_wanna_fork_on_the_table	sources/initialisation.c	/^static bool	i_wanna_fork_on_the_table(t_tabl **table)$/;"	f	typeref:typename:bool	file:
+init_table	sources/initialisation.c	/^bool	init_table(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool
 is_sign	utilities/atoi.c	/^static bool	is_sign(char **argv, int *sign)$/;"	f	typeref:typename:bool	file:
-lets_get_this_party_started	sources/initialisation/lets_get_this_party_started.c	/^bool	lets_get_this_party_started(t_tabl **table)$/;"	f	typeref:typename:bool
+last_meal	includes/structures.h	/^	suseconds_t		last_meal;$/;"	m	struct:philo	typeref:typename:suseconds_t
 lfork	includes/structures.h	/^    pthread_mutex_t *lfork;$/;"	m	struct:philo	typeref:typename:pthread_mutex_t *
 main	philosophers.c	/^int	main(int argc, char **argv)$/;"	f	typeref:typename:int
 monitoring	includes/structures.h	/^	pthread_mutex_t	monitoring;$/;"	m	struct:table	typeref:typename:pthread_mutex_t
@@ -72,14 +73,13 @@ rfork	includes/structures.h	/^    pthread_mutex_t *rfork;$/;"	m	struct:philo	typ
 routine	sources/routines.c	/^void    *routine(void *arg)$/;"	f	typeref:typename:void *
 skip_spaces_get_sign	utilities/atoi.c	/^static void	skip_spaces_get_sign(char **argv, int *sign)$/;"	f	typeref:typename:void	file:
 sleeping	sources/routines.c	/^static bool	sleeping(t_phil *philosopher)$/;"	f	typeref:typename:bool	file:
-start_eating	sources/initialisation/lets_get_this_party_started.c	/^static bool	start_eating()$/;"	f	typeref:typename:bool	file:
 stats	includes/structures.h	/^	int			    stats[STATS];$/;"	m	struct:philo	typeref:typename:int[]
 status	utilities/status.c	/^void	status(t_phil *philo, char *status)$/;"	f	typeref:typename:void
 t_phil	includes/structures.h	/^}	t_phil;$/;"	t	typeref:struct:philo
 t_tabl	includes/structures.h	/^}	t_tabl;$/;"	t	typeref:struct:table
 table	includes/structures.h	/^	struct	table	*table;$/;"	m	struct:philo	typeref:struct:table *
 table	includes/structures.h	/^typedef struct	table$/;"	s
-the_emergence_of_philosophy	sources/initialisation/table_initialisation.c	/^static bool	the_emergence_of_philosophy(t_tabl **table)$/;"	f	typeref:typename:bool	file:
+the_emergence_of_philosophy	sources/initialisation.c	/^static bool	the_emergence_of_philosophy(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 thinking	sources/routines.c	/^static bool	thinking(t_phil	*philosopher)$/;"	f	typeref:typename:bool	file:
 thread	includes/structures.h	/^    pthread_t       thread;$/;"	m	struct:philo	typeref:typename:pthread_t
-you_are_dead	sources/routines.c	/^inline static bool	you_are_dead(t_phil	*philo)$/;"	f	typeref:typename:bool	file:
+you_are_dead	includes/execution.h	/^inline static bool	you_are_dead(t_phil	*philo)$/;"	f	typeref:typename:bool
