@@ -8,6 +8,7 @@ static void	dinner_time(t_tabl	**table)
 
 	index = 0;
 	philo = NULL;
+	(*table)->start_time = get_timestamp();
 	while (index < (*table)->params[CNT])
 	{
 		philo = &(*table)->philo[index];
