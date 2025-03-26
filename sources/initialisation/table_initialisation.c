@@ -34,8 +34,8 @@ static bool a_wild_philosopher_appears(t_tabl **table, int pos, int pcount)
     if (philo)
     {
         philo->table = *table;
+		philo->last_meal = get_timestamp();
         philo->stats[POSTN] = pos + 1;
-		philo->stats[LMEAL] = 0;
 		philo->stats[EATEN] = 0;
         philo->lfork = &(*table)->fork[pos];
         philo->rfork = &(*table)->fork[(pos + 1) % pcount];

@@ -11,6 +11,7 @@ static bool	sleeping(t_phil *philosopher)
 static bool	eating(t_phil *philosopher)
 {
 	status(philosopher, EATS);
+	usleep(philosopher->table->params[EAT] * MSEC);
 	pthread_mutex_unlock(philosopher->lfork);
 	pthread_mutex_unlock(philosopher->rfork);
 	return true;
@@ -31,9 +32,7 @@ static bool	thinking(t_phil	*philosopher)
 //static inline bool delcared in the .h instead
 inline static bool	you_are_dead(t_phil	*philo)
 {
-	printf("%d	->	%ld\n", philo->stats[POSTN] ,philo->stats[LMEAL] - get_timestamp());
-	
-	return ((philo->stats[LMEAL] - get_timestamp()) > 0);
+	return ((get_timestamp() - philo->last_meal) < 0);
 }
 
 /*
@@ -42,7 +41,7 @@ inline static bool	diner_is_over(t_phil *philosopher)
 	if  	
 		return true;
 	return false;
-}*/
+*/
 
 //This is an accurate description of an hungover philosopher's routine. At 
 //first, they try to grab the fork on their left. If it fails, they pretend life
@@ -65,7 +64,7 @@ void    *routine(void *arg)
 		if (you_are_dead(philosopher))
 		{
 			pthread_mutex_unlock(&philosopher->table->monitoring);
-
+			printf("Why are you dead %d\n", philosopher->stats[POSTN]);
 			break ;
 		}
 		pthread_mutex_unlock(&philosopher->table->monitoring);
@@ -73,8 +72,9 @@ void    *routine(void *arg)
 		//Pense -> Mange -> Dort	
 
 		thinking(philosopher);
-		philosopher->stats[LMEAL] = get_timestamp();
+		philosopher->last_meal = get_timestamp();
 		eating(philosopher);
+		philosopher->stats[EATEN]++;
 		sleeping(philosopher);
 
     }

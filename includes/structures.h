@@ -15,6 +15,7 @@ typedef struct	philo
     pthread_mutex_t *lfork;
     pthread_mutex_t *rfork;
 	struct	table	*table;
+	suseconds_t		last_meal;
 	int			    stats[STATS];
 }	t_phil;
 
