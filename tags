@@ -51,6 +51,7 @@ all	Makefile	/^all : $(NAME)$/;"	t
 append_table_parameters	sources/initialisation.c	/^static bool	append_table_parameters(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool	file:
 clean	Makefile	/^clean :$/;"	t
 cleanup	utilities/cleanup.c	/^bool    cleanup(t_tabl **table, ...)$/;"	f	typeref:typename:bool
+dinner_time	philosophers.c	/^static void	dinner_time(t_tabl	**table)$/;"	f	typeref:typename:void	file:
 eating	sources/routines.c	/^static bool	eating(t_phil *philosopher)$/;"	f	typeref:typename:bool	file:
 fclean	Makefile	/^fclean : clean$/;"	t
 fork	includes/structures.h	/^	pthread_mutex_t	*fork;$/;"	m	struct:table	typeref:typename:pthread_mutex_t *
@@ -73,6 +74,7 @@ rfork	includes/structures.h	/^    pthread_mutex_t *rfork;$/;"	m	struct:philo	typ
 routine	sources/routines.c	/^void    *routine(void *arg)$/;"	f	typeref:typename:void *
 skip_spaces_get_sign	utilities/atoi.c	/^static void	skip_spaces_get_sign(char **argv, int *sign)$/;"	f	typeref:typename:void	file:
 sleeping	sources/routines.c	/^static bool	sleeping(t_phil *philosopher)$/;"	f	typeref:typename:bool	file:
+start_time	includes/structures.h	/^	suseconds_t		start_time;$/;"	m	struct:table	typeref:typename:suseconds_t
 stats	includes/structures.h	/^	int			    stats[STATS];$/;"	m	struct:philo	typeref:typename:int[]
 status	utilities/status.c	/^void	status(t_phil *philo, char *status)$/;"	f	typeref:typename:void
 t_phil	includes/structures.h	/^}	t_phil;$/;"	t	typeref:struct:philo
