@@ -1,11 +1,5 @@
 #include "philosophers.h"
 
-/*
-bool	the_show_must_go_on(t_phil *philosopher)
-{
-	if 
-}*/
-
 bool	i_m_full_daddy(t_phil *philosopher)
 {
 	if (philosopher->table->params[END] >= 0)
@@ -33,11 +27,9 @@ bool	alive_and_not_full(t_tabl *table)
 				return (false);
 			if (i_m_full_daddy(&table->philo[index]))
 				full_clip++;
-		//	printf("philo %d	->	%d\n", table->philo[index].stats[POSTN], table->philo->stats[EATEN]);
 			index++;
     	}
 		pthread_mutex_unlock(&table->monitoring);
-	//	printf("%d / %d\n", full_clip, table->params[CNT]);
 		if (full_clip >= table->params[CNT])
 			break;
 	}

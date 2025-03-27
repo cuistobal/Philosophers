@@ -6,8 +6,7 @@ typedef struct	table
 	pthread_mutex_t	*fork;
 	struct	philo	*philo;
 	pthread_mutex_t	monitoring;
-	suseconds_t		start_time;
-	int				params[TABLES];
+	long			params[TABLES];
 }	t_tabl;
 
 typedef struct	philo
@@ -16,8 +15,7 @@ typedef struct	philo
     pthread_mutex_t *lfork;
     pthread_mutex_t *rfork;
 	struct	table	*table;
-	suseconds_t		last_meal;
-	int			    stats[STATS];
+	long		    stats[STATS];
 }	t_phil;
 
 #endif

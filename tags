@@ -46,6 +46,7 @@ THNK	includes/global_variables.h	/^# define THNK /;"	d
 THREAD_CREATE	includes/global_variables.h	/^# define THREAD_CREATE /;"	d
 UTILITIES_H	includes/utilities.h	/^# define UTILITIES_H$/;"	d
 a_wild_philosopher_appears	sources/initialisation.c	/^static bool a_wild_philosopher_appears(t_tabl **table, int pos, int pcount)$/;"	f	typeref:typename:bool	file:
+access_value	utilities/access_value.c	/^void	*access_value(pthread_mutex_t *mutex, void *value)$/;"	f	typeref:typename:void *
 alive_and_not_full	sources/monitoring.c	/^bool	alive_and_not_full(t_tabl *table)$/;"	f	typeref:typename:bool
 all	Makefile	/^all : $(NAME)$/;"	t
 append_table_parameters	sources/initialisation.c	/^static bool	append_table_parameters(t_tabl **table, char **argv)$/;"	f	typeref:typename:bool	file:

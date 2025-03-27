@@ -10,10 +10,9 @@ SOURCES = \
 	sources/routines.c \
 	sources/monitoring.c \
 	sources/initialisation.c \
-	utilities/status.c \
-	utilities/cleanup.c \
-	utilities/timestamps.c \
-	utilities/atoi.c
+	utilities/misc.c \
+	utilities/atoi.c \
+	utilities/cleanup.c
 
 OBJ = $(SOURCES:.c=.o)
 

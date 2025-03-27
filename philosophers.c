@@ -8,11 +8,11 @@ static void	dinner_time(t_tabl	**table)
 
 	index = 0;
 	philo = NULL;
-	(*table)->start_time = get_timestamp();
+	(*table)->params[STS] = get_timestamp();
 	while (index < (*table)->params[CNT])
 	{
 		philo = &(*table)->philo[index];
-		philo->last_meal = get_timestamp();
+		philo->stats[LMEAL] = get_timestamp();
 		if (pthread_create(&philo->thread, NULL, routine, philo) != 0)
 			cleanup(table, THREAD_CREATE);
 		index++;
