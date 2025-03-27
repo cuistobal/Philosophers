@@ -22,11 +22,11 @@ void	*access_value(pthread_mutex_t *mutex, void *value)
 //
 void	status(t_phil *philo, char *status)
 {
-//	long	time;
+	long	time;
 
-//	time = (long)access_value(&philo->table->monitoring, (void *)philo->table->params[STS]);
-//	printf("%ld %ld %s", get_timestamp() - time, philo->stats[POSTN], status);
-	printf("%ld %ld %s", get_timestamp(), philo->stats[POSTN], status);
+	time = (long)access_value(&philo->table->monitoring, (void *)philo->table->params[STS]);
+	printf("%ld %ld %s", get_timestamp() - time, philo->stats[POSTN], status);
+//	printf("%ld %ld %s", get_timestamp(), philo->stats[POSTN], status);
 }
 
 //

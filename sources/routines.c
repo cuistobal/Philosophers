@@ -1,13 +1,13 @@
 #include "philosophers.h"
 
-//
+// *rompiche intensifies*
 static void	sleeping(t_phil *philosopher)
 {
 	status(philosopher, SLEP);
 	usleep(philosopher->table->params[SLP] * MSEC);
 }
 
-//
+// *scronch scronch scronch*
 static void	eating(t_phil *philosopher)
 {
 	status(philosopher, EATS);
@@ -16,14 +16,36 @@ static void	eating(t_phil *philosopher)
 	pthread_mutex_unlock(philosopher->rfork);
 }
 
-//
-static void	thinking(t_phil	*philosopher)
+//The philos are right handed if an even number sits around the table. They 
+//become left handed otherwise.
+static void	thinking(t_phil	*philosopher, bool even)
 {	
 	status(philosopher, THNK);
-	pthread_mutex_lock(philosopher->lfork);
-	status(philosopher, FORK);
-	pthread_mutex_lock(philosopher->rfork);	
-	status(philosopher, FORK);
+	if (even)
+	{
+		pthread_mutex_lock(philosopher->lfork);
+		status(philosopher, FORK);
+		pthread_mutex_lock(philosopher->rfork);	
+		status(philosopher, FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(philosopher->rfork);	
+		status(philosopher, FORK);
+		pthread_mutex_lock(philosopher->lfork);
+		status(philosopher, FORK);
+	}
+}
+
+static void	set_even(t_phil *philosopher, bool *even)
+{
+	long			count;
+
+	count = (long)access_value(&philosopher->table->monitoring, (void *)philosopher->table->params[CNT]);
+	if (count & 1)
+		*even = true;
+	else
+		*even = false;
 }
 
 //This is an accurate description of an hungover philosopher's routine. At 
@@ -33,11 +55,14 @@ static void	thinking(t_phil	*philosopher)
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
 void    *routine(void *arg)
 {
-    t_phil		*philosopher;
+	bool	even;
+    t_phil	*philosopher;
 
     philosopher = (t_phil *)arg;
-    while (1)
+    set_even(philosopher, &even);
+	while (true)
     {
+
 		pthread_mutex_lock(&philosopher->table->monitoring);
 
 		//Acceder a la variable de monitoring
@@ -51,17 +76,18 @@ void    *routine(void *arg)
 			status(philosopher, DIED);	
 			break ;
 		}
+
 		pthread_mutex_unlock(&philosopher->table->monitoring);
 
 		//Pense -> Mange -> Dort	
 
-		thinking(philosopher);
+		thinking(philosopher, even);
 		philosopher->stats[LMEAL] = get_timestamp();
 		eating(philosopher);
 		philosopher->stats[EATEN]++;
 		sleeping(philosopher);
     }
-    return (NULL);
+    return (philosopher);
 }
 
 //Set STS to -1	->	Simulation should end

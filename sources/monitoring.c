@@ -1,11 +1,14 @@
 #include "philosophers.h"
 
-bool	i_m_full_daddy(t_phil *philosopher)
+//
+static bool	dead_or_full(t_tabl *table, t_phil *philo, int *full)	
 {
-	if (philosopher->table->params[END] >= 0)
+	if (you_are_dead(philo))
+		return (false);
+	if (philo->table->params[END] >= 0)
 	{
-		if (philosopher->stats[EATEN] != philosopher->table->params[END])
-			return (false);
+		if (philo->stats[EATEN] == table->params[END])
+			full++;
 	}
 	return (true);
 }
@@ -13,24 +16,21 @@ bool	i_m_full_daddy(t_phil *philosopher)
 //This function checks my boi did not starve not got enough pasta. 
 bool	alive_and_not_full(t_tabl *table)
 {
+	int		full;
 	int		index;
-	int		full_clip;
 
-	full_clip = 0;
+	full = 0;
 	while (1)
 	{
-    	index = 0;
+    	index = -1;
 		pthread_mutex_lock(&table->monitoring);
-    	while (index < table->params[CNT] && table->params[STS] != -1)
+    	while (index++ < table->params[CNT])
     	{
-			if (you_are_dead(&table->philo[index]))
-				set_value(&table->monitoring, (void *)&table->params[STS], (void *)-1);	
-			if (i_m_full_daddy(&table->philo[index]))
-				full_clip++;
-			index++;
+			if (dead_or_full(table, &table->philo[index], &full))
+				return false;
     	}
 		pthread_mutex_unlock(&table->monitoring);
-		if (full_clip >= table->params[CNT])
+		if (full == table->params[CNT])
 			break;
 	}
 	return (true);
