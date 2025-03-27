@@ -1,5 +1,13 @@
 #include "philosophers.h"
 
+//
+void	set_value(pthread_mutex_t *mutex, void **value, void *new)
+{
+	pthread_mutex_lock(mutex);
+	*value = new;
+	pthread_mutex_unlock(mutex);
+}
+
 //This function allows us to access value thread safely
 void	*access_value(pthread_mutex_t *mutex, void *value)
 {

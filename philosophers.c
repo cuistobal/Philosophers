@@ -17,8 +17,7 @@ static void	dinner_time(t_tabl	**table)
 			cleanup(table, THREAD_CREATE);
 		index++;
 	}
-	if (!alive_and_not_full(*table))
-		return ;
+	alive_and_not_full(*table);
 	index = 0;
 	while (index < (*table)->params[CNT])
 	{

@@ -21,10 +21,10 @@ bool	alive_and_not_full(t_tabl *table)
 	{
     	index = 0;
 		pthread_mutex_lock(&table->monitoring);
-    	while (index < table->params[CNT])
+    	while (index < table->params[CNT] && table->params[STS] != -1)
     	{
 			if (you_are_dead(&table->philo[index]))
-				return (false);
+				set_value(&table->monitoring, (void *)&table->params[STS], (void *)-1);	
 			if (i_m_full_daddy(&table->philo[index]))
 				full_clip++;
 			index++;

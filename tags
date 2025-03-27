@@ -83,4 +83,4 @@ table	includes/structures.h	/^typedef struct	table$/;"	s
 the_emergence_of_philosophy	sources/initialisation.c	/^static bool	the_emergence_of_philosophy(t_tabl **table)$/;"	f	typeref:typename:bool	file:
 thinking	sources/routines.c	/^static void	thinking(t_phil	*philosopher)$/;"	f	typeref:typename:void	file:
 thread	includes/structures.h	/^    pthread_t       thread;$/;"	m	struct:philo	typeref:typename:pthread_t
-you_are_dead	includes/execution.h	/^inline static bool	you_are_dead(t_phil	*philo)$/;"	f	typeref:typename:bool
+you_are_dead	includes/utilities.h	/^inline static bool	you_are_dead(t_phil	*philo)$/;"	f	typeref:typename:bool

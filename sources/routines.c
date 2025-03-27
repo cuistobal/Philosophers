@@ -63,3 +63,5 @@ void    *routine(void *arg)
     }
     return (NULL);
 }
+
+//Set STS to -1	->	Simulation should end
