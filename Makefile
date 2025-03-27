@@ -6,13 +6,13 @@ CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)
 INCLUDES = includes
 
 SOURCES = \
-	philosophers.c \
 	sources/routines.c \
 	sources/monitoring.c \
 	sources/initialisation.c \
 	utilities/misc.c \
 	utilities/atoi.c \
-	utilities/cleanup.c
+	utilities/cleanup.c \
+	philosophers.c
 
 OBJ = $(SOURCES:.c=.o)
 

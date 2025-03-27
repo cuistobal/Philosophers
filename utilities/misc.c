@@ -28,5 +28,4 @@ long	get_timestamp(void)
 
 	gettimeofday(&current, NULL);
 	return (current.tv_usec);
-	//return (current.tv_usec * MSEC + (current.tv_usec / MSEC));
 }
