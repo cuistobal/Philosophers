@@ -12,7 +12,7 @@ typedef struct	table
 typedef struct	philo
 {
     pthread_t       thread;
-    pthread_mutex_t *lfork;
+	pthread_mutex_t *lfork;
     pthread_mutex_t *rfork;
 	struct	table	*table;
 	long		    stats[STATS];

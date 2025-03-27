@@ -18,34 +18,13 @@ static void	eating(t_phil *philosopher)
 
 //The philos are right handed if an even number sits around the table. They 
 //become left handed otherwise.
-static void	thinking(t_phil	*philosopher, bool even)
+static void	thinking(t_phil	*philosopher)
 {	
 	status(philosopher, THNK);
-	if (even)
-	{
-		pthread_mutex_lock(philosopher->lfork);
-		status(philosopher, FORK);
-		pthread_mutex_lock(philosopher->rfork);	
-		status(philosopher, FORK);
-	}
-	else
-	{
-		pthread_mutex_lock(philosopher->rfork);	
-		status(philosopher, FORK);
-		pthread_mutex_lock(philosopher->lfork);
-		status(philosopher, FORK);
-	}
-}
-
-static void	set_even(t_phil *philosopher, bool *even)
-{
-	long			count;
-
-	count = (long)access_value(&philosopher->table->monitoring, (void *)philosopher->table->params[CNT]);
-	if (count & 1)
-		*even = true;
-	else
-		*even = false;
+	pthread_mutex_lock(philosopher->lfork);
+	status(philosopher, FORK);
+	pthread_mutex_lock(philosopher->rfork);	
+	status(philosopher, FORK);
 }
 
 //This is an accurate description of an hungover philosopher's routine. At 
@@ -55,11 +34,9 @@ static void	set_even(t_phil *philosopher, bool *even)
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
 void    *routine(void *arg)
 {
-	bool	even;
     t_phil	*philosopher;
 
     philosopher = (t_phil *)arg;
-    set_even(philosopher, &even);
 	while (true)
     {
 
@@ -81,8 +58,8 @@ void    *routine(void *arg)
 
 		//Pense -> Mange -> Dort	
 
-		thinking(philosopher, even);
-		philosopher->stats[LMEAL] = get_timestamp();
+		thinking(philosopher);
+		set_value(&philosopher->table->monitoring, (void *)&philosopher->stats[LMEAL], (void *)get_timestamp());
 		eating(philosopher);
 		philosopher->stats[EATEN]++;
 		sleeping(philosopher);

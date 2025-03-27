@@ -20,7 +20,7 @@ static void	dinner_time(t_tabl	**table)
 	while (index < (*table)->params[CNT])
 	{
 		philo = &(*table)->philo[index];
-		philo->stats[LMEAL] = 0;
+		set_value(&(*table)->monitoring, (void *)&philo->stats[LMEAL], (void *)get_timestamp());
 		if (pthread_create(&philo->thread, NULL, routine, &philo[index]) != 0)
 			cleanup(table, THREAD_CREATE);
 		index++;
