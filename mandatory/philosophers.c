@@ -25,9 +25,10 @@ static void	dinner_time(t_tabl *table)
 			cleanup(table, THREAD_CREATE);
 		index++;
 	}
-	pthread_mutex_lock(&table->monitoring);
+	//pthread_mutex_lock(&table->monitoring);
 	table->params[STS] = get_timestamp();
-	pthread_mutex_unlock(&table->monitoring);
+	printf("%ld\n", get_timestamp() - table->params[STS]);
+	//pthread_mutex_unlock(&table->monitoring);
 	alive_and_not_full(table);
 	index = 0;
 	while (index < table->params[CNT])

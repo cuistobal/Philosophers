@@ -85,6 +85,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = my_atoi(argv[index]);
 		index++;
 	}
+	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;
 	if (pthread_mutex_init(&table->monitoring, NULL) != 0)

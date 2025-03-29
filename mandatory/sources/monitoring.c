@@ -39,15 +39,16 @@ bool	alive_and_not_full(t_tabl *table)
 	full = 0;
 	while (1)
 	{
-		index = -1;
+		index = 0;
 		pthread_mutex_lock(&table->monitoring);
-		while (index++ < table->params[CNT])
+		while (index < table->params[CNT])
 		{
 			if (dead_or_full(table, &table->philo[index], &full))
 			{
 				pthread_mutex_unlock(&table->monitoring);
 				return (false);
 			}
+			index++;
 		}
 		pthread_mutex_unlock(&table->monitoring);
 		if (full == table->params[CNT])

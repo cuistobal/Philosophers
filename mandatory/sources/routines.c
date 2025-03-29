@@ -36,6 +36,18 @@ static bool	is_even(t_phil *philo)
 	return (position & 1);
 }
 
+static void	starting_block(t_phil *philo)
+{
+	int	wait;
+
+	wait = 0;
+	pthread_mutex_lock(&philo->table->monitoring);
+	while (philo->table->params[STS] == -1)
+		wait++;
+	philo->stats[LMEAL] = philo->table->params[STS];
+	pthread_mutex_unlock(&philo->table->monitoring);
+}
+
 //This is an accurate description of an hungover philosopher's routine. At 
 //first, they try to grab the fork on their left. If it fails, they pretend life
 // and start regretting all this liquor ingested last night. Once they grab the
@@ -48,7 +60,8 @@ void	*routine(void *philosopher)
 
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
-	while (true)
+	starting_block(philo);
+	while (1)
 	{
 		if (you_are_dead(philo))
 			break ;
