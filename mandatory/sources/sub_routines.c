@@ -36,6 +36,7 @@ void	eating(t_phil *philosopher)
 	pthread_mutex_lock(&philosopher->table->monitoring);
 	meal_time = philosopher->table->params[EAT];
 	philosopher->stats[LMEAL] = get_timestamp();
+	philosopher->stats[EATEN]++;
 	pthread_mutex_unlock(&philosopher->table->monitoring);
 	status(philosopher, EATS);
 	usleep(meal_time);
@@ -48,4 +49,5 @@ void	eating(t_phil *philosopher)
 void	thinking(t_phil	*philosopher)
 {	
 	status(philosopher, THNK);
+	usleep(100);
 }

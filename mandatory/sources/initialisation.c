@@ -37,12 +37,12 @@ static bool	i_wanna_fork_on_the_table(t_tabl *table)
 //
 static void	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 {
-	table->philo[pos].table = table;
-	table->philo[pos].stats[POSTN] = pos + 1;
-	table->philo[pos].stats[EATEN] = 0;
-	table->philo[pos].stats[LMEAL] = 0;
-	table->philo[pos].lfork = &table->fork[pos];
-	table->philo[pos].rfork = &table->fork[(pos + 1) % pcount];
+	table->philo[pos - 1].table = table;
+	table->philo[pos - 1].stats[POSTN] = pos;
+	table->philo[pos - 1].stats[EATEN] = 0;
+	table->philo[pos - 1].stats[LMEAL] = 0;
+	table->philo[pos - 1].lfork = &table->fork[(pos + pcount - 1) % pcount];
+	table->philo[pos - 1].rfork = &table->fork[pos % pcount];
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -53,21 +53,19 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	int		pcount;
 	t_phil	*philos;
 
-	pos = 0;
+	pos = 1;
 	philos = NULL;
 	pcount = table->params[CNT];
 	philos = malloc(sizeof(t_phil) * pcount);
-	if (philos)
+	if (!philos)
+		return (false);
+	table->philo = philos;
+	while (pos < pcount + 1)
 	{
-		table->params[STS] = get_timestamp();
-		table->philo = philos;
-		while (pos < pcount)
-		{
-			a_wild_philosopher_appears(table, pos, pcount);
-			pos++;
-		}
+		a_wild_philosopher_appears(table, pos, pcount);
+		pos++;
 	}
-	return (philos);
+	return (true);
 }
 
 //How would you sit and share a meal if it wasn't for a table to be dressed up!
