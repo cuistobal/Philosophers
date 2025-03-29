@@ -1,13 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
+/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 //
-static bool	dead_or_full(t_tabl *table, t_phil *philo, int *full)	
+static bool	dead_or_full(t_tabl *table, t_phil *philo, int *full)
 {
+	long	end;
+	long	eaten;
+
+	end = table->params[DIE];
 	if (you_are_dead(philo))
 		return (false);
-	if (philo->table->params[END] >= 0)
+	if (end >= 0)
 	{
-		if (philo->stats[EATEN] == table->params[END])
+		eaten = philo->stats[EATEN];
+		if (eaten == end)
 			full++;
 	}
 	return (true);
@@ -22,16 +39,19 @@ bool	alive_and_not_full(t_tabl *table)
 	full = 0;
 	while (1)
 	{
-    	index = -1;
+		index = -1;
 		pthread_mutex_lock(&table->monitoring);
-    	while (index++ < table->params[CNT])
-    	{
+		while (index++ < table->params[CNT])
+		{
 			if (dead_or_full(table, &table->philo[index], &full))
-				return false;
-    	}
+			{
+				pthread_mutex_unlock(&table->monitoring);
+				return (false);
+			}
+		}
 		pthread_mutex_unlock(&table->monitoring);
 		if (full == table->params[CNT])
-			break;
+			break ;
 	}
 	return (true);
 }

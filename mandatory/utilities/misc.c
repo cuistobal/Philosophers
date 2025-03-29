@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
+/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 //
-void	set_value(pthread_mutex_t *mutex, void **value, void *new)
+void	set_value(pthread_mutex_t *mutex, void *current, void *new, size_t size)
 {
 	pthread_mutex_lock(mutex);
-	*value = new;
+	memcpy(current, new, size);
 	pthread_mutex_unlock(mutex);
 }
 
@@ -23,10 +35,13 @@ void	*access_value(pthread_mutex_t *mutex, void *value)
 void	status(t_phil *philo, char *status)
 {
 	long	time;
+	long	position;
 
-	time = (long)access_value(&philo->table->monitoring, (void *)philo->table->params[STS]);
-	printf("%ld %ld %s", get_timestamp() - time, philo->stats[POSTN], status);
-//	printf("%ld %ld %s", get_timestamp(), philo->stats[POSTN], status);
+	pthread_mutex_lock(&philo->table->monitoring);
+	time = philo->table->params[STS];
+	position = philo->stats[POSTN];
+	pthread_mutex_unlock(&philo->table->monitoring);
+	printf("%ld %ld %s", get_timestamp() - time, position, status);
 }
 
 //

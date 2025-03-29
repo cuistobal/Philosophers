@@ -1,30 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
+/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-// *rompiche intensifies*
-static void	sleeping(t_phil *philosopher)
+static void	even_routine(t_phil *philo)
 {
-	status(philosopher, SLEP);
-	usleep(philosopher->table->params[SLP] * MSEC);
+	eating(philo);
+	sleeping(philo);
+	thinking(philo);
 }
 
-// *scronch scronch scronch*
-static void	eating(t_phil *philosopher)
+static void	uneven_routine(t_phil *philo)
 {
-	status(philosopher, EATS);
-	usleep(philosopher->table->params[EAT] * MSEC);
-	pthread_mutex_unlock(philosopher->lfork);
-	pthread_mutex_unlock(philosopher->rfork);
+	thinking(philo);
+	eating(philo);
+	sleeping(philo);
 }
 
-//The philos are right handed if an even number sits around the table. They 
-//become left handed otherwise.
-static void	thinking(t_phil	*philosopher)
-{	
-	status(philosopher, THNK);
-	pthread_mutex_lock(philosopher->lfork);
-	status(philosopher, FORK);
-	pthread_mutex_lock(philosopher->rfork);	
-	status(philosopher, FORK);
+static bool	is_even(t_phil *philo)
+{
+	long	position;
+
+	pthread_mutex_lock(&philo->table->monitoring);
+	position = philo->stats[POSTN];
+	pthread_mutex_unlock(&philo->table->monitoring);
+	return (position & 1);
 }
 
 //This is an accurate description of an hungover philosopher's routine. At 
@@ -32,39 +41,21 @@ static void	thinking(t_phil	*philosopher)
 // and start regretting all this liquor ingested last night. Once they grab the
 //fork, their focus shifts to grabbing the second fork.
 //After ingesting all thos spaghettis, they feel sleepy hence take a nap. 
-void    *routine(void *arg)
+void	*routine(void *philosopher)
 {
-    t_phil	*philosopher;
+	bool	even;
+	t_phil	*philo;
 
-    philosopher = (t_phil *)arg;
+	philo = (t_phil *)philosopher;
+	even = is_even(philo);
 	while (true)
-    {
-
-		pthread_mutex_lock(&philosopher->table->monitoring);
-
-		//Acceder a la variable de monitoring
-		//Verifier que simulation peut continuer
-		//Rendre la variable de monitoring
-
-		//if (the_show_must_go_on(philosopher))
-		if (you_are_dead(philosopher))	
-		{
-			pthread_mutex_unlock(&philosopher->table->monitoring);
-			status(philosopher, DIED);	
+	{
+		if (you_are_dead(philo))
 			break ;
-		}
-
-		pthread_mutex_unlock(&philosopher->table->monitoring);
-
-		//Pense -> Mange -> Dort	
-
-		thinking(philosopher);
-		set_value(&philosopher->table->monitoring, (void *)&philosopher->stats[LMEAL], (void *)get_timestamp());
-		eating(philosopher);
-		philosopher->stats[EATEN]++;
-		sleeping(philosopher);
-    }
-    return (philosopher);
+		if (even)
+			even_routine(philo);
+		else
+			uneven_routine(philo);
+	}
+	return (NULL);
 }
-
-//Set STS to -1	->	Simulation should end

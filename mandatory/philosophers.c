@@ -1,37 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
+/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 //
-//	STEP 1	->	Set all threads and make them start at the same time
-//
-//	STEP 2	->	Make sure no one dies
-//
-//	STEP 3	->	Join all threads
-//
-static void	dinner_time(t_tabl	**table)
+static void	dinner_time(t_tabl *table)
 {
-	int		index;
-	t_phil	*philo;
+	int	index;
 
 	index = 0;
-	philo = NULL;
-
-	(*table)->params[STS] = get_timestamp();
-	
-	while (index < (*table)->params[CNT])
+	while (index < table->params[CNT])
 	{
-		philo = &(*table)->philo[index];
-		set_value(&(*table)->monitoring, (void *)&philo->stats[LMEAL], (void *)get_timestamp());
-		if (pthread_create(&philo->thread, NULL, routine, &philo[index]) != 0)
+		if (pthread_create(&table->philo[index].thread, NULL, routine, \
+				&table->philo[index]) != 0)
 			cleanup(table, THREAD_CREATE);
 		index++;
 	}
-	
-	alive_and_not_full(*table);
+	pthread_mutex_lock(&table->monitoring);
+	table->params[STS] = get_timestamp();
+	pthread_mutex_unlock(&table->monitoring);
+	alive_and_not_full(table);
 	index = 0;
-	
-	while (index < (*table)->params[CNT])
+	while (index < table->params[CNT])
 	{
-		if (pthread_join(philo[index].thread, NULL) != 0)	
+		if (pthread_join(table->philo[index].thread, NULL) != 0)
 			cleanup(table, THREAD_CREATE);
 		index++;
 	}
@@ -47,11 +48,11 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv))
 		{
-			dinner_time(&table);
-	        cleanup(&table, NULL);
-            return 0;
-        }
-		return (cleanup(&table, INIT_TABLE));
+			dinner_time(table);
+			cleanup(table, NULL);
+			return (0);
+		}
+		return (cleanup(table, INIT_TABLE));
 	}
-	return (cleanup(&table, ARGC));
+	return (cleanup(table, ARGC));
 }

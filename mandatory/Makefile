@@ -7,6 +7,7 @@ INCLUDES = includes
 
 SOURCES = \
 	sources/routines.c \
+	sources/sub_routines.c \
 	sources/monitoring.c \
 	sources/initialisation.c \
 	utilities/misc.c \
@@ -14,23 +15,23 @@ SOURCES = \
 	utilities/cleanup.c \
 	philosophers.c
 
-OBJ = $(SOURCES:.c=.o)
+OBJS = $(SOURCES:.c=.o)
 
-NAME : $(OBJ)
-	@ $(CC) $(OBJ) -o $(NAME)
+$(NAME): $(OBJS)
+	@ $(CC) $(OBJS) -o $(NAME)
 
 %.o: %.c
 	@ $(CC) $(CFLAGS) -c $< -o $@
 
-all : $(NAME)
+all: $(NAME)
 	@ echo "G3t r34dy t0 th1nk (:"
 
-re : fclean all
+clean:
+	@ rm -rf $(OBJS)
 
-clean :
-	@ rm -rf $(OBJ)
-
-fclean : clean
+fclean: clean
 	@ rm -rf $(NAME)
 
-.PHONY: all, re, clean, fclean, bonus
+re: fclean all
+
+.PHONY: all clean fclean re
