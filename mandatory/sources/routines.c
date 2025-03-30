@@ -61,6 +61,7 @@ void	*routine(void *philosopher)
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
 	starting_block(philo);
+//	printf("%ld\n", get_timestamp() - philo->stats[LMEAL]);
 	while (1)
 	{
 		if (you_are_dead(philo))
