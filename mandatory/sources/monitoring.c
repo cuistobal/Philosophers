@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:03:48 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:00:43 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 static bool	dead_or_full(t_phil *philo, int *full, int end)
 {
 	if (you_are_dead(philo))
+	{
 		return (false);
+	}
 	if (end >= 0)
 	{
-		printf("%ld / %d\n", philo->stats[EATEN], end);
+//		printf("%ld / %d\n", philo->stats[EATEN], end);
 		if (philo->stats[EATEN] == end)
 			full++;
 	}
@@ -27,13 +29,15 @@ static bool	dead_or_full(t_phil *philo, int *full, int end)
 }
 
 //This function checks my boi did not starve not got enough pasta. 
-bool	alive_and_not_full(t_tabl *table)
+void	*alive_and_not_full(void *data)
 {
 	int		end;
 	int		full;
 	int		index;
+	t_tabl	*table;
 
 	full = 0;
+	table = (t_tabl *)data;
 	pthread_mutex_lock(&table->monitoring);
 	end = table->params[DIE];
 	pthread_mutex_unlock(&table->monitoring);
@@ -47,13 +51,16 @@ bool	alive_and_not_full(t_tabl *table)
 			{
 				status(table->philo, DIED);
 				pthread_mutex_unlock(&table->monitoring);
-				return (false);
+				return ((void *)false);
 			}
 			index++;
 		}
-		pthread_mutex_unlock(&table->monitoring);
 		if (full == table->params[CNT])
+		{
+			pthread_mutex_unlock(&table->monitoring);
 			break ;
+		}
+		pthread_mutex_unlock(&table->monitoring);
 	}
-	return (true);
+	return ((void *)true);
 }

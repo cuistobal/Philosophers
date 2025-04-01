@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:24:00 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:51:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*routine(void *philosopher)
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
 	starting_block(philo);
-	while (!you_are_dead(philo))
+	while (1)
 	{
 		if (even)
 			even_routine(philo);

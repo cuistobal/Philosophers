@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:02:03 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:04:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	dinner_time(t_tabl *table)
 {
 	int	index;
 
+	//init threads	
+
 	index = 0;
 	while (index < table->params[CNT])
 	{
@@ -25,10 +27,18 @@ static void	dinner_time(t_tabl *table)
 			cleanup(table, THREAD_CREATE);
 		index++;
 	}
+
+	//set start timer && monitor execution
+
 	pthread_mutex_lock(&table->monitoring);
 	table->params[STS] = get_timestamp();
 	pthread_mutex_unlock(&table->monitoring);
-	alive_and_not_full(table);
+
+	pthread_create(&table->thread, NULL, alive_and_not_full, table);
+//	alive_and_not_full(table);
+	
+	//join threads
+
 	index = 0;
 	while (index < table->params[CNT])
 	{
