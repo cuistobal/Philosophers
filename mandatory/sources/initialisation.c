@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:04:22 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	i_wanna_fork_on_the_table(t_tabl *table)
 }
 
 //
-static void	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
+static bool a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 {
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
@@ -40,6 +40,9 @@ static void	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].lfork = &table->fork[(pos + pcount - 1) % pcount];
 	table->philo[pos - 1].rfork = &table->fork[pos % pcount];
+	if (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) != 0)
+		return (false);
+	return (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) == 0); 
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -59,7 +62,8 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	table->philo = philos;
 	while (pos < pcount + 1)
 	{
-		a_wild_philosopher_appears(table, pos, pcount);
+		if (!a_wild_philosopher_appears(table, pos, pcount))
+			return (false);
 		pos++;
 	}
 	return (true);

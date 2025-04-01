@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 11:13:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:50:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,21 @@ static bool	is_even(t_phil *philo)
 {
 	long	position;
 
-	pthread_mutex_lock(&philo->table->monitoring);
+	pthread_mutex_lock(&philo->clock);
 	position = philo->stats[POSTN];
-	pthread_mutex_unlock(&philo->table->monitoring);
+	pthread_mutex_unlock(&philo->clock);
 	return (position & 1);
 }
 
 //Recursive spinlock function to synchronise the threads start.
 static void	starting_block(t_phil *philo)
 {
-	pthread_mutex_lock(&philo->table->monitoring);
-	if (philo->table->params[STS] == -1)
-	{
-		pthread_mutex_unlock(&philo->table->monitoring);
-		starting_block(philo);
-	}
+	pthread_mutex_lock(&philo->clock);
+	while (philo->table->params[STS] == -1)
+		;
 	philo->stats[START] = philo->table->params[STS];
 	philo->stats[LMEAL] = philo->stats[START];
-	pthread_mutex_unlock(&philo->table->monitoring);
+	pthread_mutex_unlock(&philo->clock);
 }
 
 //This is an accurate description of an hungover philosopher's routine. At 
@@ -66,17 +63,10 @@ void	*routine(void *philosopher)
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
 	starting_block(philo);
- /*	
-	pthread_mutex_lock(&philo->table->monitoring);
-	printf("Philo %ld		->	%ld	&&	%ld\n", philo->stats[POSTN], philo->stats[LMEAL], philo->stats[START]);
-	pthread_mutex_unlock(&philo->table->monitoring);
-	return (NULL);
-*/
-
-	while (1)
+	while (!you_are_dead(philo))
 	{
-		if ((get_timestamp() - philo->stats[LMEAL]) > 800)
-			break;
+	//	if (you_are_dead(philo))
+	//		break ;
 		if (even)
 			even_routine(philo);
 		else

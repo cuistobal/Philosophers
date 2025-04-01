@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h	                                :+:      :+:    :+:   */
+/*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:03:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct table
 typedef struct philo
 {
 	pthread_t		thread;
+	pthread_mutex_t	clock;
+	pthread_mutex_t	write;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
 	struct table	*table;

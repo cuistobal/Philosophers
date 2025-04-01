@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 09:57:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:04:58 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	status(t_phil *philo, char *status)
 	long	time;
 	long	position;
 
-	pthread_mutex_lock(&philo->table->monitoring);
+	pthread_mutex_lock(&philo->write);
 	time = philo->stats[START];
 	position = philo->stats[POSTN];
-	pthread_mutex_unlock(&philo->table->monitoring);
 	printf("%ld %ld %s", get_timestamp() - time, position, status);
+	pthread_mutex_unlock(&philo->write);
 }
 
 //
@@ -50,5 +50,5 @@ long	get_timestamp(void)
 	struct timeval	current;
 
 	gettimeofday(&current, NULL);
-	return (current.tv_usec);
+	return (current.tv_usec / MSEC);
 }
