@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   global_variables.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 09:56:29 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 # define END 5
 
 //Philo macros
-# define STATS 3
+# define STATS 4
 
-# define POSTN 0	 
+# define POSTN 0
 # define LMEAL 1
 # define EATEN 2
+# define START 3
 
 //Routine messages
 # define THNK "is thinking\n"

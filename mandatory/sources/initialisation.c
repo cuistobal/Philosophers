@@ -17,21 +17,18 @@
 static bool	i_wanna_fork_on_the_table(t_tabl *table)
 {
 	int				index;
-	pthread_mutex_t	*forks;
 
 	index = 0;
-	forks = malloc(sizeof(pthread_mutex_t) * table->params[CNT]);
-	if (forks)
+	table->fork = malloc(sizeof(pthread_mutex_t) * table->params[CNT]);
+	if (!table->fork)
+		return (false);
+	while (index < table->params[CNT])
 	{
-		table->fork = forks;
-		while (index < table->params[CNT])
-		{
-			if (pthread_mutex_init(&forks[index], NULL) != 0)
-				return (false);
-			index++;
-		}
+		if (pthread_mutex_init(&table->fork[index], NULL) != 0)
+			return (false);
+		index++;
 	}
-	return (forks);
+	return (true);
 }
 
 //
@@ -97,13 +94,11 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 bool	init_table(t_tabl **table, char **argv)
 {
 	*table = (t_tabl *)malloc(sizeof(t_tabl));
-	if (*table)
-	{
-		if (!append_table_parameters(*table, argv))
-			return (false);
-		if (!i_wanna_fork_on_the_table(*table))
-			return (false);
-		return (the_emergence_of_philosophy(*table));
-	}
-	return (*table);
+	if (!*table)
+		return (false);
+	if (!append_table_parameters(*table, argv))
+		return (false);
+	if (!i_wanna_fork_on_the_table(*table))
+		return (false);
+	return (the_emergence_of_philosophy(*table));
 }

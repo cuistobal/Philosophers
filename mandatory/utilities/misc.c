@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   misc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 09:57:35 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	status(t_phil *philo, char *status)
 	long	position;
 
 	pthread_mutex_lock(&philo->table->monitoring);
-	time = philo->table->params[STS];
+	time = philo->stats[START];
 	position = philo->stats[POSTN];
 	pthread_mutex_unlock(&philo->table->monitoring);
 	printf("%ld %ld %s", get_timestamp() - time, position, status);

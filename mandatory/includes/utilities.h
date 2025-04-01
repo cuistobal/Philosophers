@@ -28,7 +28,9 @@ inline static bool	you_are_dead(t_phil *philo)
 {
 	long	last_meal;
 
+	pthread_mutex_lock(&philo->table->monitoring);
 	last_meal = philo->stats[LMEAL];
+	pthread_mutex_unlock(&philo->table->monitoring);
 	return (get_timestamp() - last_meal < 0);
 }
 
