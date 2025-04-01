@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:15:03 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:28:38 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ void	eating(t_phil *philosopher)
 void	thinking(t_phil	*philosopher)
 {	
 	status(philosopher, THNK);
-//	usleep(100 * MSEC);
+	usleep(MSEC);
 }

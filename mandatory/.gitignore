@@ -52,4 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Vim stuff
-tags
+tags\
+
+# Vscode stuff
+.vscode
