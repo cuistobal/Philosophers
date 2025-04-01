@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 12:46:03 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:31:55 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;
+	table->simulation = true;
 	return (pthread_mutex_init(&table->monitoring, NULL) == 0);
 }
 

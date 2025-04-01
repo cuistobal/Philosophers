@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 14:16:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:35:00 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 static bool	dead_or_full(t_phil *philo, int *full, int end)
 {
 	if (you_are_dead(philo))
+	{
+		status(philo, DIED);
 		return (false);
+	}
 	if (end >= 0)
 	{
 		if (philo->stats[EATEN] == end)
@@ -37,27 +40,21 @@ void	*alive_and_not_full(void *data)
 	table = (t_tabl *)data;
 	pthread_mutex_lock(&table->monitoring);
 	end = table->params[DIE];
-	pthread_mutex_unlock(&table->monitoring);
 	while (1)
 	{
 		index = 0;
-		pthread_mutex_lock(&table->monitoring);
 		while (index < table->params[CNT])
 		{
 			if (!dead_or_full(&table->philo[index], &full, end))
-			{
-				status(&table->philo[index], DIED);
-				pthread_mutex_unlock(&table->monitoring);
-				return ((void *)false);
-			}
+		//	{
+		//		table->simulation = false;
+				break ;
+		//	}
 			index++;
 		}
 		if (full == table->params[CNT])
-		{
-			pthread_mutex_unlock(&table->monitoring);
 			break ;
-		}
-		pthread_mutex_unlock(&table->monitoring);
 	}
-	return ((void *)true);
+	pthread_mutex_unlock(&table->monitoring);
+	return (NULL);
 }

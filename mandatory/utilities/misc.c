@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:00:42 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:33:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 //
 void	status(t_phil *philo, char *status)
 {
-
-	pthread_mutex_lock(&philo->write);
-
-//	printf("%ld	&&	%ld	->	", get_timestamp(), philo->stats[START]);
-	
+	pthread_mutex_lock(&philo->write);	
 	printf("%ld %ld %s", get_timestamp() - philo->stats[START], philo->stats[POSTN], status);
 	pthread_mutex_unlock(&philo->write);
 }

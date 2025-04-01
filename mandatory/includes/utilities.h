@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 13:26:38 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:29:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ inline static bool	you_are_dead(t_phil *philo)
 	pthread_mutex_lock(&philo->clock);
 	last_meal = philo->stats[LMEAL];
 	die = philo->table->params[DIE];
-
-//	printf("%ld	for	%ld\n", get_timestamp() - last_meal, die);
-
 	pthread_mutex_unlock(&philo->clock);
 	return ((get_timestamp() - last_meal) >= die);
 }
