@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 11:58:28 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:03:48 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static bool	dead_or_full(t_phil *philo, int *full, int end)
 		return (false);
 	if (end >= 0)
 	{
+		printf("%ld / %d\n", philo->stats[EATEN], end);
 		if (philo->stats[EATEN] == end)
 			full++;
 	}

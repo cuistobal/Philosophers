@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 12:04:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:46:03 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //to vacation in Malta).
 static bool	i_wanna_fork_on_the_table(t_tabl *table)
 {
-	int				index;
+	int	index;
 
 	index = 0;
 	table->fork = malloc(sizeof(pthread_mutex_t) * table->params[CNT]);
@@ -38,6 +38,7 @@ static bool a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[POSTN] = pos;
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
+	table->philo[pos - 1].stats[START] = 0;
 	table->philo[pos - 1].lfork = &table->fork[(pos + pcount - 1) % pcount];
 	table->philo[pos - 1].rfork = &table->fork[pos % pcount];
 	if (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) != 0)
@@ -89,9 +90,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;
-	if (pthread_mutex_init(&table->monitoring, NULL) != 0)
-		return (false);
-	return (true);
+	return (pthread_mutex_init(&table->monitoring, NULL) == 0);
 }
 
 //

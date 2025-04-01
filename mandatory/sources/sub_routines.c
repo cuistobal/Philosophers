@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 12:01:01 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:15:03 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	sleeping(t_phil *philosopher)
 	sleep_time = philosopher->table->params[SLP];
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, SLEP);
+
+//	printf("%ld	->	%ld\n", sleep_time, sleep_time * MSEC);
+
 	usleep(sleep_time * MSEC);
 }
 
@@ -35,11 +38,20 @@ void	eating(t_phil *philosopher)
 	status(philosopher, FORK);
 	pthread_mutex_lock(&philosopher->clock);
 	meal_time = philosopher->table->params[EAT];
+
+//	printf("Old Timer = %ld	", philosopher->stats[LMEAL]);
+
 	philosopher->stats[LMEAL] = get_timestamp();
+
+//	printf("	->	New Timer = %ld\n", philosopher->stats[LMEAL]);
+	
 	philosopher->stats[EATEN]++;
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, EATS);
 	usleep(meal_time * MSEC);
+	
+//	printf("%ld	->	%ld\n",	meal_time, meal_time * MSEC);
+	
 	pthread_mutex_unlock(philosopher->lfork);
 	pthread_mutex_unlock(philosopher->rfork);
 }
@@ -49,5 +61,5 @@ void	eating(t_phil *philosopher)
 void	thinking(t_phil	*philosopher)
 {	
 	status(philosopher, THNK);
-	usleep(100 * MSEC);
+//	usleep(100 * MSEC);
 }

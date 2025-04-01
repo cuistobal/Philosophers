@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 10:02:30 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:02:03 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	dinner_time(t_tabl *table)
 	pthread_mutex_lock(&table->monitoring);
 	table->params[STS] = get_timestamp();
 	pthread_mutex_unlock(&table->monitoring);
-	//alive_and_not_full(table);
+	alive_and_not_full(table);
 	index = 0;
 	while (index < table->params[CNT])
 	{
