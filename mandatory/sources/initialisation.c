@@ -81,8 +81,8 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	{
 		temp = my_atoi(argv[index]);
 		if (temp < 0)
-			return (cleanup(table, ATOI, argv[index]));
-		table->params[index] = my_atoi(argv[index]);
+			return (cleanup(table, ATOI, temp));
+		table->params[index] = temp;
 		index++;
 	}
 	table->params[STS] = -1;
