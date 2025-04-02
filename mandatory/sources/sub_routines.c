@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 15:22:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:12:01 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	thinking(t_phil	*philosopher)
 	long	think_time;
 
 	pthread_mutex_lock(&philosopher->clock);
-	think_time = my_min(philosopher->table->params[EAT], philosopher->table->params[SLP]);
+	think_time = my_min(philosopher->table->params[EAT], philosopher->table->params[SLP]) / 2;
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, THNK);
 	usleep(think_time * MSEC);

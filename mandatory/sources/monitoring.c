@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/02 09:35:55 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/02 10:12:39 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ void	*alive_and_not_full(void *data)
 		while (index < table->params[CNT])
 		{
             if (full == table->params[CNT])
-            {
-                printf("Everybody iss full.\n");
                 break ;
-            }
             /*
 			if (!dead_or_full(&table->philo[index], &full, end) || full == table->params[CNT])
 			{
@@ -61,7 +58,7 @@ void	*alive_and_not_full(void *data)
             if (you_are_dead(&table->philo[index]))
             {
 				table->simulation = false;
-                status(&table->philo[index], DIED);
+            //    status(&table->philo[index], DIED);
                 break ;
             }
             if (table->philo[index].stats[EATEN] == end)
