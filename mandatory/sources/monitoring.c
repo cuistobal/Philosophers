@@ -47,8 +47,11 @@ void	*alive_and_not_full(void *data)
 		while (index < table->params[CNT])
 		{
             if (full == table->params[CNT])
-                break ;
-            /*
+			{
+				status(&table->philo[index], DIED);
+				break ;
+			}
+			/*
 			if (!dead_or_full(&table->philo[index], &full, end) || full == table->params[CNT])
 			{
 				table->simulation = false;

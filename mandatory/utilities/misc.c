@@ -15,9 +15,9 @@
 //
 void	status(t_phil *philo, char *status)
 {
-	pthread_mutex_lock(&philo->write);	
+	pthread_mutex_lock(&philo->table->write);	
 	printf("%ld %ld %s", get_timestamp() - philo->stats[START], philo->stats[POSTN], status);
-	pthread_mutex_unlock(&philo->write);
+	pthread_mutex_unlock(&philo->table->write);
 }
 
 //

@@ -41,8 +41,6 @@ static bool a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[START] = 0;
 	table->philo[pos - 1].lfork = &table->fork[(pos + pcount - 1) % pcount];
 	table->philo[pos - 1].rfork = &table->fork[pos % pcount];
-	if (pthread_mutex_init(&table->philo[pos - 1].write, NULL) != 0)
-		return (false);
 	return (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) == 0); 
 }
 
@@ -91,6 +89,8 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	table->fork = NULL;
 	table->philo = NULL;
 	table->simulation = true;
+	if (pthread_mutex_init(&table->write, NULL) != 0)
+		return (false);
 	return (pthread_mutex_init(&table->monitoring, NULL) == 0);
 }
 

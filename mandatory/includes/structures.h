@@ -18,6 +18,7 @@ typedef struct table
 	pthread_t		thread;
 	pthread_mutex_t	*fork;
 	struct philo	*philo;
+	pthread_mutex_t	write;
 	pthread_mutex_t	monitoring;
 	bool			simulation;
 	long			params[TABLES];
@@ -27,7 +28,6 @@ typedef struct philo
 {
 	pthread_t		thread;
 	pthread_mutex_t	clock;
-	pthread_mutex_t	write;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
 	struct table	*table;
