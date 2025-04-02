@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 15:29:36 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/02 09:16:13 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,13 @@ void	*routine(void *philosopher)
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
 	starting_block(philo);
-	while (1)
+	while (philo->table->simulation)
 	{
+        if (you_are_dead(philo))
+        {
+            status(philo, DIED);
+            return (NULL);
+        }
 		if (even)
 			even_routine(philo);
 		else
