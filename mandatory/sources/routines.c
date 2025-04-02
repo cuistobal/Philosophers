@@ -65,11 +65,14 @@ void	*routine(void *philosopher)
 	starting_block(philo);
 	while (philo->table->simulation)
 	{
+		/*
         if (you_are_dead(philo))
         {
             status(philo, DIED);
-            return (NULL);
+			break ;
         }
+		*/
+
 		if (even)
 			even_routine(philo);
 		else

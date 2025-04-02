@@ -32,7 +32,6 @@ static bool	dead_or_full(t_phil *philo, int *full, int end)
 //This function checks my boi did not starve not got enough pasta. 
 void	*alive_and_not_full(void *data)
 {
-	int		end;
 	int		full;
 	int		index;
 	t_tabl	*table;
@@ -40,17 +39,15 @@ void	*alive_and_not_full(void *data)
 	full = 0;
 	table = (t_tabl *)data;
 	pthread_mutex_lock(&table->monitoring);
-	end = table->params[END];
-    while (table->simulation || full < table->params[CNT])
+	while (table->simulation || full < table->params[CNT])
+//	while (table->simulation)
 	{
 		index = 0;
 		while (index < table->params[CNT])
 		{
             if (full == table->params[CNT])
-			{
-				status(&table->philo[index], DIED);
 				break ;
-			}
+
 			/*
 			if (!dead_or_full(&table->philo[index], &full, end) || full == table->params[CNT])
 			{
@@ -58,13 +55,16 @@ void	*alive_and_not_full(void *data)
 				break ;
 			}
             */
-            if (you_are_dead(&table->philo[index]))
+            
+			if (you_are_dead(&table->philo[index]))
             {
+		
 				table->simulation = false;
-            //    status(&table->philo[index], DIED);
-                break ;
+			//	status(&table->philo[index], DIED);
+            
+				break ;
             }
-            if (table->philo[index].stats[EATEN] == end)
+            if (table->philo[index].stats[EATEN] == table->params[END])
                 full++;
 			index++;
 		}
