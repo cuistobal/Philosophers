@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 08:54:03 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:40:36 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // *rompiche intensifies*
 void	sleeping(t_phil *philosopher)
 {
+/*
 	long	sleep_time;
 
 	pthread_mutex_lock(&philosopher->clock);
@@ -22,6 +23,9 @@ void	sleeping(t_phil *philosopher)
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, SLEP);
 	usleep(sleep_time * MSEC);
+*/
+	status(philosopher, SLEP);
+	my_usleep(philosopher->table, philosopher->table->params[SLP]);
 }
 
 // *scronch scronch scronch*

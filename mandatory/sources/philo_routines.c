@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 09:33:33 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:42:26 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	starting_block(t_phil *philo)
 }
 
 //
-static bool	the_show_must_go_on(t_phil *philo)
+bool	the_show_must_go_on(t_phil *philo)
 {
 	bool	status;
 

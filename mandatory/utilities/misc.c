@@ -6,11 +6,22 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 08:57:07 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:43:02 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+//
+bool	the_show_must_go_on(t_phil *philo)
+{
+	bool	status;
+
+	pthread_mutex_lock(&philo->clock);
+	status = philo->table->simulation;
+	pthread_mutex_unlock(&philo->clock);
+	return (status);
+}
 
 void	*get_value(pthread_mutex_t *mutex, void *source)
 {
