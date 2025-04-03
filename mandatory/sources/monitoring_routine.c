@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 10:00:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:23:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ bool	you_are_dead(t_phil *philo)
 	long	die;
 	long	last_meal;
 
-	pthread_mutex_lock(&philo->clock);
+	pthread_mutex_lock(&philo->table->monitoring);
+//	pthread_mutex_lock(&philo->clock);
 	last_meal = philo->stats[LMEAL];
 	die = philo->table->params[DIE];
-	pthread_mutex_unlock(&philo->clock);
+//	pthread_mutex_unlock(&philo->clock);
+	pthread_mutex_unlock(&philo->table->monitoring);
+//	printf("%ld -> %ld\n", get_timestamp() - last_meal, die);
 	return ((get_timestamp() - last_meal) >= die);
 }
 
@@ -54,38 +57,20 @@ void	*monitoring(void *data)
 
 	table = (t_tabl *)data;
 	while (table->simulation)
-//	while (1)
 	{
 		full = 0;
 		index = 0;
 		while (index < table->params[CNT])
 		{
 			if (you_are_dead(&table->philo[index]))
-				return (stop_simulation(table, &table->philo[index], true));	
-			/*
-			{
-				pthread_mutex_lock(&table->monitoring);
-				table->simulation = false;
-				status(&table->philo[index], DIED);	
-				pthread_mutex_unlock(&table->monitoring);	
-				break ;
-			}
-			*/
+				return (stop_simulation(table, &table->philo[index], true));
 			if (you_are_full(table, &table->philo[index]))
 				full++;
 			index++;
 		}
         if (full == table->params[CNT])	
-			return (stop_simulation(table, &table->philo[index], false));	
-		/*
-		{
-			pthread_mutex_lock(&table->monitoring);
-			table->simulation = false;
-			pthread_mutex_unlock(&table->monitoring);	
-			break ;
-		}
-		*/
-		usleep(MSEC);
+			return (stop_simulation(table, &table->philo[index], false));
+		usleep(9 * MSEC);
 	}
 	return (NULL);
 }

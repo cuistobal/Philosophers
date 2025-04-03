@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 10:42:26 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:01:07 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,6 @@ static void	starting_block(t_phil *philo)
 	pthread_mutex_unlock(&philo->clock);
 }
 
-//
-bool	the_show_must_go_on(t_phil *philo)
-{
-	bool	status;
-
-//	pthread_mutex_lock(&philo->table->monitoring);
-	pthread_mutex_lock(&philo->clock);
-	status = philo->table->simulation;
-//	pthread_mutex_unlock(&philo->table->monitoring);
-	pthread_mutex_unlock(&philo->clock);
-	return (status);
-}
 //This is an accurate description of an hungover philosopher's routine. At 
 //first, they try to grab the fork on their left. If it fails, they pretend life
 // and start regretting all this liquor ingested last night. Once they grab the
@@ -82,6 +70,5 @@ void	*routine(void *philosopher)
 		else
 			uneven_routine(philo);
 	}
-	printf("c cassehehe\n");
 	return (NULL);
 }

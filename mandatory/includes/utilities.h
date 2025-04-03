@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 08:58:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:54:48 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ int		my_atoi(char *argv);
 
 bool	cleanup(t_tabl *table, ...);
 
+bool	the_show_must_go_on(t_phil *philo);
+void	my_usleep(t_phil *philo, long sleep, long start);
 long	get_timestamp(void);
-
 void	status(t_phil *philosopher, char *message);
-
-void	set_value(pthread_mutex_t *mutex, void *value, void *new, size_t size);
 void	*get_value(pthread_mutex_t *mutex, void *value);
 
 bool	you_are_dead(t_phil *philo);
