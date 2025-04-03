@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routines.c                                         :+:      :+:    :+:   */
+/*   philo_routines.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/02 09:16:13 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/03 09:33:33 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	is_even(t_phil *philo)
 	return (position & 1);
 }
 
-//Recursive spinlock function to synchronise the threads start.
+//Spinlock function to synchronise the threads start.
 static void	starting_block(t_phil *philo)
 {
 	pthread_mutex_lock(&philo->clock);
@@ -50,6 +50,18 @@ static void	starting_block(t_phil *philo)
 	pthread_mutex_unlock(&philo->clock);
 }
 
+//
+static bool	the_show_must_go_on(t_phil *philo)
+{
+	bool	status;
+
+//	pthread_mutex_lock(&philo->table->monitoring);
+	pthread_mutex_lock(&philo->clock);
+	status = philo->table->simulation;
+//	pthread_mutex_unlock(&philo->table->monitoring);
+	pthread_mutex_unlock(&philo->clock);
+	return (status);
+}
 //This is an accurate description of an hungover philosopher's routine. At 
 //first, they try to grab the fork on their left. If it fails, they pretend life
 // and start regretting all this liquor ingested last night. Once they grab the
@@ -63,20 +75,13 @@ void	*routine(void *philosopher)
 	philo = (t_phil *)philosopher;
 	even = is_even(philo);
 	starting_block(philo);
-	while (philo->table->simulation)
+	while (the_show_must_go_on(philo))
 	{
-		/*
-        if (you_are_dead(philo))
-        {
-            status(philo, DIED);
-			break ;
-        }
-		*/
-
 		if (even)
 			even_routine(philo);
 		else
 			uneven_routine(philo);
 	}
+	printf("c cassehehe\n");
 	return (NULL);
 }

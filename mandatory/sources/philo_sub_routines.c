@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sub_routines.c                                     :+:      :+:    :+:   */
+/*   philo_sub_routines.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/02 10:12:01 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/03 08:54:03 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@ void	eating(t_phil *philosopher)
 	usleep(meal_time * MSEC);
 	pthread_mutex_unlock(philosopher->lfork);
 	pthread_mutex_unlock(philosopher->rfork);
-}
-
-static long	my_min(long a, long b)
-{
-	if (a > b)
-		return (a);
-	return (b);
 }
 
 //The philos are right handed if an even number sits around the table. They 

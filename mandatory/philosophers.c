@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 08:22:25 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 09:06:13 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ static void	set_monitoring(t_tabl *table)
 {
 	pthread_mutex_lock(&table->monitoring);
 	table->params[STS] = get_timestamp();
-	pthread_create(&table->thread, NULL, alive_and_not_full, table);
+	pthread_create(&table->thread, NULL, monitoring, table);
 	pthread_detach(table->thread);
 	pthread_mutex_unlock(&table->monitoring);
-	
 }
 
 //

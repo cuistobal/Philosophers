@@ -6,11 +6,21 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:57:07 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	*get_value(pthread_mutex_t *mutex, void *source)
+{
+	void	*value;
+
+	pthread_mutex_lock(mutex);
+	value = source;
+	pthread_mutex_unlock(mutex);
+	return (value);
+}
 
 //
 void	status(t_phil *philo, char *status)

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/01 14:19:33 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 09:11:20 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@
 //Misc
 # define SUCCESS "Greaaaaat suucceeeeeees.\n"
 # define MSEC 1000
+# define TCAP 10000
+
 #endif
