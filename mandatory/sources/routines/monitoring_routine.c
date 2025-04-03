@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 13:42:41 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:50:38 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*monitoring(void *data)
 		}
         if (full == table->params[CNT])	
 			return (stop_simulation(table, &table->philo[index], false));
-		usleep(MSEC);
+		usleep(MONITORING_DELAY * MSEC);
 	}
 	return (NULL);
 }

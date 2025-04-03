@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 12:38:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:16:19 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,16 @@ static bool	is_even(t_phil *philo)
 //Spinlock function to synchronise the threads start.
 static void	starting_block(t_phil *philo)
 {
-	pthread_mutex_lock(&philo->clock);
+//	pthread_mutex_lock(&philo->clock);
 	pthread_mutex_lock(&philo->table->monitoring);
 	while (philo->table->params[STS] == -1)
 	{
 		pthread_mutex_unlock(&philo->table->monitoring);
-		usleep(10);
+		usleep(STARTING_BLOCK);
 		pthread_mutex_lock(&philo->table->monitoring);
 	}
 	pthread_mutex_unlock(&philo->table->monitoring);
+	pthread_mutex_lock(&philo->clock);
 	philo->stats[START] = philo->table->params[STS];
 	philo->stats[LMEAL] = philo->stats[START];
 	pthread_mutex_unlock(&philo->clock);

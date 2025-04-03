@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 09:11:20 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:50:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@
 # define SUCCESS "Greaaaaat suucceeeeeees.\n"
 # define MSEC 1000
 # define TCAP 10000
+# define STARTING_BLOCK 10
+# define MONITORING_DELAY 10
 
 #endif
