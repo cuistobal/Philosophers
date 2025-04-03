@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 12:37:24 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:41:09 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 //initialisation.c
 bool	init_table(t_tabl **table, char **argv);
-
-//monitoring.c
-//void	*alive_and_not_full(void *data);
-
 
 //monitoring_routine.c
 bool	you_are_dead(t_phil *philo);

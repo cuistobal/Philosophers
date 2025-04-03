@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 13:37:43 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:48:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ bool	the_show_must_go_on(t_phil *philo)
 void	my_usleep(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
-	
+
 	while (the_show_must_go_on(philo))
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
 			break ;
-		else 
+		else
 		{
 			if (remainder > TCAP / MSEC)
 				usleep(TCAP);
@@ -57,8 +57,9 @@ void	*get_value(pthread_mutex_t *mutex, void *source)
 //
 void	status(t_phil *philo, char *status)
 {
-	pthread_mutex_lock(&philo->table->write);	
-	printf("%ld %ld %s", get_timestamp() - philo->stats[START], philo->stats[POSTN], status);
+	pthread_mutex_lock(&philo->table->write);
+	printf("%ld %ld %s", get_timestamp() - philo->stats[START], \
+			philo->stats[POSTN], status);
 	pthread_mutex_unlock(&philo->table->write);
 }
 

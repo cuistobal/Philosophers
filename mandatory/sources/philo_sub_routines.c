@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 14:34:10 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:46:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ void	sleeping(t_phil *philosopher)
 	if (the_show_must_go_on(philosopher))
 	{
 		status(philosopher, SLEP);
-		my_usleep(philosopher, philosopher->table->params[SLP], get_timestamp());
+		my_usleep(philosopher, philosopher->table->params[SLP], \
+				get_timestamp());
 	}
 }
 
-static bool	append_stats(t_phil *philosopher)
+//yummy yummy, pasta al pastrami
+static bool	scronch_scronch(t_phil *philosopher, bool even)
 {
 	long	meal_start;
-	
+
 	pthread_mutex_lock(&philosopher->clock);
 	if (!the_show_must_go_on(philosopher))
 		return (pthread_mutex_unlock(&philosopher->clock), false);
@@ -35,16 +37,6 @@ static bool	append_stats(t_phil *philosopher)
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, EATS);
 	my_usleep(philosopher, philosopher->table->params[EAT], meal_start);
-	return (true);
-}
-
-//yummy yummy, pasta al pastrami
-static bool	scronch_scronch(t_phil *philosopher, bool even)
-{
-	if (!append_stats(philosopher))
-		return (false);
-	if (!the_show_must_go_on(philosopher))
-		return (false);
 	if (even)
 	{
 		pthread_mutex_unlock(philosopher->lfork);
@@ -64,12 +56,10 @@ static bool	pick_forks(t_phil *philosopher, bool even)
 	if (even)
 	{
 		pthread_mutex_lock(philosopher->lfork);
-	//	status(philosopher, FORK);
 		if (!the_show_must_go_on(philosopher))
 			return (pthread_mutex_unlock(philosopher->lfork), false);
 		status(philosopher, FORK);
 		pthread_mutex_lock(philosopher->rfork);
-	//	status(philosopher, FORK);
 		if (!the_show_must_go_on(philosopher))
 			return (pthread_mutex_unlock(philosopher->rfork), false);
 		status(philosopher, FORK);
@@ -77,15 +67,13 @@ static bool	pick_forks(t_phil *philosopher, bool even)
 	else
 	{
 		pthread_mutex_lock(philosopher->rfork);
-//		status(philosopher, FORK);
 		if (!the_show_must_go_on(philosopher))
 			return (pthread_mutex_unlock(philosopher->rfork), false);
 		status(philosopher, FORK);
 		pthread_mutex_lock(philosopher->lfork);
-//		status(philosopher, FORK);
 		if (!the_show_must_go_on(philosopher))
 			return (pthread_mutex_unlock(philosopher->lfork), false);
-//		status(philosopher, FORK);
+		status(philosopher, FORK);
 	}
 	return (true);
 }
@@ -97,7 +85,8 @@ void	eating(t_phil *philosopher, bool even)
 	{
 		if (!pick_forks(philosopher, even))
 			return ;
-		if (the_show_must_go_on(philosopher) && scronch_scronch(philosopher, even))
+		if (the_show_must_go_on(philosopher) && \
+				scronch_scronch(philosopher, even))
 			return ;
 		pthread_mutex_unlock(philosopher->lfork);
 		pthread_mutex_unlock(philosopher->rfork);

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 09:06:13 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:40:46 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	init_threads(t_tabl *table)
 	t_phil	*philo;
 
 	index = 0;
-	philo = table->philo;	
+	philo = table->philo;
 	while (index < table->params[CNT])
 	{
 		if (pthread_create(&philo[index].thread, NULL, routine, \
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv))
 		{
-			init_threads(table);	
+			init_threads(table);
 			set_monitoring(table);
 			join_threads(table);
 			return (cleanup(table, NULL));
