@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:22:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:28:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 // *rompiche intensifies*
 void	sleeping(t_phil *philosopher)
 {
-/*
-	long	sleep_time;
-
-	pthread_mutex_lock(&philosopher->clock);
-	sleep_time = philosopher->table->params[SLP];
-	pthread_mutex_unlock(&philosopher->clock);
-	status(philosopher, SLEP);
-	usleep(sleep_time * MSEC);
-*/
 	if (the_show_must_go_on(philosopher))
 	{
 		status(philosopher, SLEP);
@@ -60,17 +51,11 @@ void	eating(t_phil *philosopher)
 //become left handed otherwise.
 void	thinking(t_phil	*philosopher)
 {
-//	long	think_time;
-//	t_tabl	*table;
-
-//	table = philosopher->table;
 	if (the_show_must_go_on(philosopher))
 	{
 		pthread_mutex_lock(&philosopher->clock);
-//		think_time = my_min(table->params[EAT], table->params[SLP]) / 2;
 		pthread_mutex_unlock(&philosopher->clock);
 		status(philosopher, THNK);
-//		my_usleep(philosopher, think_time, get_timestamp());
-		my_usleep(philosopher, 0, get_timestamp());
+		my_usleep(philosopher, 1, get_timestamp());
 	}
 }

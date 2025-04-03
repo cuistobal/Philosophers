@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/02 09:30:29 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/03 11:40:10 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
+	if (argv[5] == NULL)
+		table->params[END] = -1;
 	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;
