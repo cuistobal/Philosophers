@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 12:37:12 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:17:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,40 @@ void	sleeping(t_phil *philosopher)
 	}
 }
 
+/*
+static bool	scrounch_scrounch()
+{
+
+	return (true);
+}*/
+
+static bool	pick_forks(t_phil *philosopher, bool even)
+{
+	if (even)
+	{
+		pthread_mutex_lock(philosopher->lfork);
+		status(philosopher, FORK);
+		if (!the_show_must_go_on(philosopher))
+			return (pthread_mutex_unlock(philosopher->lfork), false);
+		pthread_mutex_lock(philosopher->rfork);
+		status(philosopher, FORK);
+		if (!the_show_must_go_on(philosopher))
+			return (pthread_mutex_unlock(philosopher->rfork), false);
+	}
+	else
+	{
+		pthread_mutex_lock(philosopher->rfork);
+		status(philosopher, FORK);
+		if (!the_show_must_go_on(philosopher))
+			return (pthread_mutex_unlock(philosopher->rfork), false);
+		pthread_mutex_lock(philosopher->lfork);
+		status(philosopher, FORK);
+		if (!the_show_must_go_on(philosopher))
+			return (pthread_mutex_unlock(philosopher->lfork), false);
+	}
+	return (true);
+}
+
 // *scronch scronch scronch*
 void	eating(t_phil *philosopher, bool even)
 {
@@ -29,29 +63,18 @@ void	eating(t_phil *philosopher, bool even)
 
 	if (the_show_must_go_on(philosopher))
 	{
-		if (even)
-		{
-			pthread_mutex_lock(philosopher->lfork);
-			status(philosopher, FORK);
-			pthread_mutex_lock(philosopher->rfork);
-			status(philosopher, FORK);
+		if (!pick_forks(philosopher, even))
+			return ;
+		if (the_show_must_go_on(philosopher))
+		{	
+			pthread_mutex_lock(&philosopher->clock);
+			philosopher->stats[LMEAL] = get_timestamp();
+			meal_start = philosopher->stats[LMEAL];
+			philosopher->stats[EATEN]++;
+			pthread_mutex_unlock(&philosopher->clock);
+			status(philosopher, EATS);
+			my_usleep(philosopher, philosopher->table->params[EAT], meal_start);
 		}
-		else
-		{
-			pthread_mutex_lock(philosopher->rfork);
-			status(philosopher, FORK);
-			pthread_mutex_lock(philosopher->lfork);
-			status(philosopher, FORK);
-		}
-
-		pthread_mutex_lock(&philosopher->clock);
-		philosopher->stats[LMEAL] = get_timestamp();
-		meal_start = philosopher->stats[LMEAL];
-		philosopher->stats[EATEN]++;
-		pthread_mutex_unlock(&philosopher->clock);
-
-		status(philosopher, EATS);
-		my_usleep(philosopher, philosopher->table->params[EAT], meal_start);
 		pthread_mutex_unlock(philosopher->lfork);
 		pthread_mutex_unlock(philosopher->rfork);
 	}
