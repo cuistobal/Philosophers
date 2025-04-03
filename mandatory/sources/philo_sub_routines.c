@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 13:46:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:34:10 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sleeping(t_phil *philosopher)
 	}
 }
 
-static bool	append_stats(t_phil *philosopher, bool even)
+static bool	append_stats(t_phil *philosopher)
 {
 	long	meal_start;
 	
@@ -41,7 +41,7 @@ static bool	append_stats(t_phil *philosopher, bool even)
 //yummy yummy, pasta al pastrami
 static bool	scronch_scronch(t_phil *philosopher, bool even)
 {
-	if (!append_stats(philosopher, even))
+	if (!append_stats(philosopher))
 		return (false);
 	if (!the_show_must_go_on(philosopher))
 		return (false);
