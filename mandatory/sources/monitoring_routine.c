@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 12:46:46 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:42:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ bool	you_are_full(t_tabl *table, t_phil *philo)
 
 	if (table->params[END] >= 0)
 	{
-	//	pthread_mutex_lock(&table->monitoring);
 		pthread_mutex_lock(&philo->clock);
 		eaten = philo->stats[EATEN];
-	//	pthread_mutex_unlock(&table->monitoring);
 		pthread_mutex_unlock(&philo->clock);
 		return (eaten >= table->params[END]);
 	}
@@ -54,6 +52,7 @@ void	*stop_simulation(t_tabl *table, t_phil *philo, bool flag)
 	pthread_mutex_unlock(&table->monitoring);	
 	return (NULL);
 }
+
 //
 void	*monitoring(void *data)
 {
