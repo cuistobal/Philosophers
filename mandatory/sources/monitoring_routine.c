@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:40:27 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:46:46 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ bool	you_are_dead(t_phil *philo)
 	long	die;
 	long	last_meal;
 
-	pthread_mutex_lock(&philo->table->monitoring);
+//	pthread_mutex_lock(&philo->table->monitoring);
+	pthread_mutex_lock(&philo->clock);
 	last_meal = philo->stats[LMEAL];
+//	die = philo->table->params[DIE];
+	pthread_mutex_unlock(&philo->clock);
 	die = philo->table->params[DIE];
-	pthread_mutex_unlock(&philo->table->monitoring);
+//	pthread_mutex_unlock(&philo->table->monitoring);
 	return ((get_timestamp() - last_meal) >= die);
 }
 
@@ -32,9 +35,11 @@ bool	you_are_full(t_tabl *table, t_phil *philo)
 
 	if (table->params[END] >= 0)
 	{
-		pthread_mutex_lock(&table->monitoring);
+	//	pthread_mutex_lock(&table->monitoring);
+		pthread_mutex_lock(&philo->clock);
 		eaten = philo->stats[EATEN];
-		pthread_mutex_unlock(&table->monitoring);
+	//	pthread_mutex_unlock(&table->monitoring);
+		pthread_mutex_unlock(&philo->clock);
 		return (eaten >= table->params[END]);
 	}
 	return (false);

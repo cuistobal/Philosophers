@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:28:45 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:37:12 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,26 @@ void	sleeping(t_phil *philosopher)
 }
 
 // *scronch scronch scronch*
-void	eating(t_phil *philosopher)
+void	eating(t_phil *philosopher, bool even)
 {
 	long	meal_start;
 
 	if (the_show_must_go_on(philosopher))
 	{
-		pthread_mutex_lock(philosopher->lfork);
-		status(philosopher, FORK);
-		pthread_mutex_lock(philosopher->rfork);
-		status(philosopher, FORK);
+		if (even)
+		{
+			pthread_mutex_lock(philosopher->lfork);
+			status(philosopher, FORK);
+			pthread_mutex_lock(philosopher->rfork);
+			status(philosopher, FORK);
+		}
+		else
+		{
+			pthread_mutex_lock(philosopher->rfork);
+			status(philosopher, FORK);
+			pthread_mutex_lock(philosopher->lfork);
+			status(philosopher, FORK);
+		}
 
 		pthread_mutex_lock(&philosopher->clock);
 		philosopher->stats[LMEAL] = get_timestamp();

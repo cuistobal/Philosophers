@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 09:05:21 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:37:24 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*monitoring(void *data);
 void	*routine(void *arg);
 
 //philo_sub_routines.c
-void	eating(t_phil *philosopher);
+void	eating(t_phil *philosopher, bool even);
 void	sleeping(t_phil *philosopher);
 void	thinking(t_phil *philosopher);
 

@@ -6,25 +6,25 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:51:34 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:38:23 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 //
-static void	even_routine(t_phil *philo)
+static void	even_routine(t_phil *philo, bool even)
 {
-	eating(philo);
+	eating(philo, even);
 	sleeping(philo);
 	thinking(philo);
 }
 
 //
-static void	uneven_routine(t_phil *philo)
+static void	uneven_routine(t_phil *philo, bool even)
 {
 	thinking(philo);
-	eating(philo);
+	eating(philo, even);
 	sleeping(philo);
 }
 
@@ -47,9 +47,7 @@ static void	starting_block(t_phil *philo)
 	while (philo->table->params[STS] == -1)
 	{
 		pthread_mutex_unlock(&philo->table->monitoring);
-//		pthread_mutex_unlock(&philo->clock);
 		usleep(10);
-//		pthread_mutex_lock(&philo->clock);
 		pthread_mutex_lock(&philo->table->monitoring);
 	}
 	pthread_mutex_unlock(&philo->table->monitoring);
@@ -74,9 +72,9 @@ void	*routine(void *philosopher)
 	while (the_show_must_go_on(philo))
 	{
 		if (even)
-			even_routine(philo);
+			even_routine(philo, even);
 		else
-			uneven_routine(philo);
+			uneven_routine(philo, even);
 	}
 	return (NULL);
 }

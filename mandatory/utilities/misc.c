@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:08:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:28:33 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ bool	the_show_must_go_on(t_phil *philo)
 {
 	bool	status;
 
-	pthread_mutex_lock(&philo->clock);
+//	pthread_mutex_lock(&philo->clock);
+	pthread_mutex_lock(&philo->table->monitoring);
 	status = philo->table->simulation;
-	pthread_mutex_unlock(&philo->clock);
+//	pthread_mutex_unlock(&philo->clock);
+	pthread_mutex_unlock(&philo->table->monitoring);
 	return (status);
 }
 
