@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 10:54:48 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:37:43 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int		my_atoi(char *argv);
 
-bool	cleanup(t_tabl *table, ...);
+//bool	cleanup(t_tabl *table, ...);
+bool	cleanup(t_tabl *table, char *message);
 
 bool	the_show_must_go_on(t_phil *philo);
 void	my_usleep(t_phil *philo, long sleep, long start);

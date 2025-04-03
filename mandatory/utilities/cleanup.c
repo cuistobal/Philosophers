@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/03/29 12:07:23 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:37:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,10 @@ static bool	free_table(t_tabl *table)
 	return (false);
 }
 
-//Include va_args here
-bool	cleanup(t_tabl *table, ...)
+//
+bool	cleanup(t_tabl *table, char *message)
 {
-	char	*str;
-	va_list	args;
-
-	va_start(args, table);
-	str = va_arg(args, char *);
-	while (str)
-	{
-		printf("%s ", str);
-		str = va_arg(args, char *);
-	}
-	printf("\n");
-	va_end(args);
+	if (message)
+		printf("%s\n", message);
 	return (free_table(table));
 }

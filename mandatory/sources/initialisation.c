@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 11:40:10 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:38:20 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	{
 		temp = my_atoi(argv[index]);
 		if (temp < 0)
-			return (cleanup(table, ATOI, temp));
+			return (cleanup(table, ATOI));
 		table->params[index] = temp;
 		index++;
 	}
