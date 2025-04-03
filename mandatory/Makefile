@@ -6,9 +6,9 @@ CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)
 INCLUDES = includes
 
 SOURCES = \
-	sources/routines.c \
-	sources/sub_routines.c \
-	sources/monitoring.c \
+	sources/philo_routines.c \
+	sources/philo_sub_routines.c \
+	sources/monitoring_routine.c \
 	sources/initialisation.c \
 	utilities/misc.c \
 	utilities/atoi.c \

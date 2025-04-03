@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitoring.c                                       :+:      :+:    :+:   */
+/*   monitoring_routine.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/02 10:12:39 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/03 08:24:13 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-/*
-static bool	dead_or_full(t_phil *philo, int *full, int end)
-{
-	if (you_are_dead(philo))
-	{
-		status(philo, DIED);
-		return (false);
-	}
-	if (end >= 0)
-	{
-		if (philo->stats[EATEN] == end)
-			(*full)++;
-	}
-	return (true);
-}
-*/
 
 //This function checks my boi did not starve not got enough pasta. 
 void	*alive_and_not_full(void *data)
