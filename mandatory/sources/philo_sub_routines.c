@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/07 18:15:55 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:21:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void	sleeping(t_phil *philosopher)
 	}
 }
 
+static bool release_forks(t_phil *philosopher, bool even)
+{
+	if (even)
+	{
+		pthread_mutex_unlock(philosopher->lfork);
+		pthread_mutex_unlock(philosopher->rfork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philosopher->rfork);
+		pthread_mutex_unlock(philosopher->lfork);
+	}
+	return (true);
+}
+
 //yummy yummy, pasta al pastrami
 static bool	scronch_scronch(t_phil *philosopher, bool even)
 {
@@ -37,6 +52,8 @@ static bool	scronch_scronch(t_phil *philosopher, bool even)
 	pthread_mutex_unlock(&philosopher->clock);
 	status(philosopher, EATS);
 	my_usleep(philosopher, philosopher->table->params[EAT], meal_start);
+	return (release_forks(philosopher, even));	
+	/*
 	if (even)
 	{
 		pthread_mutex_unlock(philosopher->lfork);
@@ -48,6 +65,7 @@ static bool	scronch_scronch(t_phil *philosopher, bool even)
 		pthread_mutex_unlock(philosopher->lfork);
 	}
 	return (true);
+	*/
 }
 
 //Ma forky boiiii
@@ -88,8 +106,9 @@ void	eating(t_phil *philosopher, bool even)
 		if (the_show_must_go_on(philosopher) && \
 				scronch_scronch(philosopher, even))
 			return ;
-		pthread_mutex_unlock(philosopher->lfork);
-		pthread_mutex_unlock(philosopher->rfork);
+		release_forks(philosopher, even);		
+	//	pthread_mutex_unlock(philosopher->lfork);
+	//	pthread_mutex_unlock(philosopher->rfork);
 	}
 }
 
@@ -99,8 +118,8 @@ void	thinking(t_phil	*philosopher)
 {
 	if (the_show_must_go_on(philosopher))
 	{
-		pthread_mutex_lock(&philosopher->clock);
-		pthread_mutex_unlock(&philosopher->clock);
+	//	pthread_mutex_lock(&philosopher->clock);
+	//	pthread_mutex_unlock(&philosopher->clock);
 		status(philosopher, THNK);
 		my_usleep(philosopher, 1, get_timestamp());
 	}
