@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/07 18:21:50 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:35:15 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static bool	pick_forks(t_phil *philosopher, bool even)
 		status(philosopher, FORK);
 		pthread_mutex_lock(philosopher->rfork);
 		if (!the_show_must_go_on(philosopher))
-			return (pthread_mutex_unlock(philosopher->rfork), false);
+			return (release_forks(philosopher, even), false);
 		status(philosopher, FORK);
 	}
 	else
@@ -90,7 +90,7 @@ static bool	pick_forks(t_phil *philosopher, bool even)
 		status(philosopher, FORK);
 		pthread_mutex_lock(philosopher->lfork);
 		if (!the_show_must_go_on(philosopher))
-			return (pthread_mutex_unlock(philosopher->lfork), false);
+			return (release_forks(philosopher, even), false);
 		status(philosopher, FORK);
 	}
 	return (true);
