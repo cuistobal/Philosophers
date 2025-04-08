@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/08 11:11:04 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:27:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ void	sleeping(t_phil *philosopher)
 		status(philosopher, SLEP);
 		my_usleep(philosopher, philosopher->table->params[SLP], \
 				get_timestamp());
-	}
-}
-
-// *scronch scronch scronch*
-void	eating(t_phil *philosopher, bool even)
-{
-	if (the_show_must_go_on(philosopher))
-	{
-		if (!pick_forks(philosopher, even))
-			return ;
-		if (the_show_must_go_on(philosopher) && \
-				scronch_scronch(philosopher, even))
-			return ;
-		release_forks(philosopher, even);		
 	}
 }
 

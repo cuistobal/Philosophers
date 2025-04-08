@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:46:15 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/08 09:47:06 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:28:26 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ void	eating(t_phil *philosopher, bool even)
 	{
 		if (!pick_forks(philosopher, even))
 			return ;
-		if (the_show_must_go_on(philosopher) && \
-				scronch_scronch(philosopher, even))
-			return ;
-		release_forks(philosopher, even);
+	/*	if (the_show_must_go_on(philosopher) && \
+				scronch_scronch(philosopher, even)) */
+		if (!the_show_must_go_on(philosopher) || \
+				!scronch_scronch(philosopher, even))
+			release_forks(philosopher, even);
 	}
 }

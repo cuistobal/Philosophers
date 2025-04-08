@@ -8,6 +8,7 @@ INCLUDES = includes
 SOURCES = \
 	sources/philo_routines.c \
 	sources/philo_sub_routines.c \
+	sources/philo_sub_routines2.c \
 	sources/monitoring_routine.c \
 	sources/initialisation.c \
 	utilities/misc.c \
