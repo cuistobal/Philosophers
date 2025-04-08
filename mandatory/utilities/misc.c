@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/07 18:16:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:03:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	my_usleep(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
 
-	if (sleep > 0 && the_show_must_go_on(philo))
+	if (the_show_must_go_on(philo))
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
