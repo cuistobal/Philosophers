@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 09:11:20 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:27:11 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 # define GLOBAL_VARIABLES_H
 
 //Table macros
-# define TABLES 6
+# define TABLES 7 
 
 # define STS 0
 # define CNT 1
 # define DIE 2
 # define EAT 3
 # define SLP 4
-# define END 5
+# define THK 5
+# define END 6
 
 //Philo macros
 # define STATS 4

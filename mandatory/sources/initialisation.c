@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 12:56:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:29:16 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	int	lfork;
 	int	rfork;
 
-	if (pos == 1 || pos == pcount)
+
+	rfork = pos - 1;
+	lfork = pos % pcount;
+	if (pos % 2)
 	{
+		rfork = pos % pcount;
 		lfork = pos - 1;
-		rfork = pcount - pos;
-	}
-	else
-	{
-		lfork = pos - 1;
-		rfork = pos;
 	}
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
@@ -100,6 +98,8 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	}
 	if (argv[5] == NULL)
 		table->params[END] = -1;
+	table->params[THK] = (table->params[DIE] -\
+			(table->params[EAT] + table->params[SLP])) / 2;
 	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;

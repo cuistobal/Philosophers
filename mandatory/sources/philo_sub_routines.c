@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 12:40:04 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:32:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void	sleeping(t_phil *philosopher)
 //become left handed otherwise.
 void	thinking(t_phil	*philosopher)
 {
-	int	think;
+	int think;
 
-	think = 1;
+	think = philosopher->table->params[THK];
 	if (the_show_must_go_on(philosopher))
 	{
 		status(philosopher, THNK);
+		if (get_timestamp() - philosopher->stats[LMEAL] < think)
+			think = 0;	
 		my_usleep(philosopher, think, get_timestamp());
 	}
 }
