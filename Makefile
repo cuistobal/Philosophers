@@ -13,6 +13,7 @@ SOURCES = \
 SOURCES_MAN = \
 	mandatory/sources/philo_routines.c \
 	mandatory/sources/philo_sub_routines.c \
+	mandatory/sources/philo_sub_routines2.c \
 	mandatory/sources/monitoring_routine.c \
 	mandatory/sources/initialisation.c \
 	mandatory/philosophers.c
