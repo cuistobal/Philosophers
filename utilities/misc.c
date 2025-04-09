@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 10:12:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:27:47 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,6 @@ void	my_usleep(t_phil *philo, long sleep, long start)
 	}
 }
 
-/*
-void	my_usleep(t_phil *philo, long sleep, long start)
-{
-	long	remainder;
-
-	if (sleep > 0 && the_show_must_go_on(philo))
-	{
-		remainder = sleep - (get_timestamp() - start);
-		if (remainder <= 0)
-			return ;
-		else
-		{
-			if (remainder > TCAP / MSEC)
-				usleep(TCAP);
-			else
-				usleep(remainder * MSEC);
-		}
-		my_usleep(philo, remainder, get_timestamp());
-	}
-}
-*/
 //
 void	*get_value(pthread_mutex_t *mutex, void *source)
 {
