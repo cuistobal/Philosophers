@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:17:24 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 12:13:27 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:00:52 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static bool	scronch_scronch(t_phil *philosopher, bool even)
 {
 	long	meal_start;
 
-	//pthread_mutex_lock(&philosopher->clock);
 	if (!the_show_must_go_on(philosopher))
-	//	return (pthread_mutex_unlock(&philosopher->clock), false);
 		return (false);
 	pthread_mutex_lock(&philosopher->clock);
 	philosopher->stats[LMEAL] = get_timestamp();

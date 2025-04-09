@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 10:55:36 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:38:30 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,11 @@ static void	uneven_routine(t_phil *philo, bool even)
 //
 static bool	is_even(t_phil *philo)
 {
-//	long	last;
 	long	position;
 
 	pthread_mutex_lock(&philo->clock);
-//	last = philo->table->params[CNT];
 	position = philo->stats[POSTN];
 	pthread_mutex_unlock(&philo->clock);
-//	if (position == last - 1)
-//		return (!(position & 1));
 	return (position & 1);
 }
 

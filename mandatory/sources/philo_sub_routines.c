@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 13:32:57 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:08:54 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	thinking(t_phil	*philosopher)
 	{
 		status(philosopher, THNK);
 		if (get_timestamp() - philosopher->stats[LMEAL] < think)
-			think = 0;	
+			think = 0;
 		my_usleep(philosopher, think, get_timestamp());
 	}
 }
