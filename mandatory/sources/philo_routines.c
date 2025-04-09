@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 18:16:12 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:37:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	is_even(t_phil *philo)
 	pthread_mutex_lock(&philo->clock);
 	position = philo->stats[POSTN];
 	pthread_mutex_unlock(&philo->clock);
-	return (!(position & 1));
+	return (position & 1);
 }
 
 //Spinlock function to synchronise the threads start.
