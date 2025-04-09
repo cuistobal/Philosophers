@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 13:29:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:30:01 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[START] = 0;
 	table->philo[pos - 1].lfork = &table->fork[lfork];
 	table->philo[pos - 1].rfork = &table->fork[rfork];
+	printf("philo %d has %d to the right and %d to the left\n", pos, rfork, lfork);
 	return (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) == 0);
 }
 
