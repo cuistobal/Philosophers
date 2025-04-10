@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/10 10:00:34 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:46:16 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	*monitoring(void *data)
 	{
 		full = 0;
 		index = 0;
+		usleep(TCAP - MSEC);
 		while (index < table->params[CNT])
 		{
 			if (you_are_dead(&table->philo[index]))
@@ -72,7 +73,6 @@ void	*monitoring(void *data)
 		}
 		if (full == table->params[CNT])
 			return (stop_simulation(table, &table->philo[index], false));
-		usleep(MSEC);
 	}
 	return (NULL);
 }
