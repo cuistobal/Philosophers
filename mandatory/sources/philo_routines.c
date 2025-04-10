@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/08 12:11:29 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:26:06 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	starting_block(t_phil *philo)
 	while (philo->table->params[STS] == -1)
 	{
 		pthread_mutex_unlock(&philo->table->monitoring);
-		usleep(10);
+		usleep(1);
 		pthread_mutex_lock(&philo->table->monitoring);
 	}
 	pthread_mutex_unlock(&philo->table->monitoring);

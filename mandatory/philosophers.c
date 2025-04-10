@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 14:40:46 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:28:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 			init_threads(table);
 			set_monitoring(table);
 			join_threads(table);
-			return (cleanup(table, NULL));
+			return (cleanup(table, SUCCESS));
 		}
 		return (cleanup(table, INIT_TABLE));
 	}
