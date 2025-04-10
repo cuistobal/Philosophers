@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 14:47:34 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:59:01 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,18 @@ static bool	i_wanna_fork_on_the_table(t_tabl *table)
 //
 static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 {
+	int	rfork;
+	int	lfork;
+
+	lfork = pos % pcount;
+	rfork = (pos + pcount - 1) % pcount;
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
-	table->philo[pos - 1].lfork = &table->fork[(pos + pcount - 1) % pcount];
-	table->philo[pos - 1].rfork = &table->fork[pos % pcount];
+	table->philo[pos - 1].rfork = &table->fork[rfork];
+	table->philo[pos - 1].lfork = &table->fork[lfork];
 	return (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) == 0);
 }
 
