@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:17:24 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/09 19:15:19 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:17:20 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,9 @@ static bool	scronch_scronch(t_phil *philosopher, bool even)
 	return (release_forks(philosopher, even));
 }
 
-/*
-static bool	pick_forks(t_phil *philosopher, bool even)
-{
-	bool	both;
-	long	start;
-	long	limit;
-
-	both = false;
-	limit = 100;
-	start = get_timestamp();	
-	pthread_mutex_lock(philosopher->lfork);
-	if (!the_show_must_go_on(philosopher))
-		return (pthread_mutex_unlock(philosopher->lfork), false);
-	if (!both)
-	{
-		pthread_mutex_unlock(philosopher->lfork);
-		return (pick_forks(philosopher, even));
-	}	
-	status(philosopher, FORK);
-//	pthread_mutex_lock(philosopher->rfork);
-	if (!the_show_must_go_on(philosopher))
-		return (release_forks(philosopher, even), false);
-	status(philosopher, FORK);
-	return (true);
-}
-*/
-
 //Ma forky boiiii
 static bool	pick_forks(t_phil *philosopher, bool even)
-{
+{	
 	if (even)
 	{
 		pthread_mutex_lock(philosopher->lfork);
