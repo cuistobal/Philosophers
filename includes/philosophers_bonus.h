@@ -4,8 +4,9 @@
 # include "standard_headaers.h"
 # include "structures_bonus.h"
 # include "global_variables.h"
-# include ""
-# include ""
-# include ""
+# include "utilities.h"
+# include "execution_bonus.h"
+
+int	main(int argc, char **argv);
 
 #endif

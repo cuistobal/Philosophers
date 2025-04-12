@@ -6,11 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 09:18:19 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:17:11 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
 //I wish you know about this video. Otherwise check it out (Italian guy goes 
 //to vacation in Malta).
@@ -34,19 +34,24 @@ static bool	i_wanna_fork_on_the_table(t_tabl *table)
 //
 static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 {
-	int	rfork;
-	int	lfork;
-
-	lfork = pos % pcount;
-	rfork = (pos + pcount - 1) % pcount;
+	table->philo[pos - 1].pid = 0;
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
-	table->philo[pos - 1].rfork = &table->fork[rfork];
-	table->philo[pos - 1].lfork = &table->fork[lfork];
-	return (pthread_mutex_init(&table->philo[pos - 1].clock, NULL) == 0);
+	sem_init();
+	return ();
+}
+
+static bool	sem_init(t_tabl *table)
+{
+	if (table)
+	{
+		table->forks = sem_open();
+		if ()
+	}
+	return (false);
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -54,6 +59,7 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 static bool	the_emergence_of_philosophy(t_tabl *table)
 {
 	int		pos;
+	pid_t	pid;
 	int		pcount;
 	t_phil	*philos;
 
@@ -66,6 +72,15 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	table->philo = philos;
 	while (pos < pcount + 1)
 	{
+		/*
+		pid = fork();
+		if (pid < 0)
+			return (false);
+		else if (pid > 0)
+			table->pid[i] = fork()
+		else
+			philo[i].pid = table->pid[i];
+		*/
 		if (!a_wild_philosopher_appears(table, pos, pcount))
 			return (false);
 		pos++;
@@ -82,21 +97,28 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 
 	temp = 0;
 	index = 1;
+	table->pids = NULL;
+	table->philo = NULL;
+	table->simulation = true;
+	table->params[STS] = -1;
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);
 		if (temp < 0)
-			return (cleanup(table, ATOI));
+			return (false);	
 		table->params[index] = temp;
 		index++;
 	}
-	table->params[STS] = -1;
-	table->fork = NULL;
-	table->philo = NULL;
-	table->simulation = true;
-	if (pthread_mutex_init(&table->write, NULL) != 0)
-		return (false);
-	return (pthread_mutex_init(&table->monitoring, NULL) == 0);
+	return (sem_init(table));
+	/*
+	if (table->params[DIE] > (table->params[EAT] + table->params[SLP]))
+	{
+		table->pids = malloc(sizeof(pid_t) * table->params[CNT]);
+		if (table->pids)
+			return (sem_init(table));
+	}
+	*/
+//	return (false);
 }
 
 //
@@ -104,7 +126,7 @@ bool	init_table(t_tabl **table, char **argv)
 {
 	*table = (t_tabl *)malloc(sizeof(t_tabl));
 	if (!*table)
-		return (false);
+		return (false);	
 	if (!append_table_parameters(*table, argv))
 		return (false);
 	if (!i_wanna_fork_on_the_table(*table))

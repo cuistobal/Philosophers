@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/10 11:56:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:53:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	set_monitoring(t_tabl *table)
 }
 
 //
-static void	init_threads(t_tabl *table)
+static void	init_processes(t_tabl *table)
 {
 	int		index;
 	t_phil	*philo;
