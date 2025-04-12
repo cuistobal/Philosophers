@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/03 14:37:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:21:26 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static bool	free_table(t_tabl *table)
 	index = 0;
 	if (table)
 	{
-		while (index < table->params[CNT])
-		{
-			pthread_mutex_destroy(&table->fork[index]);
-			index++;
-		}
 		if (table->fork)
 		{
+			while (index < table->params[CNT])
+			{
+				pthread_mutex_destroy(&table->fork[index]);
+				index++;
+			}
 			free(table->fork);
 			table->fork = NULL;
 		}

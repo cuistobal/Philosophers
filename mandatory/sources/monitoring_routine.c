@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/10 11:46:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:19:33 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	you_are_full(t_tabl *table, t_phil *philo)
 {
 	long	eaten;
 
-	if (table->params[END] >= 0)
+	if (table->params[END] > 0)
 	{
 		pthread_mutex_lock(&philo->clock);
 		eaten = philo->stats[EATEN];

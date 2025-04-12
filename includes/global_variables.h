@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/10 09:29:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:33:12 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@
 # define DIED "died\n"
 
 //Error messages
-# define ARGC "Usage: ./philosophers philos die eat sleep [min eat].\n"
-# define ATOI "Invalid parameter.\n"
-# define THREAD_CREATE "Failed to create Thread.\n"
-# define INIT_TABLE "Failed to initialise the simulaiton.\n"
+# define ARGC "Usage: ./philosophers philos die eat sleep [min eat]."
+# define ATOI "Invalid parameter."
+# define THREAD_CREATE "Failed to create Thread."
+# define INIT_TABLE "Failed to initialise the simulation."
 
 //Misc
 # define SUCCESS "Greaaaaat suucceeeeeees."
