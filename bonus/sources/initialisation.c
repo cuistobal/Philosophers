@@ -6,30 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 11:17:11 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:01:51 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-//I wish you know about this video. Otherwise check it out (Italian guy goes 
-//to vacation in Malta).
-static bool	i_wanna_fork_on_the_table(t_tabl *table)
-{
-	int	index;
-
-	index = 0;
-	table->fork = malloc(sizeof(pthread_mutex_t) * table->params[CNT]);
-	if (!table->fork)
-		return (false);
-	while (index < table->params[CNT])
-	{
-		if (pthread_mutex_init(&table->fork[index], NULL) != 0)
-			return (false);
-		index++;
-	}
-	return (true);
-}
 
 //
 static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
@@ -40,15 +21,14 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
-	sem_init();
-	return ();
+	return (sem_init(&table->philo[pos].clock, 1, 0) == 0);
 }
 
 static bool	sem_init(t_tabl *table)
 {
 	if (table)
 	{
-		table->forks = sem_open();
+		table->forks = sem_open(&table->death, 1, table->params[CNT]);
 		if ()
 	}
 	return (false);
