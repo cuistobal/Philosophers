@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:21:24 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:23:12 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:45:09 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	*monitoring(void *data)
 	{
 		if (!waiter(table))
 	}
+	return (NULL);
 }
