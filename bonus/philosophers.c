@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 15:45:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:15:42 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	init_processes(t_tabl *table)
 	philo = table->philo;
 	while (index < table->params[CNT])
 	{
-		
-		//	cleanup_bonus(table, THREAD_CREATE);
+		if (!create_child_process(&table->pids[index]))	
+			cleanup_bonus(table, FORK_ERROR);
 		index++;
 	}
 }

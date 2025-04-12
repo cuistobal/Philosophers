@@ -6,13 +6,32 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 14:50:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:21:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	create_process(t_tabl *table, int index)
+static void	routine(t_phil *philo)
+{
+	while (true)
+	{
+		if (philo->id & 1)
+		{
+			eating();
+			sleeping();
+			thinking();
+		}
+		else
+		{
+			eating();
+			sleeping();
+			thinking();
+		}
+	}
+}
+
+bool	create_child_process(t_phil *philo, pid_t *pid)
 {
 	pid_t	current;
 
@@ -25,6 +44,5 @@ void	create_process(t_tabl *table, int index)
 	else if (fork > 0)
 		table->pids[index] = current;
 	else
-	{
-		routine(table->philo[index]);
-	}
+		routine(philo);
+}

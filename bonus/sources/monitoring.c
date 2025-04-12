@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures_bonus.h                                 :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 16:07:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:30:50 by chrleroy         ###   ########.fr       */
+/*   Created: 2025/04/12 16:21:24 by chrleroy          #+#    #+#             */
+/*   Updated: 2025/04/12 16:23:12 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_BONUS_H
-# define STRUCTURES_BONUS_H
+#include "philosophers_bonus.h"
 
-//
-typedef struct phil
+void	*monitoring(void *data)
 {
-	pid_t			*pid;
-	sem_t			clock;
-	struct table	*table;
-	long			stats[STATS];
-}	t_phil;
+	t_tabl	*table;
 
-//
-typedef struct table
-{
-	pid_t		*pids;
-	struct phil	*philo;
-	sem_t		*semaphors;
-	long		params[TABLES];
-}	t_tabl;
-
-#endif
+	table = (t_tabl *)data;
+	while (table->simulation)
+	{
+		if (!waiter(table))
+	}
+}
