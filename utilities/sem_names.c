@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:17:43 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 11:48:17 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:57:35 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,25 @@ void	itoa(char *buffer, int size, int num)
 	}
 }
 
+void	my_strcpy(char *dest, char *from)
+{
+	int	index = 0;
+
+	index = 0;
+	while (from[index])
+	{
+		dest[index] = from[index];
+		index++;
+	}
+}
+
 void	sem_name(char *buffer, char *name, int id)
 {
 	int		index;
 	char	identifier[INT_SIZE];
 	
 	index = strlen(name);
-	strcpy(buffer, name);
-	
+	my_strcpy(buffer, name);	
 	itoa(identifier, INT_SIZE, id);
 	while (index < BUFFER_SIZE)
 	{
@@ -50,6 +61,7 @@ void	sem_name(char *buffer, char *name, int id)
 	}
 }
 
+/*
 int main(int argc, char **argv)
 {
 	int num = 0;
@@ -66,3 +78,4 @@ int main(int argc, char **argv)
 	}
 	return 0;
 }
+*/
