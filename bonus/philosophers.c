@@ -6,36 +6,16 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 09:53:17 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:45:16 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
 //
-static void	join_threads(t_tabl *table)
-{
-	int		index;
-	t_phil	*philo;
-
-	index = 0;
-	philo = table->philo;
-	while (index < table->params[CNT])
-	{
-		if (pthread_join(philo[index].thread, NULL) != 0)
-			cleanup(table, THREAD_CREATE);
-		index++;
-	}
-}
-
-//
 static void	set_monitoring(t_tabl *table)
 {
-	pthread_mutex_lock(&table->monitoring);
-	table->params[STS] = get_timestamp();
-	pthread_create(&table->thread, NULL, monitoring, table);
-	pthread_detach(table->thread);
-	pthread_mutex_unlock(&table->monitoring);
+
 }
 
 //
@@ -48,9 +28,8 @@ static void	init_processes(t_tabl *table)
 	philo = table->philo;
 	while (index < table->params[CNT])
 	{
-		if (pthread_create(&philo[index].thread, NULL, routine, \
-				&philo[index]) != 0)
-			cleanup(table, THREAD_CREATE);
+		
+		//	cleanup_bonus(table, THREAD_CREATE);
 		index++;
 	}
 }
@@ -65,12 +44,15 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv))
 		{
-			init_threads(table);
 			set_monitoring(table);
-			join_threads(table);
-			return (cleanup(table, NULL));
+			while (!waiter(table->pids, table->params[CNT]))
+				continue ;
+	/*
+	 * Gestion des morts
+	 */
+			return (cleanup_bonus(table, NULL));
 		}
-		return (cleanup(table, INIT_TABLE));
+		return (cleanup_bonus(table, INIT_TABLE));
 	}
-	return (cleanup(table, ARGC));
+	return (cleanup_bonus(table, ARGC));
 }
