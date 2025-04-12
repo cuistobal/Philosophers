@@ -4,7 +4,6 @@
 //
 typedef struct philo
 {
-	p_thread	thread;
 	pid_t	pid;
 	t_tabl	*table;
 	long	stats[STATS];
@@ -14,9 +13,9 @@ typedef struct philo
 typedef struct table
 {
 	pid_t		*pids;
-	sem_t		forks;
-	p_thread	thread;
 	t_phil		*philos;
+	sem_t		*semaphors;
+	p_thread	monitoring;
 	long		params[PARAMS];
 }	t_tabl;
 
