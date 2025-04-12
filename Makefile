@@ -1,5 +1,5 @@
-NAME = philosophers
-NAME_BONUS = pgilosophers_bonus
+NAME = philo
+NAME_BONUS = philo_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)
 
