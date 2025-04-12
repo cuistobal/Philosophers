@@ -2,18 +2,18 @@
 # define STRUCTURES_BONUS_H
 
 //
-typedef struct philo
+typedef struct phil
 {
-	pid_t	pid;
-	t_tabl	*table;
-	long	stats[STATS];
+	pid_t			pid;
+	struct table	*table;
+	long			stats[STATS];
 }	t_phil;
 
 //
 typedef struct table
 {
 	pid_t		*pids;
-	t_phil		*philos;
+	struct phil	*philo;
 	sem_t		*semaphors;
 	p_thread	monitoring;
 	long		params[PARAMS];

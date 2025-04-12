@@ -6,9 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g3 -I$(INCLUDES)
 INCLUDES = includes
 
 SOURCES = \
-	utilities/misc.c \
-	utilities/atoi.c \
-	utilities/cleanup.c
+	utilities/atoi.c 
 
 SOURCES_MAN = \
 	mandatory/sources/philo_routines.c \
@@ -16,14 +14,20 @@ SOURCES_MAN = \
 	mandatory/sources/philo_sub_routines2.c \
 	mandatory/sources/monitoring_routine.c \
 	mandatory/sources/initialisation.c \
-	mandatory/philosophers.c
+	mandatory/philosophers.c \
+	utilities/cleanup.c \
+	utilities/misc.c
 
 SOURCES_BONUS = \
-
+	bonus/philosophers.c \
+	bonus/sources/initialisation.c \
+	utilities/sem_names.c \
+	utilities/wait_pid.c \
+	utilities/cleanup_bonus.c
 
 OBJS = $(SOURCES:.c=.o)
 OBJS_MAN = $(SOURCES_MAN:.c=.o)
-OBJS_BON = $(SOURCES_BON:.c=.o)
+OBJS_BON = $(SOURCES_BONUS:.c=.o)
 
 
 $(NAME): $(OBJS) $(OBJS_MAN)
