@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 12:01:51 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:10:39 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,24 @@
 //
 static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 {
+	t_phil	*philo;
+
+	philo = &table->philo[pos];
+	philo->table = table;
+	philo->stats[POSTN] = pos;
+	philo->stats[EATEN] = 0;
+	philo->stats[LMEAL] = 0;
+	philo->stats[START] = 0;
+	return (sem_init(philo->clock, 1, 0) == 0);
+	/*
 	table->philo[pos - 1].pid = 0;
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
-	return (sem_init(&table->philo[pos].clock, 1, 0) == 0);
+	return (sem_init(table->philo[pos].clock, 1, 0) == 0);
+	*/
 }
 
 static bool	sem_init(t_tabl *table)

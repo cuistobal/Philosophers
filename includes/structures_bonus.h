@@ -5,6 +5,7 @@
 typedef struct phil
 {
 	pid_t			pid;
+	sem_t			clock;
 	struct table	*table;
 	long			stats[STATS];
 }	t_phil;
