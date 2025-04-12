@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 15:10:39 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:22:15 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	philo->stats[LMEAL] = 0;
 	philo->stats[START] = 0;
 	return (sem_init(philo->clock, 1, 0) == 0);
+	
 	/*
 	table->philo[pos - 1].pid = 0;
 	table->philo[pos - 1].table = table;
@@ -33,16 +34,6 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 	table->philo[pos - 1].stats[START] = 0;
 	return (sem_init(table->philo[pos].clock, 1, 0) == 0);
 	*/
-}
-
-static bool	sem_init(t_tabl *table)
-{
-	if (table)
-	{
-		table->forks = sem_open(&table->death, 1, table->params[CNT]);
-		if ()
-	}
-	return (false);
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -63,15 +54,6 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	table->philo = philos;
 	while (pos < pcount + 1)
 	{
-		/*
-		pid = fork();
-		if (pid < 0)
-			return (false);
-		else if (pid > 0)
-			table->pid[i] = fork()
-		else
-			philo[i].pid = table->pid[i];
-		*/
 		if (!a_wild_philosopher_appears(table, pos, pcount))
 			return (false);
 		pos++;
@@ -90,7 +72,6 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	index = 1;
 	table->pids = NULL;
 	table->philo = NULL;
-	table->simulation = true;
 	table->params[STS] = -1;
 	while (index < TABLES)
 	{
@@ -100,16 +81,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
-	return (sem_init(table));
-	/*
-	if (table->params[DIE] > (table->params[EAT] + table->params[SLP]))
-	{
-		table->pids = malloc(sizeof(pid_t) * table->params[CNT]);
-		if (table->pids)
-			return (sem_init(table));
-	}
-	*/
-//	return (false);
+//	return (sem_init(table));
 }
 
 //
@@ -119,8 +91,6 @@ bool	init_table(t_tabl **table, char **argv)
 	if (!*table)
 		return (false);	
 	if (!append_table_parameters(*table, argv))
-		return (false);
-	if (!i_wanna_fork_on_the_table(*table))
 		return (false);
 	return (the_emergence_of_philosophy(*table));
 }
