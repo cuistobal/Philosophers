@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 13:30:08 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:03:27 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 
 int count = 0;
 
-# define FULL 0
-# define DEATH 1
+# define SUCES 0
+# define FULL 17
+# define DEATH 120
 
 //If the philosopher is full -> kill him with FULL signal
 //If the philosopher is dead -> kill him with DEAD signal
@@ -44,8 +45,11 @@ void	waiter(pid_t *pids, int *index, bool *success)
 	while (*index < count)
 	{
 		if (!*success)
+		{
 			//kill(table->pids[*index], DEAD);
-			kill(pids[*index], DEATH);
+			if (kill(pids[*index], DEATH) == 0)
+				printf("Killed process %d.\n", *index);
+		}
 		else
 		{
 		//	waitpid(table->pids[index], &status, 0)
@@ -53,7 +57,7 @@ void	waiter(pid_t *pids, int *index, bool *success)
 			if (WIFEXITED(status) && WEXITSTATUS(status) == DEATH)
 			{
 			//	status(table->philosopher[*index], DIED);
-				printf("process %d died.", *index);	
+				printf("process %d died.\n", *index);	
 				*success = false;
 				*index = 0;
 			//	waiter(table, index, success);
@@ -62,9 +66,24 @@ void	waiter(pid_t *pids, int *index, bool *success)
 			else if (WIFEXITED(status) && WEXITSTATUS(status) == FULL)
 			//	kill(table->pids[*index], FULL);
 				kill(pids[*index], FULL);
+			else
+				printf("%d	->	Process %d is over with status %d\n", *index, pids[*index], status);
 		}
 		(*index)++;
 	}
+}
+
+void	create_process(pid_t *pids,	int index)
+{
+	pid_t	current;
+
+	current = fork();
+	if (current > 0)
+		pids[index] = current;
+	else if (current == 0)
+		index > 37 ? exit(DEATH) : exit(SUCES);
+	else
+		printf("FAILED\n");
 }
 
 //test
@@ -73,6 +92,7 @@ int main(int argc, char **argv)
 	pid_t	*pids;
 	pid_t	current;
 	int		index = 0;
+	bool sucess = true;
 
 	if (argc == 2)
 	{
@@ -83,19 +103,10 @@ int main(int argc, char **argv)
 		memset(pids, -1, sizeof(pid_t) * count);
 		while (index < count)
 		{
-			current = fork();
-			if (current < 0)
-				exit(-1);
-			else if (current > 0)
-				pids[index] = current;	
-			else
-			{
-				usleep(rand());
-				exit(0);
-			}
+			create_process(pids, index);
+			index++;
 		}
 		index = 0;
-		bool sucess = true;
 		waiter(pids, &index, &sucess);
 	}
 }
