@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 09:31:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:39:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		return (false);
 	if (pthread_mutex_init(&table->monitoring, NULL) != 0)
 		return (false);
+	table->params[STS] = -1;	
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);
