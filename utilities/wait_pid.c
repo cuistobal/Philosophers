@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 13:26:16 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:30:08 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,14 @@ int main(int argc, char **argv)
 		pids = malloc(sizeof(pid_t) * count);
 		if (!pids)
 			return -1;
+		memset(pids, -1, sizeof(pid_t) * count);
 		while (index < count)
 		{
 			current = fork();
 			if (current < 0)
-				return -1;
+				exit(-1);
 			else if (current > 0)
-				pids[index] = fork();	
+				pids[index] = current;	
 			else
 			{
 				usleep(rand());
