@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/10 09:59:01 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:31:53 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,22 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 
 	temp = 0;
 	index = 1;
-	while (index < TABLES)
-	{
-		temp = my_atoi(argv[index]);
-		if (temp < 0)
-			return (cleanup(table, ATOI));
-		table->params[index] = temp;
-		index++;
-	}
-	if (argv[5] == NULL)
-		table->params[END] = -1;
-	table->params[STS] = -1;
 	table->fork = NULL;
 	table->philo = NULL;
 	table->simulation = true;
 	if (pthread_mutex_init(&table->write, NULL) != 0)
 		return (false);
-	return (pthread_mutex_init(&table->monitoring, NULL) == 0);
+	if (pthread_mutex_init(&table->monitoring, NULL) != 0)
+		return (false);
+	while (index < TABLES)
+	{
+		temp = my_atoi(argv[index]);
+		if (temp < 0)
+			return (false);	
+		table->params[index] = temp;
+		index++;
+	}
+	return (table->params[DIE] > (table->params[EAT] + table->params[SLP]));
 }
 
 //
@@ -106,7 +105,7 @@ bool	init_table(t_tabl **table, char **argv)
 {
 	*table = (t_tabl *)malloc(sizeof(t_tabl));
 	if (!*table)
-		return (false);
+		return (false);	
 	if (!append_table_parameters(*table, argv))
 		return (false);
 	if (!i_wanna_fork_on_the_table(*table))
