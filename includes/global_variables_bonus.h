@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 14:42:20 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:49:43 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 //Types of semaphors
 # define F0RK 0
 # define MONT 1
-# define 
+
 
 //Philo's return values
 # define SUCES 0 
@@ -33,5 +33,9 @@
 //Utilities
 # define BUFFER_SIZE 256
 # define INT_SIZE 12
+
+//Errors
+# define FORK_ERROR "Call to fork() failed.\n"
+# define F0RK_ERROR -1
 
 #endif
