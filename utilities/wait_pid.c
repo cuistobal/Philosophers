@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 14:03:27 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:08:16 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-int count = 0;
+// int count = 0;
 
 # define SUCES 0
 # define FULL 17
@@ -37,7 +37,7 @@ int count = 0;
 //
 //Sending and *index to take kill processes in case we get a wrong exti status
 //void	waiter(t_tabl *table, int *index, bool *success)
-void	waiter(pid_t *pids, int *index, bool *success)
+void	waiter(pid_t *pids, int *index, bool *success, int count)
 {
 	int		status;
 
@@ -57,11 +57,11 @@ void	waiter(pid_t *pids, int *index, bool *success)
 			if (WIFEXITED(status) && WEXITSTATUS(status) == DEATH)
 			{
 			//	status(table->philosopher[*index], DIED);
-				printf("process %d died.\n", *index);	
+				printf("process %d died with status %d.\n", *index, status);	
 				*success = false;
 				*index = 0;
 			//	waiter(table, index, success);
-				waiter(pids, index, success);
+				waiter(pids, index, success, count);
 			}
 			else if (WIFEXITED(status) && WEXITSTATUS(status) == FULL)
 			//	kill(table->pids[*index], FULL);
@@ -75,13 +75,13 @@ void	waiter(pid_t *pids, int *index, bool *success)
 
 void	create_process(pid_t *pids,	int index)
 {
-	pid_t	current;
+	pid_t	current; 
 
 	current = fork();
 	if (current > 0)
 		pids[index] = current;
 	else if (current == 0)
-		index > 37 ? exit(DEATH) : exit(SUCES);
+		index == 7 ? exit(DEATH) : index == 4 ? exit(FULL) : exit(SUCES);
 	else
 		printf("FAILED\n");
 }
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		count = atoi(argv[1]);
+		int count = atoi(argv[1]);
 		pids = malloc(sizeof(pid_t) * count);
 		if (!pids)
 			return -1;
@@ -107,6 +107,6 @@ int main(int argc, char **argv)
 			index++;
 		}
 		index = 0;
-		waiter(pids, &index, &sucess);
+		waiter(pids, &index, &sucess, count);
 	}
 }
