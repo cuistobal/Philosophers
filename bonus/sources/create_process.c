@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 10:18:17 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 12:17:48 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 //
 static void	routine(t_phil *philo)
 {
-	while (true)
+	bool sim = true;
+	long	start = get_timestamp();
+
+	while (sim)
 	{
+		sim = (get_timestamp() - start) < TCAP;
 		if (philo->stats[POSTN] & 1)
 		{
 //			eating();
 //			sleeping();
 //			thinking();
 			usleep(1000);
-			printf("%ld yumyum\n", philo->stats[POSTN]);
+			printf("%ld	->	%ld yumyum\n", get_timestamp() - start, philo->stats[POSTN]);
 		}
 		else
 		{
-			printf("%ld scrouunchscrounch\n", philo->stats[POSTN]);
+			printf("%ld	->	%ld scrouunchscrounch\n", get_timestamp() - start, philo->stats[POSTN]);
 			usleep(100);
 //			eating();
 //			sleeping();
@@ -48,12 +52,14 @@ bool	create_child_process(t_tabl *table, int index)
 	if (current < 0)
 	{
 		printf(FORK_ERROR);
-		return false;
+		return (false);
 		//		exit(F0RK_ERROR);
 	}
-	else if (fork > 0)
+	else if (current > 0)
+	{
 		printf("current pid	->	%d\n", current);	
-		//	table->pids[index] = current;
+		table->pids[index] = current;
+	}
 	//	*pids = current;
 	else
 	//	routine(philo);

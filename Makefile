@@ -10,7 +10,8 @@ INCLUDES = includes/mandatory
 INCLUDES_BONUS = includes/bonus
 
 SOURCES = \
-	utilities/atoi.c
+	utilities/atoi.c \
+	utilities/misc.c
 
 SOURCES_MAN = \
 	mandatory/sources/philo_routines.c \
@@ -19,8 +20,7 @@ SOURCES_MAN = \
 	mandatory/sources/monitoring_routine.c \
 	mandatory/sources/initialisation.c \
 	mandatory/philosophers.c \
-	utilities/cleanup.c \
-	utilities/misc.c
+	utilities/cleanup.c
 
 SOURCES_BONUS = \
 	bonus/philosophers.c \

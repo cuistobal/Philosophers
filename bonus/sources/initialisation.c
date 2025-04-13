@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 10:07:21 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:09:51 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	return (true);
 }
 
-bool	table_semaphores(t_tabl *table)
+//
+static bool	table_semaphores(t_tabl *table)
 {
 	if (table)
 	{
@@ -81,6 +82,10 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
+	table->pids = malloc(sizeof(pid_t) * table->params[CNT]);
+	if (!table->pids)
+		return (false);
+	memset(table->pids, -1, sizeof(pid_t) * table->params[CNT]);
 	return (table_semaphores(table));
 }
 

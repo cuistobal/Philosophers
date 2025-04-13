@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 10:39:48 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 12:00:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ static void	init_processes(t_tabl *table)
 	philo = table->philo;
 	while (index < table->params[CNT])
 	{
+//
 		printf("philo %ld\n", table->philo[index].stats[POSTN]);
+//		
 		if (!create_child_process(table, index))	
 			cleanup_bonus(table, FORK_ERROR);
 		index++;
@@ -47,9 +49,12 @@ int	main(int argc, char **argv)
 		if (init_table(&table, argv))
 		{
 			init_processes(table);
-	//		set_monitoring(table);
+
 			while (!waiter(table->pids, table->params[CNT]))
+			{
+				usleep(TCAP);
 				continue ;
+			}
 	/*
 	 * Gestion des morts
 	 */

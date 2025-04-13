@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 09:57:46 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 12:06:22 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 //void	waiter(t_tabl *table, int *index, bool *success)
 bool	waiter(pid_t *pids, int count)
 {
+	pid_t	pid;
 	int		index;
 	int		status;
 	int		finished;
@@ -29,15 +30,24 @@ bool	waiter(pid_t *pids, int count)
 	finished = 0;
 	while (index < count)
 	{
-		waitpid(pids[index], &status, WNOHANG);
-		if (WIFEXITED(status))
+		pid = waitpid(pids[index], &status, WNOHANG);
+		if (pid < 0)
+		{
+			printf("error @ %d for pid %d\n", index, pids[index]);
+			exit(-1);
+		}
+		else if (pid == 0)
+			continue ;
+		else if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == DEATH)	
 				printf("process %d died with status %d.\n", index, status);
+	/*	
 			else if (WEXITSTATUS(status) == FULL)
 				printf("process %d died with status %d.\n", index, status);
 			else
 				printf("%d	->	Process %d is over with status %d\n", index, pids[index], status);
+	*/
 			finished++;	
 		}
 		index++;
