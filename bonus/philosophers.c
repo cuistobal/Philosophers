@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 15:28:48 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:22:39 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ static void	init_processes(t_tabl *table)
 		index++;
 	}
 	table->params[STS] = get_timestamp();
-	sem_post(&table->semaphores[BEGN]);
+	index = 0;
+	while (index < table->params[CNT])
+	{
+		sem_post(table->semaphores[BEGN]);
+		index++;
+	}
+	sem_close(table->semaphores[BEGN]);
+    sem_unlink(BEGIN);
 }
 
 //

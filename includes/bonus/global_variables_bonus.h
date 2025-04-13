@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 13:22:17 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:22:25 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "global_variables.h"
 
 //Semaphor's names
-# define FORKS "Fork/"
-# define MONIT "Monitoring"
-# define WRITE ""
-# define CLOCK "Clock/"
+# define FORKS "/fork_sem"
+# define MONIT "/monitoring_sem"
+# define BEGIN "/begin_sem"
+# define CLOCK "/clock_sem"
 
 //Sempahores attributes -Used only in sem_init()-
 # define LOCAL 0

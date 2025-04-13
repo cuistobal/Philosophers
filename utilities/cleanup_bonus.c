@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 09:57:02 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:54:04 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cleanup_bonus(t_tabl *table, char *message)
 	{
 		while (index < SEMP)
 		{
-			destroy_semaphore(&table->semaphores[index]);
+			destroy_semaphore(table->semaphores[index]);
 			index++;
 		}
 		index = 0;

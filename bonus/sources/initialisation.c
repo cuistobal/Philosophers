@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 14:44:36 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:00:53 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 }
 
 //
-static bool	table_semaphores(t_tabl *table)
+static bool table_semaphores(t_tabl *table)
 {
-	if (table)
-	{
-		if (sem_init(&table->semaphores[F0RK], SHARED, table->params[CNT]) < 0)
-			return (false);
-		if (sem_init(&table->semaphores[MONT], SHARED, 1) < 0)
-			return (false);
-		if (sem_init(&table->semaphores[BEGN], SHARED, 0) < 0)
-			return (false);
-		return (true);
-	}
-	return (false);
+    table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600,\
+			table->params[CNT]);
+   	if (table->semaphores[F0RK] == SEM_FAILED) 
+		return (false);	
+	table->semaphores[MONT] = sem_open(MONIT, O_CREAT, 0600, 1);
+   	if (table->semaphores[F0RK] == SEM_FAILED) 
+		return (false);	
+    table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 0);
+   	if (table->semaphores[F0RK] == SEM_FAILED) 
+		return (false);
+	return (true);
 }
 
 //How would you sit and share a meal if it wasn't for a table to be dressed up!
@@ -77,6 +77,9 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	table->pids = NULL;
 	table->philo = NULL;
 	table->params[STS] = -1;
+	table->semaphores[F0RK] = NULL;
+	table->semaphores[MONT] = NULL;
+	table->semaphores[BEGN] = NULL;
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);

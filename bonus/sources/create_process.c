@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 15:40:46 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:02:27 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ static void	uneven_routine(t_phil *philo)
 //Spinlock function to synchronise the threads start.
 static void	starting_block(t_phil *philo)
 {
-	sem_wait(&philo->table->semaphores[MONT]);
+	//sem_wait(BEGIN);
+	
+	sem_wait(philo->table->semaphores[BEGN]);
 
 	philo->stats[START] = philo->table->params[STS];
 	philo->stats[LMEAL] = philo->stats[START];
 
-	sem_post(&philo->table->semaphores[MONT]);
+	sem_post(philo->table->semaphores[BEGN]);
+	
+	//sem_post(BEGIN);
 }
 
 //This is an accurate description of an hungover philosopher's routine. At
@@ -50,7 +54,7 @@ void	*routine(void *philosopher)
 
 	philo = (t_phil *)philosopher;
 	starting_block(philo);
-	while (the_show_must_go_on(philo))
+	while (1)
 	{
 		if (philo->stats[POSTN] & 1)
 			even_routine(philo);
@@ -76,10 +80,13 @@ bool	create_child_process(t_tabl *table, int index)
 	}
 	else if (current > 0)
 	{
+		philosopher->pid = current;
 		table->pids[index] = current;
-	//	monitoring();
 	}
 	else
+	{
+		philosopher->pid = current;
 		routine(philosopher);
+	}
 	return true;
 }

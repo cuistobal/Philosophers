@@ -6,64 +6,29 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/07 18:16:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:03:02 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 //
-bool	the_show_must_go_on(t_phil *philo)
-{
-	bool	status;
-
-	pthread_mutex_lock(&philo->table->monitoring);
-	status = philo->table->simulation;
-	pthread_mutex_unlock(&philo->table->monitoring);
-	return (status);
-}
-
 
 void	my_usleep(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
 
-	while (the_show_must_go_on(philo))
+	remainder = sleep - (get_timestamp() - start);
+	if (remainder <= 0)
+		return ;
+	else
 	{
-		remainder = sleep - (get_timestamp() - start);
-		if (remainder <= 0)
-			break ;
+		if (remainder > TCAP / MSEC)
+			usleep(TCAP);
 		else
-		{
-			if (remainder > TCAP / MSEC)
-				usleep(TCAP);
-			else
-				usleep(remainder * MSEC);
-		}
+			usleep(remainder * MSEC);
 	}
 }
-
-/*
-void	my_usleep(t_phil *philo, long sleep, long start)
-{
-	long	remainder;
-
-	if (sleep > 0 && the_show_must_go_on(philo))
-	{
-		remainder = sleep - (get_timestamp() - start);
-		if (remainder <= 0)
-			return ;
-		else
-		{
-			if (remainder > TCAP / MSEC)
-				usleep(TCAP);
-			else
-				usleep(remainder * MSEC);
-		}
-		my_usleep(philo, remainder, get_timestamp());
-	}
-}
-*/
 
 //
 void	*get_value(pthread_mutex_t *mutex, void *source)
