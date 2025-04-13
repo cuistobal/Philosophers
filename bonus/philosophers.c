@@ -6,18 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 12:00:57 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 14:43:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-/*
-static void	set_monitoring(t_tabl *table)
-{
-
-}
-*/
 
 //
 static void	init_processes(t_tabl *table)
@@ -29,13 +22,13 @@ static void	init_processes(t_tabl *table)
 	philo = table->philo;
 	while (index < table->params[CNT])
 	{
-//
 		printf("philo %ld\n", table->philo[index].stats[POSTN]);
-//		
 		if (!create_child_process(table, index))	
 			cleanup_bonus(table, FORK_ERROR);
 		index++;
 	}
+	table->params[STS] = get_timestamp();
+	table->sim = true;
 }
 
 //

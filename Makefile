@@ -26,6 +26,8 @@ SOURCES_BONUS = \
 	bonus/philosophers.c \
 	bonus/sources/initialisation.c \
 	bonus/sources/create_process.c \
+	bonus/sources/philo_sub_routines.c \
+	bonus/sources/philo_sub_routines1.c \
 	utilities/sem_names.c \
 	utilities/wait_pid.c \
 	utilities/cleanup_bonus.c

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 09:50:07 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 13:22:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@
 # define SHARED 1
 
 //Types of semaphors
-# define SEMP 2
+# define SEMP 3
 
 # define F0RK 0
 # define MONT 1
+# define BEGN 2
 
 
 //Philo's return values

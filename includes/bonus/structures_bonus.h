@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 09:55:36 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 14:44:08 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct phil
 //
 typedef struct table
 {
+	bool		sim;
 	pid_t		*pids;
 	struct phil	*philo;
 	long		params[TABLES];

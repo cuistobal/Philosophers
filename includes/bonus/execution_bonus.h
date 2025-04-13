@@ -4,6 +4,9 @@
 bool	init_table(t_tabl **table, char **argv);
 
 bool    create_child_process(t_tabl *table, int index);
-//bool	create_child_process(t_phil *philo, pid_t *pid);
+
+void	eating(t_phil *philosopher);
+void	sleeping(t_phil *philosopher);
+void	thinking(t_phil *philosopher);
 
 #endif

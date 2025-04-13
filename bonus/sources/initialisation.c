@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 11:09:51 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 14:44:36 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static bool	table_semaphores(t_tabl *table)
 			return (false);
 		if (sem_init(&table->semaphores[MONT], SHARED, 1) < 0)
 			return (false);
+		if (sem_init(&table->semaphores[BEGN], SHARED, 0) < 0)
+			return (false);
 		return (true);
 	}
 	return (false);
@@ -71,6 +73,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 
 	temp = 0;
 	index = 1;
+	table->sim = false;
 	table->pids = NULL;
 	table->philo = NULL;
 	table->params[STS] = -1;
