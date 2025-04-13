@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 14:49:43 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 09:50:07 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,21 @@
 # define WRITE ""
 # define CLOCK "Clock/"
 
+//Sempahores attributes -Used only in sem_init()-
+# define LOCAL 0
+# define SHARED 1
+
 //Types of semaphors
+# define SEMP 2
+
 # define F0RK 0
 # define MONT 1
 
 
 //Philo's return values
 # define SUCES 0 
-# define DEATH 1
+# define FULL 1
+# define DEATH 2
 
 //Utilities
 # define BUFFER_SIZE 256

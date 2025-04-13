@@ -6,29 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:24:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 09:57:46 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "philosophers_bonus.h"
-
-# include <ctype.h>
-# include <stdio.h>
-# include <signal.h>
-# include <string.h>
-# include <stdarg.h>
-# include <unistd.h>
-#include <sys/wait.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <pthread.h>
-# include <sys/time.h>
-
-// int count = 0;
-
-# define SUCES 0
-# define FULL 17
-# define DEATH 120
+#include "philosophers_bonus.h"
 
 //If the philosopher is full -> kill him with FULL signal
 //If the philosopher is dead -> kill him with DEAD signal
@@ -39,7 +21,6 @@
 //void	waiter(t_tabl *table, int *index, bool *success)
 bool	waiter(pid_t *pids, int count)
 {
-	bool	end;
 	int		index;
 	int		status;
 	int		finished;
@@ -75,11 +56,11 @@ void	create_process(pid_t *pids,	int index)
 		index == 7 ? (usleep(10000), exit(DEATH)) : index == 4 ? (usleep(1000), exit(FULL)) : (usleep(100), exit(SUCES));
 }
 
+/*
 //test
 int main(int argc, char **argv)
 {
 	pid_t	*pids;
-	pid_t	current;
 	int		index = 0;
 
 	if (argc == 2)
@@ -98,3 +79,4 @@ int main(int argc, char **argv)
 			continue ;
 	}
 }
+*/

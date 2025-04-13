@@ -6,17 +6,18 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:15:42 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 10:08:35 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-//
+/*
 static void	set_monitoring(t_tabl *table)
 {
 
 }
+*/
 
 //
 static void	init_processes(t_tabl *table)
@@ -28,7 +29,8 @@ static void	init_processes(t_tabl *table)
 	philo = table->philo;
 	while (index < table->params[CNT])
 	{
-		if (!create_child_process(&table->pids[index]))	
+		printf("philo %ld\n", table->philo[index].stats[POSTN]);
+		if (!create_child_process(&philo[index], &table->pids[index]))	
 			cleanup_bonus(table, FORK_ERROR);
 		index++;
 	}
@@ -44,15 +46,16 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(&table, argv))
 		{
-			set_monitoring(table);
+			init_processes(table);
+	//		set_monitoring(table);
 			while (!waiter(table->pids, table->params[CNT]))
 				continue ;
 	/*
 	 * Gestion des morts
 	 */
-			return (cleanup_bonus(table, NULL));
+			return (cleanup_bonus(table, NULL), 0);
 		}
-		return (cleanup_bonus(table, INIT_TABLE));
+		return (cleanup_bonus(table, INIT_TABLE), 0);
 	}
-	return (cleanup_bonus(table, ARGC));
+	return (cleanup_bonus(table, ARGC), 0);
 }

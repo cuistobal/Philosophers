@@ -6,43 +6,57 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:21:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 10:18:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+//
 static void	routine(t_phil *philo)
 {
 	while (true)
 	{
-		if (philo->id & 1)
+		if (philo->stats[POSTN] & 1)
 		{
-			eating();
-			sleeping();
-			thinking();
+//			eating();
+//			sleeping();
+//			thinking();
+			usleep(1000);
+			printf("%ld yumyum\n", philo->stats[POSTN]);
 		}
 		else
 		{
-			eating();
-			sleeping();
-			thinking();
+			printf("%ld scrouunchscrounch\n", philo->stats[POSTN]);
+			usleep(100);
+//			eating();
+//			sleeping();
+//			thinking();
 		}
 	}
 }
 
-bool	create_child_process(t_phil *philo, pid_t *pid)
+//
+bool	create_child_process(t_tabl *table, int index)
+//	t_phil *philo, pid_t *pids)
 {
 	pid_t	current;
+	t_phil	*philosopher;
 
+	philosopher = &table->philo[index];
 	current	= fork();
 	if (current < 0)
 	{
 		printf(FORK_ERROR);
-		exit(F0RK_ERROR);
+		return false;
+		//		exit(F0RK_ERROR);
 	}
 	else if (fork > 0)
-		table->pids[index] = current;
+		printf("current pid	->	%d\n", current);	
+		//	table->pids[index] = current;
+	//	*pids = current;
 	else
-		routine(philo);
+	//	routine(philo);
+		routine(philosopher);
+	return true;
 }

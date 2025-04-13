@@ -6,24 +6,22 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 15:34:39 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 10:07:21 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
 //
-static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
+static bool	a_wild_philosopher_appears(t_tabl *table, int pos)
 {
-	t_phil	*philo;
+	table->philo[pos - 1].table = table;
+	table->philo[pos - 1].stats[POSTN] = pos;
+	table->philo[pos - 1].stats[EATEN] = 0;
+	table->philo[pos - 1].stats[LMEAL] = 0;
+	table->philo[pos - 1].stats[START] = 0;
+	return (sem_init(&table->philo[pos - 1].clock, SHARED, 0) == 0);
 
-	philo = &table->philo[pos];
-	philo->table = table;
-	philo->stats[POSTN] = pos;
-	philo->stats[EATEN] = 0;
-	philo->stats[LMEAL] = 0;
-	philo->stats[START] = 0;
-	return (sem_init(&philo->clock, 1, 0) == 0);
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -31,7 +29,6 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos, int pcount)
 static bool	the_emergence_of_philosophy(t_tabl *table)
 {
 	int		pos;
-	pid_t	pid;
 	int		pcount;
 	t_phil	*philos;
 
@@ -44,11 +41,24 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 	table->philo = philos;
 	while (pos < pcount + 1)
 	{
-		if (!a_wild_philosopher_appears(table, pos, pcount))
+		if (!a_wild_philosopher_appears(table, pos))
 			return (false);
 		pos++;
 	}
 	return (true);
+}
+
+bool	table_semaphores(t_tabl *table)
+{
+	if (table)
+	{
+		if (sem_init(&table->semaphores[F0RK], SHARED, table->params[CNT]) < 0)
+			return (false);
+		if (sem_init(&table->semaphores[MONT], SHARED, 1) < 0)
+			return (false);
+		return (true);
+	}
+	return (false);
 }
 
 //How would you sit and share a meal if it wasn't for a table to be dressed up!
@@ -71,7 +81,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
-//	return (sem_init(table));
+	return (table_semaphores(table));
 }
 
 //
