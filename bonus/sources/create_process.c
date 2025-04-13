@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 14:50:18 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:40:46 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,12 @@ static void	uneven_routine(t_phil *philo)
 //Spinlock function to synchronise the threads start.
 static void	starting_block(t_phil *philo)
 {
-	//
-	sem_post(&philo->clock);
-	//
-//	sem_wait(&philo->table->semaphores[MONT]);
-	//
-	while (!philo->table->sim)
-	{
-		//
-//		sem_post(&philo->table->semaphores[MONT]);
-		//
-		printf("philo %ld waiting in  process %d\n", philo->stats[POSTN], getpid());
-		usleep(1);
-		//
-//		sem_wait(&philo->table->semaphores[MONT]);
-		//
-	}
-	//
-//	sem_post(&philo->table->semaphores[MONT]);
-	//
+	sem_wait(&philo->table->semaphores[MONT]);
+
 	philo->stats[START] = philo->table->params[STS];
 	philo->stats[LMEAL] = philo->stats[START];
-	//
-	sem_wait(&philo->clock);
-	//
+
+	sem_post(&philo->table->semaphores[MONT]);
 }
 
 //This is an accurate description of an hungover philosopher's routine. At
@@ -81,7 +63,6 @@ void	*routine(void *philosopher)
 
 //
 bool	create_child_process(t_tabl *table, int index)
-//	t_phil *philo, pid_t *pids)
 {
 	pid_t	current;
 	t_phil	*philosopher;
@@ -91,17 +72,14 @@ bool	create_child_process(t_tabl *table, int index)
 	if (current < 0)
 	{
 		printf(FORK_ERROR);
-		return (false);
-		//		exit(F0RK_ERROR);
+		exit(F0RK_ERROR);
 	}
 	else if (current > 0)
 	{
-		printf("current pid	->	%d\n", current);	
 		table->pids[index] = current;
+	//	monitoring();
 	}
-	//	*pids = current;
 	else
-	//	routine(philo);
 		routine(philosopher);
 	return true;
 }

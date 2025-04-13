@@ -6,29 +6,28 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 14:43:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:28:48 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+
 //
 static void	init_processes(t_tabl *table)
 {
 	int		index;
-	t_phil	*philo;
 
 	index = 0;
-	philo = table->philo;
+	table->params[STS] = get_timestamp();
 	while (index < table->params[CNT])
 	{
-		printf("philo %ld\n", table->philo[index].stats[POSTN]);
 		if (!create_child_process(table, index))	
 			cleanup_bonus(table, FORK_ERROR);
 		index++;
 	}
 	table->params[STS] = get_timestamp();
-	table->sim = true;
+	sem_post(&table->semaphores[BEGN]);
 }
 
 //

@@ -16,7 +16,6 @@ typedef struct table
 	pid_t		*pids;
 	struct phil	*philo;
 	sem_t		*semaphors;
-	p_thread	monitoring;
 	long		params[PARAMS];
 }	t_tabl;
 
