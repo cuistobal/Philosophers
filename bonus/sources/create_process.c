@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 17:02:27 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:06:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	*routine(void *philosopher)
 	t_phil	*philo;
 
 	philo = (t_phil *)philosopher;
+	printf("Philo %ld has pid %d\n", philo->stats[POSTN], philo->pid);
 	starting_block(philo);
 	while (1)
 	{
@@ -84,9 +85,6 @@ bool	create_child_process(t_tabl *table, int index)
 		table->pids[index] = current;
 	}
 	else
-	{
-		philosopher->pid = current;
 		routine(philosopher);
-	}
 	return true;
 }
