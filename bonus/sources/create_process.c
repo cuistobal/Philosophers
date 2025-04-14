@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 09:55:17 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:55:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void	*routine(void *data)
 			even_routine(philo);
 		else
 			uneven_routine(philo);
+		if (philo->stats[EATEN] == philo->table->params[EAT])
+			exit(FULL);
+		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
+			exit(DEATH);
 	}
 	return (NULL);
 }

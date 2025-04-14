@@ -10,8 +10,7 @@ INCLUDES = includes/mandatory
 INCLUDES_BONUS = includes/bonus
 
 SOURCES = \
-	utilities/atoi.c \
-	utilities/misc.c
+	utilities/atoi.c
 
 SOURCES_MAN = \
 	mandatory/sources/philo_routines.c \
@@ -20,16 +19,18 @@ SOURCES_MAN = \
 	mandatory/sources/monitoring_routine.c \
 	mandatory/sources/initialisation.c \
 	mandatory/philosophers.c \
-	utilities/cleanup.c
+	utilities/cleanup.c \
+	utilities/misc.c
 
 SOURCES_BONUS = \
 	bonus/philosophers.c \
 	bonus/sources/initialisation.c \
 	bonus/sources/create_process.c \
 	bonus/sources/philo_sub_routines.c \
+	utilities/cleanup_bonus.c \
+	utilities/misc_bonus.c \
 	utilities/sem_names.c \
-	utilities/wait_pid.c \
-	utilities/cleanup_bonus.c
+	utilities/wait_pid.c 
 
 OBJS = $(SOURCES:.c=.o)
 OBJS_MAN = $(SOURCES_MAN:.c=.o)

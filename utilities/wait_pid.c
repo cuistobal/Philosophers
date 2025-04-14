@@ -6,11 +6,25 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 09:18:59 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:51:53 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+
+static bool	death(t_tabl *table)
+{
+	int	index;
+
+	index = 0;
+	while (index < table->params[CNT])
+	{
+		kill(table->philo[index].pid, SIGINT);
+		index++;
+	}
+	table->sim = false;
+	return (true);
+}
 
 //If the philosopher is full -> kill him with FULL signal
 //If the philosopher is dead -> kill him with DEAD signal
@@ -19,7 +33,8 @@
 //
 //Sending and *index to take kill processes in case we get a wrong exti status
 //void	waiter(t_tabl *table, int *index, bool *success)
-bool	waiter(int count)
+bool	waiter(t_tabl *table)
+	//	int count)
 {
 	pid_t	pid;
 	int		index;
@@ -28,7 +43,7 @@ bool	waiter(int count)
 
 	index = 0;
 	finished = 0;
-	while (index < count)
+	while (table->sim)
 	{
 		pid = waitpid(0, &status, WNOHANG);
 		if (pid == 0)
@@ -36,14 +51,14 @@ bool	waiter(int count)
 		else if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == DEATH)	
-				printf("Philo %d died.\n", index);
+				return (death(table));	
 			else if (WEXITSTATUS(status) == FULL)	
 				printf("Philo %d iss full of pasta\n", index);
 			finished++;	
 		}
 		index++;
 	}
-	return (finished == count);
+	return (finished == table->params[CNT]);
 }
 
 void	create_process(pid_t *pids,	int index)
