@@ -6,11 +6,24 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 11:24:50 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:21:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+
+void	*monitorinf(void *data)
+{
+	t_phil	*philo;
+
+	philo = (t_phil *)data;
+	while ()
+	{
+		
+		usleep(TCAP);
+	}
+	return (NULL);
+}
 
 //
 static void	even_routine(t_phil *philo)
@@ -33,13 +46,9 @@ static void	uneven_routine(t_phil *philo)
 // and start regretting all this liquor ingested last night. Once they grab the
 //fork, their focus shifts to grabbing the second fork.
 //After ingesting all those spaghettis, they feel sleepy hence take a nap.
-void	*routine(void *data)
+int	routine(t_phil *philo)
 {
-	t_phil	*philo;
-
-	philo = (t_phil *)data;
-
-//	Start synchroniser
+	p_thread	monitor;
 
 	sem_wait(philo->table->semaphores[BEGN]);
 
@@ -48,7 +57,8 @@ void	*routine(void *data)
 	
 	sem_post(philo->table->semaphores[BEGN]);
 
-//
+	pthread_create(&monitor, NULL, monitoring(), philo);
+	pthread_detach(&monitor);
 	while (1)
 	{
 		if (philo->stats[POSTN] & 1)
@@ -56,30 +66,31 @@ void	*routine(void *data)
 		else
 			uneven_routine(philo);
 		if (philo->stats[EATEN] == philo->table->params[EAT])
-			exit(FULL);
+			return(FULL);
 		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
-			exit(DEATH);
+			return(DEATH);
 	}
-	return (NULL);
+	return (MEM);
 }
 
 
 //
-bool	create_child_process(t_tabl *table, int index)
+void	create_child_process(t_tabl *table, int index)
 {
-	pid_t	current;
+	int		exit_code;
 	t_phil	*philosopher;
 
+	exit_code = 0;
 	philosopher = &table->philo[index];
-	current	= fork();
-	if (current < 0)
+	philosopher->pid = fork();
+	if (philosopher->pid < 0)
 	{
 		printf(FORK_ERROR);
-		return (false);	
+		exit(MEM);
 	}
-	else if (current > 0)
-		philosopher->pid = current;
-	else
-		routine(philosopher);
-	return (true);
+	else if (philosopher->pid == 0)
+	{
+		exit_code = routine(philosopher);
+		exit(exit_code);
+	}
 }

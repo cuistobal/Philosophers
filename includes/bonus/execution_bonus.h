@@ -3,7 +3,9 @@
 
 bool	init_table(t_tabl **table, char **argv);
 
-bool    create_child_process(t_tabl *table, int index);
+void    create_child_process(t_tabl *table, int index);
+
+int		routine(t_phil *philo);
 
 void	eating(t_phil *philosopher);
 void	sleeping(t_phil *philosopher);

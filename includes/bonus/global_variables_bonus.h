@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 09:03:58 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:13:51 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define SUCES 0 
 # define FULL 1
 # define DEATH 2
+# define MEM 3 
 
 //Utilities
 # define BUFFER_SIZE 256
