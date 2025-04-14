@@ -6,12 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:17:43 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 11:57:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:46:20 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+//
 void	itoa(char *buffer, int size, int num)
 {
 	int		copy;
@@ -35,6 +36,7 @@ void	itoa(char *buffer, int size, int num)
 	}
 }
 
+//
 void	my_strcpy(char *dest, char *from)
 {
 	int	index = 0;
@@ -47,18 +49,27 @@ void	my_strcpy(char *dest, char *from)
 	}
 }
 
+//
+int	my_strlen(char *string)
+{
+	int	len;
+
+	len = 0;
+	while (string[len])
+		len++;
+	return (len);
+}
+
+//
 void	sem_name(char *buffer, char *name, int id)
 {
 	int		index;
 	char	identifier[INT_SIZE];
 	
 	index = strlen(name);
-	my_strcpy(buffer, name);	
+	my_strcpy(buffer, name);
 	itoa(identifier, INT_SIZE, id);
-	while (index < BUFFER_SIZE)
-	{
-	
-	}
+	my_strcpy(buffer + index, identifier);
 }
 
 /*

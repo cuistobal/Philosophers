@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 17:01:26 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:51:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 typedef struct phil
 {
 	pid_t			pid;
-	sem_t			clock;
+	sem_t			*clock;
 	struct table	*table;
 	long			stats[STATS];
+	char			semaname[BUFFER_SIZE];
 }	t_phil;
 
 //
 typedef struct table
 {
 	bool		sim;
-	pid_t		*pids;
 	struct phil	*philo;
 	long		params[TABLES];
 	sem_t		*semaphores[SEMP];

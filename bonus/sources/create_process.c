@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 17:06:57 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:55:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,27 @@ static void	uneven_routine(t_phil *philo)
 	sleeping(philo);
 }
 
-//Spinlock function to synchronise the threads start.
-static void	starting_block(t_phil *philo)
-{
-	//sem_wait(BEGIN);
-	
-	sem_wait(philo->table->semaphores[BEGN]);
-
-	philo->stats[START] = philo->table->params[STS];
-	philo->stats[LMEAL] = philo->stats[START];
-
-	sem_post(philo->table->semaphores[BEGN]);
-	
-	//sem_post(BEGIN);
-}
-
 //This is an accurate description of an hungover philosopher's routine. At
 //first, they try to grab the fork on their left. If it fails, they pretend life
 // and start regretting all this liquor ingested last night. Once they grab the
 //fork, their focus shifts to grabbing the second fork.
 //After ingesting all those spaghettis, they feel sleepy hence take a nap.
-void	*routine(void *philosopher)
+void	*routine(void *data)
 {
 	t_phil	*philo;
 
-	philo = (t_phil *)philosopher;
-	printf("Philo %ld has pid %d\n", philo->stats[POSTN], philo->pid);
-	starting_block(philo);
+	philo = (t_phil *)data;
+
+//	Start synchroniser
+
+	sem_wait(philo->table->semaphores[BEGN]);
+
+	philo->stats[START] = philo->table->params[STS];
+	philo->stats[LMEAL] = philo->stats[START];
+	
+	sem_post(philo->table->semaphores[BEGN]);
+
+//
 	while (1)
 	{
 		if (philo->stats[POSTN] & 1)
@@ -77,14 +71,11 @@ bool	create_child_process(t_tabl *table, int index)
 	if (current < 0)
 	{
 		printf(FORK_ERROR);
-		exit(F0RK_ERROR);
+		return (false);	
 	}
 	else if (current > 0)
-	{
 		philosopher->pid = current;
-		table->pids[index] = current;
-	}
 	else
 		routine(philosopher);
-	return true;
+	return (true);
 }

@@ -6,12 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 16:22:39 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:21:10 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
 
 //
 static void	init_processes(t_tabl *table)
@@ -33,8 +32,8 @@ static void	init_processes(t_tabl *table)
 		sem_post(table->semaphores[BEGN]);
 		index++;
 	}
-	sem_close(table->semaphores[BEGN]);
-    sem_unlink(BEGIN);
+//	sem_close(table->semaphores[BEGN]);
+//	sem_unlink(BEGIN);
 }
 
 //
@@ -48,8 +47,7 @@ int	main(int argc, char **argv)
 		if (init_table(&table, argv))
 		{
 			init_processes(table);
-
-			while (!waiter(table->pids, table->params[CNT]))
+			while (!waiter(table->params[CNT]))
 			{
 				usleep(TCAP);
 				continue ;

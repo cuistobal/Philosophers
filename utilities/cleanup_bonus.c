@@ -6,17 +6,24 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 15:54:04 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:58:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-//Include the sem_name to unlink()
-static void	destroy_semaphore(sem_t	*semaphore)
+static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN};
+
+void	unlink_semaphores(void)
 {
-	sem_close(semaphore);
-//	unlink(semaphore);
+	int	index;
+
+	index = 0;
+	while (index < SEMP)
+	{
+		unlink(semanames[index]);
+		index++;
+	}
 }
 
 void	cleanup_bonus(t_tabl *table, char *message)
@@ -25,24 +32,26 @@ void	cleanup_bonus(t_tabl *table, char *message)
 
 	index = 0;
 	if (table)
-	{
+	{	
 		while (index < SEMP)
 		{
-			destroy_semaphore(table->semaphores[index]);
+			sem_close(table->semaphores[index]);
+			sem_unlink(semanames[index]);
 			index++;
 		}
 		index = 0;
-		if (table->pids)
+		if (table->philo)		
 		{
+			index = 0;
 			while (index < table->params[CNT])
 			{
-				kill(table->pids[index], SIGKILL);
+				sem_close(table->philo[index].clock);
+				sem_unlink(table->philo[index].semaname);
 				index++;
 			}
-			free(table->pids);
-			table->pids = NULL;
+			free(table->philo);
+			table->philo = NULL;
 		}
-		if (message)
-			printf("%s\n", message);
+		printf("%s\n", message);
 	}
 }

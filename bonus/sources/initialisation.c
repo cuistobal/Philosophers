@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 17:00:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:54:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 //
 static bool	a_wild_philosopher_appears(t_tabl *table, int pos)
 {
+	char	*semaname;
+
+	semaname = table->philo[pos -1].semaname;
+	memset(semaname, 0, BUFFER_SIZE * sizeof(char));
 	table->philo[pos - 1].table = table;
 	table->philo[pos - 1].stats[POSTN] = pos;
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
-	return (sem_init(&table->philo[pos - 1].clock, SHARED, 0) == 0);
-
+	sem_name(semaname, CLOCK, pos);
+	table->philo[pos - 1].clock = sem_open(semaname, O_CREAT, 0600, 1);
+	return (table->philo[pos -1].clock != SEM_FAILED);
 }
 
 //A bunch of hungover dudes pops in the tavern to sit around a table where they
@@ -51,6 +56,7 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 //
 static bool table_semaphores(t_tabl *table)
 {
+	unlink_semaphores();
     table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600,\
 			table->params[CNT]);
    	if (table->semaphores[F0RK] == SEM_FAILED) 
@@ -74,7 +80,6 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	temp = 0;
 	index = 1;
 	table->sim = false;
-	table->pids = NULL;
 	table->philo = NULL;
 	table->params[STS] = -1;
 	table->semaphores[F0RK] = NULL;
@@ -88,10 +93,6 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
-	table->pids = malloc(sizeof(pid_t) * table->params[CNT]);
-	if (!table->pids)
-		return (false);
-	memset(table->pids, -1, sizeof(pid_t) * table->params[CNT]);
 	return (table_semaphores(table));
 }
 

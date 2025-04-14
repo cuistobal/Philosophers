@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/13 16:22:25 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:03:58 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # define MONIT "/monitoring_sem"
 # define BEGIN "/begin_sem"
 # define CLOCK "/clock_sem"
+
+# define SFORKS "sem.fork_sem"
+# define SMONIT "sem.monitoring_sem"
+# define SBEGIN "sem.begin_sem"
+# define SCLOCK "sem.clock_sem"
 
 //Sempahores attributes -Used only in sem_init()-
 # define LOCAL 0
