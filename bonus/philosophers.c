@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:15:14 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:32:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	init_processes(t_tabl *table)
 	while (index < table->params[CNT])
 	{
 		create_child_process(table, index);
-	//	if (!create_child_process(table, index))	
-	//		cleanup_bonus(table, FORK_ERROR);
 		index++;
 	}
 	table->params[STS] = get_timestamp();

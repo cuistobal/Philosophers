@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 11:55:20 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:48:02 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	status(t_phil *philo, char *status);
 
-void	my_usleep(t_phil *philo, long sleep, long start);
+void	my_usl33p(t_phil *philo, long sleep, long start);
 
 int		my_atoi(char *argv);
 

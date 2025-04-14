@@ -6,13 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 10:13:39 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:56:53 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN};
+static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN, DEATH};
 
 void	unlink_semaphores(void)
 {

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:13:51 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:57:20 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,24 @@
 # define MONIT "/monitoring_sem"
 # define BEGIN "/begin_sem"
 # define CLOCK "/clock_sem"
-
-# define SFORKS "sem.fork_sem"
-# define SMONIT "sem.monitoring_sem"
-# define SBEGIN "sem.begin_sem"
-# define SCLOCK "sem.clock_sem"
+# define DEATH "/death_sem"
 
 //Sempahores attributes -Used only in sem_init()-
 # define LOCAL 0
 # define SHARED 1
 
 //Types of semaphors
-# define SEMP 3
+# define SEMP 4
 
 # define F0RK 0
 # define MONT 1
 # define BEGN 2
-
+# define DEAD 3
 
 //Philo's return values
 # define SUCES 0 
 # define FULL 1
-# define DEATH 2
+# define DEID 2
 # define MEM 3 
 
 //Utilities

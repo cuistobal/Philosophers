@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 10:51:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:58:18 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	waiter(t_tabl *table)
 			continue ;
 		else if (WIFEXITED(status))
 		{
-			if (WEXITSTATUS(status) == DEATH)	
+			if (WEXITSTATUS(status) == DEID)	
 				return (death(table));	
 			else if (WEXITSTATUS(status) == FULL)	
 				printf("Philo %d iss full of pasta\n", index);
@@ -61,6 +61,7 @@ bool	waiter(t_tabl *table)
 	return (finished == table->params[CNT]);
 }
 
+/*
 void	create_process(pid_t *pids,	int index)
 {
 	pid_t	current; 
@@ -72,7 +73,6 @@ void	create_process(pid_t *pids,	int index)
 		index == 7 ? (usleep(10000), exit(DEATH)) : index == 4 ? (usleep(1000), exit(FULL)) : (usleep(100), exit(SUCES));
 }
 
-/*
 //test
 int main(int argc, char **argv)
 {

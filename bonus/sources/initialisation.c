@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 09:54:45 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:57:33 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,19 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 //
 static bool table_semaphores(t_tabl *table)
 {
-	unlink_semaphores();
+//	unlink_semaphores();
     table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600,\
 			table->params[CNT]);
    	if (table->semaphores[F0RK] == SEM_FAILED) 
 		return (false);	
 	table->semaphores[MONT] = sem_open(MONIT, O_CREAT, 0600, 1);
-   	if (table->semaphores[F0RK] == SEM_FAILED) 
+   	if (table->semaphores[MONT] == SEM_FAILED) 
 		return (false);	
     table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 0);
-   	if (table->semaphores[F0RK] == SEM_FAILED) 
+   	if (table->semaphores[BEGN] == SEM_FAILED) 
+		return (false);
+    table->semaphores[DEID] = sem_open(DEATH, O_CREAT, 0600, 0);
+   	if (table->semaphores[DEID] == SEM_FAILED) 
 		return (false);
 	return (true);
 }
