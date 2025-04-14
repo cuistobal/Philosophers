@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 10:47:10 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:36:55 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,9 @@ int	main(int argc, char **argv)
 		if (init_table(&table, argv))
 		{
 			init_processes(table);
-			while (!waiter(table))
-			{
-				usleep(TCAP);
-				continue ;
-			}
-	/*
-	 * Gestion des morts
-	 */
-			return (cleanup_bonus(table, NULL), 0);
+			if (waiter(table))
+				return (cleanup_bonus(table, SUCCESS), 0);
+			return (cleanup_bonus(table, "ECHEEEEEC DE LA QUETE"), 0);
 		}
 		return (cleanup_bonus(table, INIT_TABLE), 0);
 	}

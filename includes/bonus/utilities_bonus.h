@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 10:51:26 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:48:29 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define UTILITIES_BONUS_H
 
 # include "utilities.h"
+
+bool	the_sh0w_must_go_on(t_tabl *table);
 
 void	unlink_semaphores(void);
 

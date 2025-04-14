@@ -6,30 +6,46 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 10:19:13 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:48:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
 //
+bool	the_sh0w_must_go_on(t_tabl *table)
+{
+	bool	value;
+
+	value = false;
+	sem_wait(table->semaphores[MONT]);
+	value = table->sim;	
+	sem_post(table->semaphores[MONT]);
+	return (value);
+}
+
+//
 void	my_usleep(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
 
-	printf("%ld\n", philo->stats[POSTN]);
-	remainder = sleep - (get_timestamp() - start);
-	if (remainder > TCAP / MSEC)
-		usleep(TCAP);
-	else
-		usleep(remainder * MSEC);
+	while (the_sh0w_must_go_on(philo->table))
+	{
+		remainder = sleep - (get_timestamp() - start);
+		if (remainder > TCAP / MSEC)
+			usleep(TCAP);
+		else
+			usleep(remainder * MSEC);
+	}
 }
 
 //
 void	status(t_phil *philo, char *status)
 {
+	sem_wait(philo->clock);
 	printf("%ld %ld %s", get_timestamp() - philo->stats[START], \
 			philo->stats[POSTN], status);
+	sem_post(philo->clock);
 }
 
 //
