@@ -6,20 +6,23 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:21:41 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:23:57 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	*monitorinf(void *data)
+static void	*monitoring(void *data)
 {
 	t_phil	*philo;
 
 	philo = (t_phil *)data;
-	while ()
+	while (1)
 	{
-		
+		if (philo->stats[EATEN] == philo->table->params[EAT])
+			return((void *)FULL);
+		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
+			return((void *)DEATH);		
 		usleep(TCAP);
 	}
 	return (NULL);
@@ -48,7 +51,7 @@ static void	uneven_routine(t_phil *philo)
 //After ingesting all those spaghettis, they feel sleepy hence take a nap.
 int	routine(t_phil *philo)
 {
-	p_thread	monitor;
+	pthread_t	monitor;
 
 	sem_wait(philo->table->semaphores[BEGN]);
 
@@ -57,8 +60,8 @@ int	routine(t_phil *philo)
 	
 	sem_post(philo->table->semaphores[BEGN]);
 
-	pthread_create(&monitor, NULL, monitoring(), philo);
-	pthread_detach(&monitor);
+	pthread_create(&monitor, NULL, monitoring, philo);
+	pthread_detach(monitor);
 	while (1)
 	{
 		if (philo->stats[POSTN] & 1)
