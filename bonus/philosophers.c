@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:11:30 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:08:40 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static bool	init_processes(t_tabl *table)
 	int			index;
 	
 	index = 0;
+	table->params[STS] = get_timestamp() + table->params[CNT] * 10;
 	while (index < table->params[CNT])
 	{
 		if (!create_child_process(&table->philo[index]))
 			return (false);
 		index++;
 	}
-	table->params[STS] = get_timestamp();
 	sem_post(table->semaphores[BEGN]);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:55:21 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:00:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@ void	eating(t_phil *philosopher)
 	long	meal_start;
 	
 	sem_wait(philosopher->table->semaphores[F0RK]);
-	sem_wait(philosopher->table->semaphores[F0RK]);	
-
-	int value;
-
-	sem_getvalue(philosopher->clock, &value);
-	printf("Clocks value -> %d\n", value);
+	sem_wait(philosopher->table->semaphores[F0RK]);		
 
 	sem_wait(philosopher->clock);
 
@@ -31,9 +26,6 @@ void	eating(t_phil *philosopher)
 	philosopher->stats[EATEN]++;
 	
 	sem_post(philosopher->clock);
-	
-	sem_getvalue(philosopher->clock, &value);
-	printf("Clocks value -> %d\n", value);
 	
 	status_bonus(philosopher, EATS);
 	

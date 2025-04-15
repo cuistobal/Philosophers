@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:57:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:12:18 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ void	*death_monitor(void *data)
 	meals = philo->table->params[END];	
 	while (1)
 	{
-
-			int value;
-
-	sem_getvalue(philo->table->semaphores[DEAD], &value);
-	printf("dead's value -> %d\n", value);
-
 		sem_wait(philo->table->semaphores[DEAD]);
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
 			break ;		
@@ -47,12 +41,17 @@ static void	routine(t_phil *philo)
 	
 	pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
-	
+
 	sem_wait(philo->table->semaphores[BEGN]);
-
-	philo->stats[LMEAL] = philo->table->params[STS];
-
+	philo->stats[START] = philo->table->params[STS];
 	sem_post(philo->table->semaphores[BEGN]);
+	
+	philo->stats[LMEAL] = philo->stats[START];
+	
+	while (get_timestamp() < philo->stats[START])
+		usleep(1);
+
+	printf("Lets get this party started -> %ld\n", get_timestamp() - philo->stats[LMEAL]);
 	
 	if (philo->stats[POSTN] & 0)
 		thinking(philo);
@@ -76,6 +75,5 @@ bool	create_child_process(t_phil	*philosopher)
 	}
 	else if (philosopher->pid == 0)
 		routine(philosopher);
-	printf("process %d\n", philosopher->pid);
 	return (true);
 }
