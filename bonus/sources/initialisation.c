@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:28:05 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:47:46 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static bool table_semaphores(t_tabl *table)
 	sem_unlink(MONIT);
 	sem_unlink(BEGIN);
 	sem_unlink(DEATH);
+	sem_unlink(REPUS);
     table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600,\
 			table->params[CNT]);
    	if (table->semaphores[F0RK] == SEM_FAILED) 
@@ -73,6 +74,9 @@ static bool table_semaphores(t_tabl *table)
     table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
    	if (table->semaphores[DEAD] == SEM_FAILED) 
 		return (false);
+    table->semaphores[FULL] = sem_open(REPUS, O_CREAT, 0600, 0);
+   	if (table->semaphores[FULL] == SEM_FAILED) 
+		return (false);
 	return (true);
 }
 
@@ -80,18 +84,18 @@ static bool table_semaphores(t_tabl *table)
 //This function initialises the table's parameter.
 static bool	append_table_parameters(t_tabl *table, char **argv)
 {
+	int i;
 	int	temp;
 	int	index;
 
+	i = -1;
 	temp = 0;
 	index = 1;
 	table->sim = true;
 	table->philo = NULL;
 	table->params[STS] = -1;
-	table->semaphores[F0RK] = NULL;
-	table->semaphores[MONT] = NULL;
-	table->semaphores[BEGN] = NULL;
-	table->semaphores[DEID] = NULL;
+	while (++i < SEMP)
+		table->semaphores[i] = NULL;
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);

@@ -6,12 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:26:59 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:16:47 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+//
 void	*death_monitor(void *data)
 {
 	long 	die;
@@ -23,22 +24,33 @@ void	*death_monitor(void *data)
 	meals = philo->table->params[END];	
 	while (1)
 	{
-		sem_wait(philo->table->semaphores[DEAD]);
+		sem_wait(philo->table->semaphores[MONT]);
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
-			break ;		
-		sem_post(philo->table->semaphores[DEAD]);
+		{
+			philo->table->sim = false;
+			sem_post(philo->table->semaphores[MONT]);
+			sem_post(philo->table->semaphores[DEAD]);
+			break ;
+		}
+		if (meals > 0 && philo->stats[EATEN] >= meals)
+		{
+			sem_post(philo->table->semaphores[MONT]);
+			sem_post(philo->table->semaphores[FULL]);
+			break ;
+		}
+		sem_post(philo->table->semaphores[MONT]);
 		usleep(TCAP);
 	}
 	return (NULL);
 }
 
+//
 static void	routine(t_phil *philo)
 {
 	pthread_t	death;
-	
+
 	pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
-
 	sem_wait(philo->table->semaphores[BEGN]);
 	philo->stats[START] = philo->table->params[STS];
 	sem_post(philo->table->semaphores[BEGN]);
@@ -50,13 +62,14 @@ static void	routine(t_phil *philo)
 
 	if (philo->stats[POSTN] & 0)
 		thinking(philo);
-	while (1)
+
+	while (the_sh0w_must_go_on(philo->table))
 	{
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
 	}
-	philo->table->sim ? printf("sim\n") : printf("aled %ld\n", philo->stats[POSTN]);
+	exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);
 }
 
 //

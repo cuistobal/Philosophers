@@ -6,25 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:56:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:48:22 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN, DEATH};
-
-void	unlink_semaphores(void)
-{
-	int	index;
-
-	index = 0;
-	while (index < SEMP)
-	{
-		unlink(semanames[index]);
-		index++;
-	}
-}
+static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN, DEATH, REPUS};
 
 static void	sema_cleanup(t_phil *philo, int pcount)
 {

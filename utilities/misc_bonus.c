@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:07:49 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:30:05 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 	long	remainder;
 
 	remainder = 0;
-	while (philo)
+	while (the_sh0w_must_go_on(philo->table))
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
@@ -40,7 +40,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 		else
 			usleep(remainder * MSEC);
 	}
-	usleep(sleep * MSEC);
+//	usleep(sleep * MSEC);
 }
 
 //

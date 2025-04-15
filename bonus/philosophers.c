@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:08:40 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:59:54 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ int	main(int argc, char **argv)
 	
 	init_processes(table);
 
-	while (table->sim)
-	{	
-		if (waiter(table))
-			return (cleanup_bonus(table, SUCCESS), 0);
-	//	printf("THe show must go on.\n");
-	}
-
+	while (!waiter(table))
+		usleep(TCAP);
+	printf("finito\n");
 }

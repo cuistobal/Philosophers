@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:00:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:41:26 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	eating(t_phil *philosopher)
 	sem_wait(philosopher->table->semaphores[F0RK]);		
 
 	sem_wait(philosopher->clock);
-
+	
 	philosopher->stats[LMEAL] = get_timestamp();
 	meal_start = philosopher->stats[LMEAL];
 	philosopher->stats[EATEN]++;
-	
+
 	sem_post(philosopher->clock);
 	
 	status_bonus(philosopher, EATS);
