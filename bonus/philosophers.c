@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:32:41 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:32:29 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,22 @@ static void	init_processes(t_tabl *table)
 //
 int	main(int argc, char **argv)
 {
-	t_tabl	*table;
-
+	t_tabl		*table;
+	pthread_t	monitoring;
+	
 	table = NULL;
 	if (argc == 5 || argc == 6)
 	{
 		if (init_table(&table, argv))
 		{
 			init_processes(table);
+			pthread_create(&monitoring, NULL, kindergarten, table);
+			pthread_detach(monitoring);
+			/*
 			if (waiter(table))
 				return (cleanup_bonus(table, SUCCESS), 0);
 			return (cleanup_bonus(table, "ECHEEEEEC DE LA QUETE"), 0);
+		*/
 		}
 		return (cleanup_bonus(table, INIT_TABLE), 0);
 	}

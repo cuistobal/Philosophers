@@ -24,6 +24,7 @@ SOURCES_MAN = \
 
 SOURCES_BONUS = \
 	bonus/philosophers.c \
+	bonus/sources/monitoring.c \
 	bonus/sources/initialisation.c \
 	bonus/sources/create_process.c \
 	bonus/sources/philo_sub_routines.c \

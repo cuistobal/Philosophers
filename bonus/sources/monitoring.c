@@ -6,20 +6,22 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:21:24 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 16:45:09 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:34:09 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	*monitoring(void *data)
+void	*kindergarten(void *data)
 {
+	int		index;
 	t_tabl	*table;
 
+	index = 0;
 	table = (t_tabl *)data;
-	while (table->simulation)
-	{
-		if (!waiter(table))
+	while (table->sim)
+	{	
+		waiter(table);
 	}
 	return (NULL);
 }

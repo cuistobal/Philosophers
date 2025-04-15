@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:58:18 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:33:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static bool	death(t_tabl *table)
 //Sending and *index to take kill processes in case we get a wrong exti status
 //void	waiter(t_tabl *table, int *index, bool *success)
 bool	waiter(t_tabl *table)
-	//	int count)
 {
 	pid_t	pid;
 	int		index;
@@ -53,7 +52,7 @@ bool	waiter(t_tabl *table)
 			if (WEXITSTATUS(status) == DEID)	
 				return (death(table));	
 			else if (WEXITSTATUS(status) == FULL)	
-				printf("Philo %d iss full of pasta\n", index);
+				printf("Philo %d is full of pasta\n", index);
 			finished++;	
 		}
 		index++;

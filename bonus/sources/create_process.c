@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:57:51 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:23:15 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ int	routine(t_phil *philo)
 			even_routine(philo);
 		else
 			uneven_routine(philo);
+		/*
 		if (philo->stats[EATEN] == philo->table->params[EAT])
 			return(FULL);
 		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
 			return(DEID);
+	*/
 	}
 	return (MEM);
 }
