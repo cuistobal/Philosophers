@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/08 11:27:32 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:48:15 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,16 @@ void	sleeping(t_phil *philosopher)
 
 //The philos are right handed if an even number sits around the table. They 
 //become left handed otherwise.
-void	thinking(t_phil	*philosopher)
+void	thinking(t_phil	*philo)
 {
-	if (the_show_must_go_on(philosopher))
+	long	think;
+
+	think = 0;
+	if (the_show_must_go_on(philo))
 	{
-		status(philosopher, THNK);
-		my_usleep(philosopher, 1, get_timestamp());
+		status(philo, THNK);
+		think =	(philo->table->params[DIE] - \
+				(philo->table->params[EAT] + philo->table->params[SLP])) >> 1;
+		my_usleep(philo, think, get_timestamp());
 	}
 }
