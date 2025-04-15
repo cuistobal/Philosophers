@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 12:09:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:33:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 }
 
 //
-void	status(t_phil *philo, char *status)
+void	status_bonus(t_phil *philo, char *status)
 {
 	sem_wait(philo->clock);
 	printf("%ld %ld %s", get_timestamp() - philo->stats[START], \

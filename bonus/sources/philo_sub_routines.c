@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 12:10:28 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:34:06 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	eating(t_phil *philosopher)
 {
 	long	meal_start;
-
+	
 	sem_wait(philosopher->table->semaphores[F0RK]);
 	sem_wait(philosopher->table->semaphores[F0RK]);	
 
@@ -27,13 +27,10 @@ void	eating(t_phil *philosopher)
 	
 	sem_post(philosopher->clock);
 	
-	status(philosopher, EATS);
-	
-//	printf("BEFORE	->	%ld\n", (long)get_timestamp);
+	status_bonus(philosopher, EATS);
 	
 	my_usl33p(philosopher, philosopher->table->params[EAT], meal_start);
 
-//	printf("AFTER	->	%ld\n", (long)get_timestamp);
 	sem_post(philosopher->table->semaphores[F0RK]);
 	sem_post(philosopher->table->semaphores[F0RK]);	
 }
@@ -41,7 +38,7 @@ void	eating(t_phil *philosopher)
 // *rompiche intensifies*
 void	sleeping(t_phil *philosopher)
 {
-	status(philosopher, SLEP);
+	status_bonus(philosopher, SLEP);
 	my_usl33p(philosopher, philosopher->table->params[SLP], get_timestamp());
 }
 
@@ -49,6 +46,6 @@ void	sleeping(t_phil *philosopher)
 //become left handed otherwise.
 void	thinking(t_phil	*philosopher)
 {
-	status(philosopher, THNK);
+	status_bonus(philosopher, THNK);
 	my_usl33p(philosopher, 1, get_timestamp());
 }
