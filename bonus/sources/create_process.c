@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:12:18 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:26:59 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	*death_monitor(void *data)
 static void	routine(t_phil *philo)
 {
 	pthread_t	death;
-	int			exit_code;
-
-	exit_code = 0;
 	
 	pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
@@ -51,8 +48,6 @@ static void	routine(t_phil *philo)
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
-	printf("Lets get this party started -> %ld\n", get_timestamp() - philo->stats[LMEAL]);
-	
 	if (philo->stats[POSTN] & 0)
 		thinking(philo);
 	while (1)
@@ -61,7 +56,7 @@ static void	routine(t_phil *philo)
 		sleeping(philo);
 		thinking(philo);
 	}
-	exit(exit_code);
+	philo->table->sim ? printf("sim\n") : printf("aled %ld\n", philo->stats[POSTN]);
 }
 
 //

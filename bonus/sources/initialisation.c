@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:58:41 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:28:05 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 
 	temp = 0;
 	index = 1;
-	table->sim = false;
+	table->sim = true;
 	table->philo = NULL;
 	table->params[STS] = -1;
 	table->semaphores[F0RK] = NULL;
