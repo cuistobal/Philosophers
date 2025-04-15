@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 17:17:40 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:09:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static bool	death(t_tabl *table)
 		kill(table->philo[index].pid, SIGINT);
 		index++;
 	}
+	sem_wait(table->semaphores[BEGN]);
 	table->sim = false;
+	sem_post(table->semaphores[BEGN]);
 	return (true);
 }
 
@@ -47,11 +49,11 @@ bool	waiter(t_tabl *table)
 		pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
 		if (pid != 0 && WIFEXITED(status))
 		{
-			if (WEXITSTATUS(status) < 0)	
+			if (WEXITSTATUS(status))
 				return (death(table));
 			finished++;	
 		}
 		index++;
-	}	
+	}
 	return (finished == table->params[CNT]);
 }

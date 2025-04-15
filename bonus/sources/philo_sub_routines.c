@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:41:26 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:08:28 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	eating(t_phil *philosopher)
 	long	meal_start;
 	
 	sem_wait(philosopher->table->semaphores[F0RK]);
+	status_bonus(philosopher, FORK);	
 	sem_wait(philosopher->table->semaphores[F0RK]);		
+	status_bonus(philosopher, FORK);	
 
 	sem_wait(philosopher->clock);
 	
@@ -44,8 +46,12 @@ void	sleeping(t_phil *philosopher)
 
 //The philos are right handed if an even number sits around the table. They 
 //become left handed otherwise.
-void	thinking(t_phil	*philosopher)
+void	thinking(t_phil	*philo)
 {
-	status_bonus(philosopher, THNK);
-	my_usl33p(philosopher, 1, get_timestamp());
+	long	think;
+
+	think =	(philo->table->params[DIE] - \
+				(philo->table->params[EAT] + philo->table->params[SLP])) >> 1;
+	status_bonus(philo, THNK);
+	my_usl33p(philo, think, get_timestamp());
 }

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 17:16:47 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:10:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ static void	routine(t_phil *philo)
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
-	if (philo->stats[POSTN] & 0)
+	if (philo->stats[POSTN] & 1)
 		thinking(philo);
-
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		eating(philo);
