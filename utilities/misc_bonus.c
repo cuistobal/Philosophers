@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:52:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:09:22 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
 
-	while (the_sh0w_must_go_on(philo->table))
+	remainder = 0;
+	//while (the_sh0w_must_go_on(philo->table))
+	while (philo)
 	{
 		remainder = sleep - (get_timestamp() - start);
-	//	printf("sleep = %ld && start = %ld	->	remainder = %ld\n", sleep, start, remainder);
+		if (remainder <= 0)
+			break ;
 		if (remainder > TCAP / MSEC)
 			usleep(TCAP);
 		else

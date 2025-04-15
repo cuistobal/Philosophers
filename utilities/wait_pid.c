@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 11:33:45 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:34:26 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,24 @@ bool	waiter(t_tabl *table)
 	int		index;
 	int		status;
 	int		finished;
-
+	
 	index = 0;
 	finished = 0;
-	while (table->sim)
+	while (index < table->params[CNT])
 	{
-		pid = waitpid(0, &status, WNOHANG);
+		pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
 		if (pid == 0)
 			continue ;
 		else if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == DEID)	
-				return (death(table));	
-			else if (WEXITSTATUS(status) == FULL)	
-				printf("Philo %d is full of pasta\n", index);
+				return (death(table));
+			else if (WEXITSTATUS(status) == FULL)
+				printf("Philo is full of pasta\n");
 			finished++;	
 		}
 		index++;
-	}
+	}	
 	return (finished == table->params[CNT]);
 }
 
