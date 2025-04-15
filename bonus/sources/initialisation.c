@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:44:57 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:58:41 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ static bool table_semaphores(t_tabl *table)
     table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 0);
    	if (table->semaphores[BEGN] == SEM_FAILED) 
 		return (false);
-//	sem_wait(table->semaphores[BEGN]);
-    table->semaphores[DEID] = sem_open(DEATH, O_CREAT, 0600, 0);
-   	if (table->semaphores[DEID] == SEM_FAILED) 
+    table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
+   	if (table->semaphores[DEAD] == SEM_FAILED) 
 		return (false);
 	return (true);
 }
@@ -92,6 +91,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	table->semaphores[F0RK] = NULL;
 	table->semaphores[MONT] = NULL;
 	table->semaphores[BEGN] = NULL;
+	table->semaphores[DEID] = NULL;
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);

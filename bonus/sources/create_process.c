@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 15:43:51 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:57:35 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	*death_monitor(void *data)
 	meals = philo->table->params[END];	
 	while (1)
 	{
-		sem_wait(philo->clock);
+
+			int value;
+
+	sem_getvalue(philo->table->semaphores[DEAD], &value);
+	printf("dead's value -> %d\n", value);
+
+		sem_wait(philo->table->semaphores[DEAD]);
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
-			break ;
-		
-		/*
-		else if (meals > 0 && philo->stats[EATEN] == meals)
-			break ;
-		*/
-		
-		sem_post(philo->clock);
+			break ;		
+		sem_post(philo->table->semaphores[DEAD]);
 		usleep(TCAP);
 	}
 	return (NULL);
@@ -47,17 +47,13 @@ static void	routine(t_phil *philo)
 	
 	pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
-
-	int value;
-	
-	sem_getvalue(philo->table->semaphores[BEGN], &value);
-	printf("sem's value -> %d", value);
 	
 	sem_wait(philo->table->semaphores[BEGN]);
 
 	philo->stats[LMEAL] = philo->table->params[STS];
 
 	sem_post(philo->table->semaphores[BEGN]);
+	
 	if (philo->stats[POSTN] & 0)
 		thinking(philo);
 	while (1)
@@ -66,7 +62,6 @@ static void	routine(t_phil *philo)
 		sleeping(philo);
 		thinking(philo);
 	}
-	pthread_join(death, NULL);
 	exit(exit_code);
 }
 
