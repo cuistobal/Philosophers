@@ -54,5 +54,8 @@ dkms.conf
 # Vim stuff
 tags
 
+*.swp
+*.vscode*
+
 philo
 philo_bonus
