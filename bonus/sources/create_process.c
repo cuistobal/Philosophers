@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:28:31 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/17 14:20:22 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ static void	routine(t_phil *philo)
 
 	if (philo->stats[POSTN] & 1)
 		thinking(philo);
+
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		eating(philo);
-	    if (philo->status[1])
-            exit(1);
+//	    if (philo->status[1])
+  //          exit(0);
         sleeping(philo);
 		thinking(philo);
 	}

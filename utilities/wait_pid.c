@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 13:01:59 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/17 14:19:33 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,20 @@ bool	waiter(t_tabl *table)
 	int		finished;
 	
 	index = 0;
-	finished = 0;
-	while (index < table->params[CNT] && finished != table->params[CNT])
-	{
-		waitpid(table->philo[index].pid, &status, WNOHANG);
-        if (WIFEXITED(status))
-        {
-            if (status > 1)
-                finished++;
+    while (finished != table->params[CNT])
+    {
+	    finished = 0;
+	    while (index < table->params[CNT])
+	    {
+    		waitpid(table->philo[index].pid, &status, WNOHANG);
+            if (WIFEXITED(status))
+            {
+                if (status > 1)
+                    finished++;
           //  else
             //    death(table);
             //printf("finished %d index %d && status %d\n", finished, index, status);
-        }
+            }
 		/*
         pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
 		if (pid != 0 && WIFEXITED(status))
@@ -69,7 +71,9 @@ bool	waiter(t_tabl *table)
             finished++;	
 		}
         */
-		index++;
-	}
+		    index++;
+	    }
+        //printf("finished = %d\n", finished);
+    }
 	return (finished == table->params[CNT]);
 }
