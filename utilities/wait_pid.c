@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 14:19:33 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/17 14:28:36 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ bool	waiter(t_tabl *table)
 	int		finished;
 	
 	index = 0;
+	finished = 0;
     while (finished != table->params[CNT])
     {
+	    index = 0;
 	    finished = 0;
 	    while (index < table->params[CNT])
 	    {
