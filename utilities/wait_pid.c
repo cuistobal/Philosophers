@@ -6,12 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:31:45 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/17 13:01:59 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+/*
 static bool	death(t_tabl *table)
 {
 	int	index;
@@ -27,7 +28,7 @@ static bool	death(t_tabl *table)
 	sem_post(table->semaphores[BEGN]);
 	return (true);
 }
-
+*/
 //If the philosopher is full -> kill him with FULL signal
 //If the philosopher is dead -> kill him with DEAD signal
 //
@@ -37,7 +38,7 @@ static bool	death(t_tabl *table)
 //void	waiter(t_tabl *table, int *index, bool *success)
 bool	waiter(t_tabl *table)
 {
-	pid_t	pid;
+//	pid_t	pid;
 	int		index;
 	int		status;
 	int		finished;
@@ -46,16 +47,28 @@ bool	waiter(t_tabl *table)
 	finished = 0;
 	while (index < table->params[CNT] && finished != table->params[CNT])
 	{
-		pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
+		waitpid(table->philo[index].pid, &status, WNOHANG);
+        if (WIFEXITED(status))
+        {
+            if (status > 1)
+                finished++;
+          //  else
+            //    death(table);
+            //printf("finished %d index %d && status %d\n", finished, index, status);
+        }
+		/*
+        pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
 		if (pid != 0 && WIFEXITED(status))
 		{
+            printf("status = %d\n", status);
 			if (WEXITSTATUS(status) != 0 && WEXITSTATUS(status) != 1)
             {
-                printf("You are ded %ld\n", table->philo[index].stats[POSTN]);
+                printf("You are ded %ld -> %d\n", table->philo[index].stats[POSTN], status);
 				return (death(table));
             }
             finished++;	
 		}
+        */
 		index++;
 	}
 	return (finished == table->params[CNT]);
