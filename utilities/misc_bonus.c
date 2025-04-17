@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:30:05 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:25:01 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	the_sh0w_must_go_on(t_tabl *table)
 
 	value = false;
 	sem_wait(table->semaphores[MONT]);
-	value = table->sim;	
+    value = table->sim;	
 	sem_post(table->semaphores[MONT]);
 	return (value);
 }
@@ -40,7 +40,6 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 		else
 			usleep(remainder * MSEC);
 	}
-//	usleep(sleep * MSEC);
 }
 
 //

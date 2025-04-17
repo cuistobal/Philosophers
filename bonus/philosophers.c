@@ -6,12 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 19:05:36 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:15:43 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+//
 static void	*child_monitor(void *data)
 {
 	t_tabl	*table;
@@ -29,18 +30,22 @@ static void	*child_monitor(void *data)
 //
 static bool	init_processes(t_tabl *table)
 {
-	int			index;
+    int	    index;
+    long    start;
 	
 	index = 0;
-	table->params[STS] = get_timestamp() + table->params[CNT] * 10;
+    sem_wait(table->semaphores[BEGN]);
+    start = get_timestamp() + table->params[CNT] * 10;
+    table->params[STS] = start;
 	while (index < table->params[CNT])
 	{
+        table->philo[index].stats[START] = start;
+        table->philo[index].stats[LMEAL] = start;
 		if (!create_child_process(&table->philo[index]))
 			return (false);
 		index++;
 	}
-	sem_post(table->semaphores[BEGN]);
-	return (true);
+    return (true);
 }
 
 //
@@ -58,11 +63,11 @@ int	main(int argc, char **argv)
 	
 	init_processes(table);
 	
+    temp = NULL;
 	pthread_create(&monitoring, NULL, child_monitor, table);	
 	pthread_join(monitoring, &temp);
 	if (!temp)
 		return (cleanup_bonus(table, NULL), 0);
-
 	for (int i= 0; i < table->params[CNT]; i++)
 		kill(table->philo[i].pid, SIGINT);
 	return (cleanup_bonus(table, SUCCESS), 0);

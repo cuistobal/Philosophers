@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:47:46 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:25:14 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static bool	a_wild_philosopher_appears(t_tabl *table, int pos)
 	table->philo[pos - 1].stats[EATEN] = 0;
 	table->philo[pos - 1].stats[LMEAL] = 0;
 	table->philo[pos - 1].stats[START] = 0;
+    table->philo[pos -1].status[0] = false;
+    table->philo[pos -1].status[1] = false;
 	sem_name(semaname, CLOCK, pos);
 	table->philo[pos - 1].clock = sem_open(semaname, O_CREAT, 0600, 1);
 	return (table->philo[pos -1].clock != SEM_FAILED);
@@ -68,7 +70,7 @@ static bool table_semaphores(t_tabl *table)
 	table->semaphores[MONT] = sem_open(MONIT, O_CREAT, 0600, 1);
    	if (table->semaphores[MONT] == SEM_FAILED) 
 		return (false);	
-    table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 0);
+    table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 1);
    	if (table->semaphores[BEGN] == SEM_FAILED) 
 		return (false);
     table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
