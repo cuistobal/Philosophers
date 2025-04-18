@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:28:31 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 10:40:58 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	routine(t_phil *philo)
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
-	if (philo->stats[POSTN] & 1)
+	if (!(philo->stats[POSTN] & 1))
 		thinking(philo);
 	while (the_sh0w_must_go_on(philo->table))
 	{
