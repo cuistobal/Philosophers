@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 14:26:58 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 10:53:55 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,28 @@ void	*death_monitor(void *data)
 {
 	long 	die;
 	long	meals;
+	bool	death;
 	t_phil	*philo;
 
+	death = false;
 	philo = (t_phil *)data;
 	die = philo->table->params[DIE];
 	meals = philo->table->params[END];	
-	while (1)
+	while (!death)
 	{
 		sem_wait(philo->table->semaphores[MONT]);
 		sem_wait(philo->clock);
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
 		{
+			status_bonus(philo, DIED);
             philo->status[0] = true;
-            sem_post(philo->clock);
 			philo->table->sim = false;
-			sem_post(philo->table->semaphores[MONT]);
-			sem_post(philo->table->semaphores[DEAD]);
-			break ;
+			death  =true;
 		}
-		if (meals > 0 && philo->stats[EATEN] >= meals)
+		else if (meals > 0 && philo->stats[EATEN] >= meals)
 		{
             philo->status[1] = true;
-            sem_post(philo->clock);
-			sem_post(philo->table->semaphores[MONT]);
-			sem_post(philo->table->semaphores[FULL]);
-			break ;
+			death = true;
 		}
         sem_post(philo->clock);
 		sem_post(philo->table->semaphores[MONT]);

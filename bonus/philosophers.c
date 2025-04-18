@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 14:15:51 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 10:47:07 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,9 @@ int	main(int argc, char **argv)
 	
 	init_processes(table);
 	
-//    temp = NULL;
 	pthread_create(&monitoring, NULL, child_monitor, table);	
 	pthread_join(monitoring, NULL);
-    int i = 0;
-    for (i = 0; i < table->params[CNT]; i++)
-        sem_wait(table->semaphores[FULL]);
-    if (i == table->params[CNT])
-        printf("all full\n");
-    else
-        printf("Someone died\n");
-//	if (!temp)
-//		return (cleanup_bonus(table, NULL), 0);
-//    pthread_detach(moniitoring); 
-	for (int i= 0; i < table->params[CNT]; i++)
-		kill(table->philo[i].pid, SIGINT);
+//	pthread_detach(monitoring);
+
 	return (cleanup_bonus(table, SUCCESS), 0);
 }

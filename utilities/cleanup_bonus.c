@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:48:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:50:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ static void	sema_cleanup(t_phil *philo, int pcount)
 		index++;
 	}
 }
+
+static void	kill_philos(t_phil *philo, int pcount)	
+{
+	int index;
+
+	index = 0;
+	while (index < pcount)	
+	{
+		kill(philo[index].pid, SIGINT);
+		index++;
+	}
+}
+
 void	cleanup_bonus(t_tabl *table, char *message)
 {
 	int	index;
@@ -40,8 +53,9 @@ void	cleanup_bonus(t_tabl *table, char *message)
 			sem_unlink(semanames[index]);
 			index++;
 		}
-		if (table->philo)		
+		if (table->philo)
 		{
+			kill_philos(table->philo, table->params[CNT]);
 			sema_cleanup(table->philo, table->params[CNT]);
 			free(table->philo);
 			table->philo = NULL;
