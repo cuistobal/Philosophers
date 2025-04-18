@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/18 09:26:59 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:12:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,13 @@ void	*death_monitor(void *data)
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
 		{
             philo->status[0] = true;
-//          sem_post(philo->clock);
+			status_bonus(philo, DIED);
 			philo->table->sim = false;
-//			sem_post(philo->table->semaphores[MONT]);
-//			sem_post(philo->table->semaphores[DEAD]);
-//			break ;
-			monit = false;	
+			monit = false;
 		}
-		if (meals > 0 && philo->stats[EATEN] >= meals)
+		else if (meals > 0 && philo->stats[EATEN] >= meals)
 		{
             philo->status[1] = true;
-//          sem_post(philo->clock);
-//			sem_post(philo->table->semaphores[MONT]);
-//			sem_post(philo->table->semaphores[FULL]);
-//			break ;
 			monit = false;	
 		}
         sem_post(philo->clock);
@@ -61,25 +54,24 @@ static void	routine(t_phil *philo)
 
     pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
+	
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
 	if (!(philo->stats[POSTN] & 1))
 		thinking(philo);
+	
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		eating(philo);
-	    if (philo->status[1])
-            exit(0);
-		else if (philo->status[0])
-		{
-			status_bonus(philo, DIED);
-            exit(-1);
-		}
 		sleeping(philo);
 		thinking(philo);
 	}
-    exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);
+	
+	if (philo->status[0])
+		exit(-1);
+   	exit(0);
+	// exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);
 }
 
 //
