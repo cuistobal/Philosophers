@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/18 09:05:45 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/18 09:26:59 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,35 @@ void	*death_monitor(void *data)
 {
 	long 	die;
 	long	meals;
+	bool	monit;
 	t_phil	*philo;
 
+	monit = true;	
 	philo = (t_phil *)data;
 	die = philo->table->params[DIE];
 	meals = philo->table->params[END];	
-	while (1)
+	while (monit)
 	{
 		sem_wait(philo->table->semaphores[MONT]);
 		sem_wait(philo->clock);
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
 		{
             philo->status[0] = true;
-            sem_post(philo->clock);
+//          sem_post(philo->clock);
 			philo->table->sim = false;
-			sem_post(philo->table->semaphores[MONT]);
-			sem_post(philo->table->semaphores[DEAD]);
-			break ;
+//			sem_post(philo->table->semaphores[MONT]);
+//			sem_post(philo->table->semaphores[DEAD]);
+//			break ;
+			monit = false;	
 		}
 		if (meals > 0 && philo->stats[EATEN] >= meals)
 		{
             philo->status[1] = true;
-            sem_post(philo->clock);
-			sem_post(philo->table->semaphores[MONT]);
-			sem_post(philo->table->semaphores[FULL]);
-			break ;
+//          sem_post(philo->clock);
+//			sem_post(philo->table->semaphores[MONT]);
+//			sem_post(philo->table->semaphores[FULL]);
+//			break ;
+			monit = false;	
 		}
         sem_post(philo->clock);
 		sem_post(philo->table->semaphores[MONT]);
@@ -60,14 +64,19 @@ static void	routine(t_phil *philo)
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
-	if (philo->stats[POSTN] & 0)
+	if (!(philo->stats[POSTN] & 1))
 		thinking(philo);
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		eating(philo);
 	    if (philo->status[1])
-            exit(1);
-        sleeping(philo);
+            exit(0);
+		else if (philo->status[0])
+		{
+			status_bonus(philo, DIED);
+            exit(-1);
+		}
+		sleeping(philo);
 		thinking(philo);
 	}
     exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);

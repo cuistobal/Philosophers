@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:31:45 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 09:18:56 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static bool	death(t_tabl *table)
 		kill(table->philo[index].pid, SIGINT);
 		index++;
 	}
-	sem_wait(table->semaphores[BEGN]);
+	sem_wait(table->semaphores[DEAD]);
 	table->sim = false;
-	sem_post(table->semaphores[BEGN]);
+	sem_post(table->semaphores[DEAD]);
 	return (true);
 }
 
@@ -50,10 +50,7 @@ bool	waiter(t_tabl *table)
 		if (pid != 0 && WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) != 0 && WEXITSTATUS(status) != 1)
-            {
-                printf("You are ded %ld\n", table->philo[index].stats[POSTN]);
 				return (death(table));
-            }
             finished++;	
 		}
 		index++;

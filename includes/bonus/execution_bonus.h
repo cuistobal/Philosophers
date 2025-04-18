@@ -1,6 +1,7 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
+bool	i_m_alive(t_phil *philo);
 
 bool	init_table(t_tabl **table, char **argv);
 

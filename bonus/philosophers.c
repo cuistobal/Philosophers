@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:15:43 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 09:19:14 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 {
 	void		*temp;
 	t_tabl		*table;
-	pthread_t	monitoring;
+	pthread_t	monitoring_thread;
 
 	table = NULL;
 	if (argc != 5 && argc != 6)
@@ -64,11 +64,11 @@ int	main(int argc, char **argv)
 	init_processes(table);
 	
     temp = NULL;
-	pthread_create(&monitoring, NULL, child_monitor, table);	
-	pthread_join(monitoring, &temp);
+	pthread_create(&monitoring_thread, NULL, child_monitor, table);	
+	pthread_join(monitoring_thread, &temp);
 	if (!temp)
 		return (cleanup_bonus(table, NULL), 0);
-	for (int i= 0; i < table->params[CNT]; i++)
-		kill(table->philo[i].pid, SIGINT);
+//	for (int i= 0; i < table->params[CNT]; i++)
+//		kill(table->philo[i].pid, SIGINT);
 	return (cleanup_bonus(table, SUCCESS), 0);
 }
