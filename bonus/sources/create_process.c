@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/18 10:53:55 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:09:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*death_monitor(void *data)
 	philo = (t_phil *)data;
 	die = philo->table->params[DIE];
 	meals = philo->table->params[END];	
-	while (!death)
+	while (death)
 	{
 		sem_wait(philo->table->semaphores[MONT]);
 		sem_wait(philo->clock);
@@ -33,7 +33,7 @@ void	*death_monitor(void *data)
 			status_bonus(philo, DIED);
             philo->status[0] = true;
 			philo->table->sim = false;
-			death  =true;
+			death = true;
 		}
 		else if (meals > 0 && philo->stats[EATEN] >= meals)
 		{
@@ -54,21 +54,21 @@ static void	routine(t_phil *philo)
 
     pthread_create(&death, NULL, death_monitor, philo);
 	pthread_detach(death);
+
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
 
-	if (philo->stats[POSTN] & 1)
+	if (!(philo->stats[POSTN] & 1))
 		thinking(philo);
 
-	while (the_sh0w_must_go_on(philo->table))
+	while (the_sh0w_must_go_on(philo->table, philo))
 	{
 		eating(philo);
-//	    if (philo->status[1])
-  //          exit(0);
         sleeping(philo);
 		thinking(philo);
 	}
-    exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);
+	exit(0);
+//	exit(get_timestamp() - philo->stats[LMEAL] <= philo->table->params[DIE]);
 }
 
 //

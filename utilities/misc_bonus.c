@@ -6,14 +6,14 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:25:01 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/18 11:09:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
 //
-bool	the_sh0w_must_go_on(t_tabl *table)
+bool	the_sh0w_must_go_on(t_tabl *table, t_phil *philo)
 {
 	bool	value;
 
@@ -21,6 +21,10 @@ bool	the_sh0w_must_go_on(t_tabl *table)
 	sem_wait(table->semaphores[MONT]);
     value = table->sim;	
 	sem_post(table->semaphores[MONT]);
+	sem_wait(philo->clock);
+	if (philo->status[0] || philo->status[1])
+		value = false;	
+	sem_post(philo->clock);
 	return (value);
 }
 
@@ -30,7 +34,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 	long	remainder;
 
 	remainder = 0;
-	while (the_sh0w_must_go_on(philo->table))
+	while (the_sh0w_must_go_on(philo->table, philo))
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
