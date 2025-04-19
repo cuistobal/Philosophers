@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 09:37:41 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:38:07 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define INIT_TABLE "Failed to initialise the simulation."
 
 //Misc
-# define SUCCESS "Greaaaaat suucceeeeeees."
+# define SUCCESS "Greaaaaat suucceeeeeees.\n"
 # define MSEC 1000
 # define TCAP 10000
 

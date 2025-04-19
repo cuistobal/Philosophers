@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/18 11:09:18 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 09:29:10 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		my_atoi(char *argv);
 
 long	get_timestamp(void);
 
-bool	the_sh0w_must_go_on(t_tabl *table, t_phil *philo);
+bool	the_sh0w_must_go_on(t_tabl *table);
 
 void	unlink_semaphores(void);
 

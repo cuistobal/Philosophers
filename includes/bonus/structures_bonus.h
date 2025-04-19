@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/17 11:23:05 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/19 10:45:45 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 typedef struct phil
 {
 	pid_t			pid;
+	pthread_t		death;
 	sem_t			*clock;
 	struct table	*table;
-    bool            status[2];
 	long			stats[STATS];
 	char			semaname[BUFFER_SIZE];
 }	t_phil;

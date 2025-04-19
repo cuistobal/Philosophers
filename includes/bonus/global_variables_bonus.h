@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:42:18 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 16:49:38 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:50:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 //Semaphor's names
 # define FORKS "/fork_sem"
 # define MONIT "/monitoring_sem"
-# define BEGIN "/begin_sem"
 # define CLOCK "/clock_sem"
 # define DEATH "/death_sem"
+# define BEGIN "/begin_sem"
 # define REPUS "/full_sem"
 
 //Sempahores attributes -Used only in sem_init()-
@@ -28,12 +28,12 @@
 # define SHARED 1
 
 //Types of semaphors
-# define SEMP 5
+# define SEMP 3 
 
 # define F0RK 0
 # define MONT 1
-# define BEGN 2
-# define DEAD 3
+# define DEAD 2
+# define BEGN 3
 # define FULL 4
 
 //Utilities
