@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 11:47:19 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 14:34:31 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static bool	init_processes(t_tabl *table)
 			return (false);
 		}
 		else if (table->philo[index].pid == 0)
-		{
-			routine(&table->philo[index]);
-			exit(0);
-		}
+			exit(routine(&table->philo[index]));
 		index++;
 	}
     return (true);
@@ -45,10 +42,8 @@ static bool	init_processes(t_tabl *table)
 //
 int	main(int argc, char **argv)
 {
-	int			index;
 	t_tabl		*table;
 
-	index = 0;
 	table = NULL;
 	if (argc != 5 && argc != 6)
 		return (cleanup_bonus(table, ARGC), 0);
@@ -59,7 +54,8 @@ int	main(int argc, char **argv)
 		return (cleanup_bonus(table, INIT_TABLE), 0);	
 
 	sem_wait(table->semaphores[DEAD]);
+
 	if (table->sim)
-		printf(SUCCESS);
+		return (cleanup_bonus(table, SUCCESS), 0);
 	return (cleanup_bonus(table, NULL), 0);
 }
