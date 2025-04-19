@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 15:49:47 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:32:27 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ void	*death_monitor(void *data)
 			sem_post(philo->table->semaphores[DEAD]);
 			break ;
 		}
-/*
-		else if (meals > 0)
-		{
-			if (philo->stats[EATEN] >= meals)
-			{
-  	      		sem_post(philo->clock);
-				sem_post(philo->table->semaphores[DEAD]);
-				break ;
-			}
-  	      	sem_post(philo->clock);
-		}
-	*/
   	    sem_post(philo->clock);
 		usleep(TCAP);
 	}
@@ -52,7 +40,7 @@ void	*death_monitor(void *data)
 }
 
 //
-void	routine(t_phil *philo)
+int		routine(t_phil *philo)
 {
 	pthread_t	death;
 
@@ -71,11 +59,12 @@ void	routine(t_phil *philo)
 		if (philo->stats[EATEN] == philo->table->params[END])
 		{
 			sem_post(philo->clock);
-			break ;
+			return (1);
 		}
 		sem_post(philo->clock);
 		eating(philo);
         sleeping(philo);
 		thinking(philo);
 	}
+	return (2);
 }
