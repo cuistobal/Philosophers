@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 10:34:34 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:08:38 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,59 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
 			break ;
-		if (remainder > TCAP / MSEC)
+		else if (remainder > TCAP / MSEC)
 			usleep(TCAP);
 		else
 			usleep(remainder * MSEC);
 	}
 }
 
-//
+static void	minitoa(char *message, int *len, int num)
+{
+	int		index;
+	char	temp[INT_SIZE];
+
+	index = 0;
+	memset(temp, '\0', sizeof(char) * INT_SIZE);
+	while (num >= 0)
+	{
+		temp[index] = num % 10 + '0';
+		if (num == 0 || num / 10 == 0)
+		{
+			index++;
+			break ;
+		}
+		num = num / 10;
+		index++;
+	}
+	temp[index] = ' ';
+	while (--index >= 0)
+	{
+		message[*len] = temp[index];
+		(*len)++;
+	}
+}
+
 void	status_bonus(t_phil *philo, char *status)
 {
+	int		len;
+	int		index;
+	char	message[256];
+
+	len = 0;
+	index = 0;
+	memset(message, '\0', sizeof(char) * 256);
+	minitoa(message + len, &len, get_timestamp() - philo->stats[START]);
+	message[len] = ' ';
+	len++;	
+	minitoa(message, &len, philo->stats[POSTN]);
+	message[len] = ' ';
+	len++;
+	my_strcpy(message + len, status);
+	len = len + my_strlen(status);	
+	message[len] = '\n';		
 	sem_wait(philo->clock);
-	printf("%ld %ld %s", get_timestamp() - philo->stats[START], \
-			philo->stats[POSTN], status);
+	write(STDOUT_FILENO, message, len);
 	sem_post(philo->clock);
 }
 

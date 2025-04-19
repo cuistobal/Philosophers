@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 09:29:10 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 16:20:39 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	waiter(t_tabl *table);
 
 void	sem_name(char *buffer, char *name, int id);
 void	itoa(char *buffer, int size, int num);
+void	my_strcpy(char *dest, char *from);
+int		my_strlen(char *src);
 void	my_strcpy(char *dest, char *from);
 
 #endif

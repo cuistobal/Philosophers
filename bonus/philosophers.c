@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 11:47:19 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:47:30 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv)
 		return (cleanup_bonus(table, INIT_TABLE), 0);	
 
 	sem_wait(table->semaphores[DEAD]);
+	
 	if (table->sim)
 		printf(SUCCESS);
 	return (cleanup_bonus(table, NULL), 0);

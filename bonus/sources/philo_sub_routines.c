@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 19:08:28 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:40:05 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	eating(t_phil *philosopher)
 	
 	philosopher->stats[LMEAL] = get_timestamp();
 	meal_start = philosopher->stats[LMEAL];
+			
 	philosopher->stats[EATEN]++;
 
 	sem_post(philosopher->clock);
