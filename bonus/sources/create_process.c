@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 17:32:27 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/20 08:55:49 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 void	*death_monitor(void *data)
 {
 	long 	die;
-	long	meals;
 	t_phil	*philo;
 
 	philo = (t_phil *)data;
 	die = philo->table->params[DIE];
-	meals = philo->table->params[END];	
 	while (1)
 	{
 		sem_wait(philo->clock);
@@ -34,7 +32,6 @@ void	*death_monitor(void *data)
 			break ;
 		}
   	    sem_post(philo->clock);
-		usleep(TCAP);
 	}
 	return (NULL);
 }
@@ -46,24 +43,24 @@ int		routine(t_phil *philo)
 
 	while (get_timestamp() < philo->stats[START])
 		usleep(1);
-    
 	pthread_create(&death, NULL, death_monitor, philo);
-	pthread_detach(death);
-	
+	pthread_detach(death);	
 	if (!(philo->stats[POSTN] & 1))
 		thinking(philo);
-
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		sem_wait(philo->clock);
 		if (philo->stats[EATEN] == philo->table->params[END])
-		{
-			sem_post(philo->clock);
-			return (1);
-		}
+            return (sem_post(philo->clock), 1);
 		sem_post(philo->clock);
-		eating(philo);
+        if (!the_sh0w_must_go_on(philo->table))
+            break ;
+        eating(philo);
+        if (!the_sh0w_must_go_on(philo->table))
+            break ;
         sleeping(philo);
+        if (!the_sh0w_must_go_on(philo->table))
+            break ;
 		thinking(philo);
 	}
 	return (2);

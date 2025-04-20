@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 11:54:02 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/20 08:46:31 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static const char *semanames[SEMP] = {FORKS, MONIT, DEATH};
 
 //
-static void	kill_philos(t_phil *philo, int pcount)	
+void    kill_philos(t_phil *philo, int pcount)	
 {
 	int index;
 

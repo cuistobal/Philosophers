@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 17:08:38 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/20 08:56:30 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,9 @@ static void	minitoa(char *message, int *len, int num)
 void	status_bonus(t_phil *philo, char *status)
 {
 	int		len;
-	int		index;
 	char	message[256];
 
 	len = 0;
-	index = 0;
 	memset(message, '\0', sizeof(char) * 256);
 	minitoa(message + len, &len, get_timestamp() - philo->stats[START]);
 	message[len] = ' ';
@@ -86,9 +84,10 @@ void	status_bonus(t_phil *philo, char *status)
 	my_strcpy(message + len, status);
 	len = len + my_strlen(status);	
 	message[len] = '\n';		
-	sem_wait(philo->clock);
+	sem_wait(philo->table->semaphores[MONT]);
 	write(STDOUT_FILENO, message, len);
-	sem_post(philo->clock);
+//    if (strcmp(status, DIED) != 0)
+	    sem_post(philo->table->semaphores[MONT]);
 }
 
 //
