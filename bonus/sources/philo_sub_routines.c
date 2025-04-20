@@ -6,20 +6,29 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 15:40:05 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/20 09:17:26 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+static void pick_forks(t_phil *philosopher)
+{
+	sem_wait(philosopher->table->semaphores[F0RK]);
+    if (!the_sh0w_must_go_on(philosopher->table))
+        exit(2);
+    status_bonus(philosopher, FORK);
+	sem_wait(philosopher->table->semaphores[F0RK]);		
+    if (!the_sh0w_must_go_on(philosopher->table))
+        exit(2);
+    status_bonus(philosopher, FORK);	
+}
+
 void	eating(t_phil *philosopher)
 {
 	long	meal_start;
 	
-	sem_wait(philosopher->table->semaphores[F0RK]);
-	status_bonus(philosopher, FORK);	
-	sem_wait(philosopher->table->semaphores[F0RK]);		
-	status_bonus(philosopher, FORK);	
+    pick_forks(philosopher);
 
 	sem_wait(philosopher->clock);
 	
@@ -41,8 +50,13 @@ void	eating(t_phil *philosopher)
 // *rompiche intensifies*
 void	sleeping(t_phil *philosopher)
 {
-	status_bonus(philosopher, SLEP);
-	my_usl33p(philosopher, philosopher->table->params[SLP], get_timestamp());
+    if (!the_sh0w_must_go_on(philosopher->table))
+        exit(2);
+    else
+    {
+	    status_bonus(philosopher, SLEP);
+	    my_usl33p(philosopher, philosopher->table->params[SLP], get_timestamp());
+    }
 }
 
 //The philos are right handed if an even number sits around the table. They 
@@ -51,8 +65,13 @@ void	thinking(t_phil	*philo)
 {
 	long	think;
 
-	think =	(philo->table->params[DIE] - \
+    if (!the_sh0w_must_go_on(philo->table))
+        exit(2);
+    else
+    {
+        think =	(philo->table->params[DIE] - \
 				(philo->table->params[EAT] + philo->table->params[SLP])) >> 1;
-	status_bonus(philo, THNK);
-	my_usl33p(philo, think, get_timestamp());
+	    status_bonus(philo, THNK);
+	    my_usl33p(philo, think, get_timestamp());
+    }
 }

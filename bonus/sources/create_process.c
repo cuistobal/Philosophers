@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 08:55:49 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/20 09:09:28 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*death_monitor(void *data)
 			status_bonus(philo, DIED);
 			philo->table->sim = false;
 			sem_post(philo->table->semaphores[DEAD]);
-			break ;
+            break ;
 		}
   	    sem_post(philo->clock);
 	}
@@ -63,5 +63,6 @@ int		routine(t_phil *philo)
             break ;
 		thinking(philo);
 	}
-	return (2);
+//  return (kill_philos(philo, philo->table->params[CNT]), 2);	
+    return (2);
 }

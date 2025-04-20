@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/19 11:47:50 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/20 09:24:28 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ static bool table_semaphores(t_tabl *table)
 	table->semaphores[MONT] = sem_open(MONIT, O_CREAT, 0600, 1);
    	if (table->semaphores[MONT] == SEM_FAILED) 
 		return (false);
-	/*
-    table->semaphores[BEGN] = sem_open(BEGIN, O_CREAT, 0600, 1);
-   	if (table->semaphores[BEGN] == SEM_FAILED) 
-		return (false);
-    */
 	table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
    	if (table->semaphores[DEAD] == SEM_FAILED) 
 		return (false);
@@ -83,15 +78,15 @@ static bool table_semaphores(t_tabl *table)
 //This function initialises the table's parameter.
 static bool	append_table_parameters(t_tabl *table, char **argv)
 {
-	int i;
-	int	temp;
-	int	index;
+	int     i;
+	int	    temp;
+	int	    index;
 
 	i = -1;
 	temp = 0;
 	index = 1;
 	table->sim = true;
-	table->philo = NULL;
+    table->philo = NULL;
 	table->params[STS] = -1;
 	while (++i < SEMP)
 		table->semaphores[i] = NULL;
