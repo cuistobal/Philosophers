@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 08:47:01 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/20 09:37:14 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,19 @@ int	main(int argc, char **argv)
 	
 	table = NULL;
 	if (argc != 5 && argc != 6)
-		return (cleanup_bonus(table, ARGC), 0);
+		return (cleanup_bonus(&table, ARGC), 0);
 	if (!init_table(&table, argv))
-		return (cleanup_bonus(table, INIT_TABLE), 0);
+		return (cleanup_bonus(&table, INIT_TABLE), 0);
 	
 	if (!init_processes(table))
-		return (cleanup_bonus(table, INIT_TABLE), 0);	
+		return (cleanup_bonus(&table, INIT_TABLE), 0);	
 	
 	type = wait_for_childs(table);
 
 	sem_wait(table->semaphores[DEAD]);
 	
+	cleanup_bonus(&table, NULL);
 	if (type)
 		printf(SUCCESS);
-	return (cleanup_bonus(table, NULL), 0);
+	return (cleanup_bonus(&table, NULL), 0);
 }

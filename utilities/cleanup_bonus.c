@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 08:46:31 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/20 09:38:13 by cuistobal        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,27 @@ void    kill_philos(t_phil *philo, int pcount)
 }
 
 //
-void	cleanup_bonus(t_tabl *table, char *message)
+void	cleanup_bonus(t_tabl **table, char *message)
 {
 	int	index;
 
 	index = 0;
-	if (table)
+	if (*table)
 	{	
-		if (table->philo)
+		if ((*table)->philo)
 		{
-			kill_philos(table->philo, table->params[CNT]);
-		//	sema_cleanup(table->philo, table->params[CNT]);
-			free(table->philo);
-			table->philo = NULL;
+			kill_philos((*table)->philo, (*table)->params[CNT]);
+			free((*table)->philo);
+			(*table)->philo = NULL;
 		}
 		while (index < SEMP)
 		{
-			sem_close(table->semaphores[index]);
+			sem_close((*table)->semaphores[index]);
 			sem_unlink(semanames[index]);
 			index++;
 		}
-		free(table);
-		table = NULL;
+		free(*table);
+		*table = NULL;
 		if (message)
 			printf("%s\n", message);
 	}
