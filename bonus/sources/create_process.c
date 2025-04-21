@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 10:42:11 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:22:05 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		routine(t_phil *philo)
 	while (the_sh0w_must_go_on(philo->table))
 	{
 		sem_wait(philo->clock);
-		if (philo->stats[EATEN] == philo->table->params[END])
+		if (philo->table->params[END] > 0 && \
+				philo->stats[EATEN] == philo->table->params[END])
             return (sem_post(philo->clock), 1);
 		sem_post(philo->clock);
 		if (!the_sh0w_must_go_on(philo->table))
@@ -64,6 +65,5 @@ int		routine(t_phil *philo)
             break ;
 		thinking(philo);
 	}
-//  return (kill_philos(philo, philo->table->params[CNT]), 2);	
-    return (2);
+    return (cleanup_bonus(&philo->table, NULL), 2);
 }
