@@ -6,14 +6,14 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 14:06:00 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:13:00 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITIES_BONUS_H
 # define UTILITIES_BONUS_H
 
-void    kill_philos(t_phil *philo, int pcount);
+void	kill_philos(t_phil *philo, int pcount);
 
 void	status_bonus(t_phil *philo, char *status);
 

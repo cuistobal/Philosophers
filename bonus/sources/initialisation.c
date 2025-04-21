@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 09:24:28 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/21 15:18:55 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ static bool	the_emergence_of_philosophy(t_tabl *table)
 }
 
 //
-static bool table_semaphores(t_tabl *table)
+static bool	table_semaphores(t_tabl *table)
 {
 	sem_unlink(FORKS);
 	sem_unlink(MONIT);
 	sem_unlink(BEGIN);
 	sem_unlink(DEATH);
 	sem_unlink(REPUS);
-    table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600,\
+	table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600, \
 			table->params[CNT]);
-   	if (table->semaphores[F0RK] == SEM_FAILED) 
-		return (false);	
+	if (table->semaphores[F0RK] == SEM_FAILED)
+		return (false);
 	table->semaphores[MONT] = sem_open(MONIT, O_CREAT, 0600, 1);
-   	if (table->semaphores[MONT] == SEM_FAILED) 
+	if (table->semaphores[MONT] == SEM_FAILED)
 		return (false);
 	table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
-   	if (table->semaphores[DEAD] == SEM_FAILED) 
+	if (table->semaphores[DEAD] == SEM_FAILED)
 		return (false);
 	return (true);
 }
@@ -78,15 +78,15 @@ static bool table_semaphores(t_tabl *table)
 //This function initialises the table's parameter.
 static bool	append_table_parameters(t_tabl *table, char **argv)
 {
-	int     i;
-	int	    temp;
-	int	    index;
+	int	i;
+	int	temp;
+	int	index;
 
 	i = -1;
 	temp = 0;
 	index = 1;
 	table->sim = true;
-    table->philo = NULL;
+	table->philo = NULL;
 	table->params[STS] = -1;
 	while (++i < SEMP)
 		table->semaphores[i] = NULL;
@@ -94,7 +94,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 	{
 		temp = my_atoi(argv[index]);
 		if (temp < 0)
-			return (false);	
+			return (false);
 		table->params[index] = temp;
 		index++;
 	}
@@ -106,7 +106,7 @@ bool	init_table(t_tabl **table, char **argv)
 {
 	*table = (t_tabl *)malloc(sizeof(t_tabl));
 	if (!*table)
-		return (false);	
+		return (false);
 	if (!append_table_parameters(*table, argv))
 		return (false);
 	return (the_emergence_of_philosophy(*table));

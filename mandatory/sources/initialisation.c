@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/12 09:39:44 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:07:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		return (false);
 	if (pthread_mutex_init(&table->monitoring, NULL) != 0)
 		return (false);
-	table->params[STS] = -1;	
+	table->params[STS] = -1;
 	while (index < TABLES)
 	{
 		temp = my_atoi(argv[index]);
 		if (temp < 0)
-			return (false);	
+			return (false);
 		table->params[index] = temp;
 		index++;
 	}
@@ -106,7 +106,7 @@ bool	init_table(t_tabl **table, char **argv)
 {
 	*table = (t_tabl *)malloc(sizeof(t_tabl));
 	if (!*table)
-		return (false);	
+		return (false);
 	if (!append_table_parameters(*table, argv))
 		return (false);
 	if (!i_wanna_fork_on_the_table(*table))
