@@ -29,8 +29,7 @@ SOURCES_BONUS = \
 	bonus/sources/philo_sub_routines.c \
 	utilities/cleanup_bonus.c \
 	utilities/misc_bonus.c \
-	utilities/sem_names.c \
-	utilities/wait_pid.c 
+	utilities/sem_names.c
 
 OBJS = $(SOURCES:.c=.o)
 OBJS_MAN = $(SOURCES_MAN:.c=.o)
