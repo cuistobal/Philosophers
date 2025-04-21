@@ -6,39 +6,65 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:56:53 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:21:35 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static const char *semanames[SEMP] = {FORKS, MONIT, BEGIN, DEATH};
+static const char *semanames[SEMP] = {FORKS, MONIT, DEATH};
 
-void	unlink_semaphores(void)
+//
+void    kill_philos(t_phil *philo, int pcount)	
+{
+	int index;
+
+	index = 0;
+	while (index < pcount)	
+	{
+		kill(philo[index].pid, SIGINT);
+		index++;
+	}
+}
+
+//
+static void	clean_philos(t_tabl *table)
+{
+	int		index;
+
+	index = 0;
+	while (index < (table)->params[CNT])
+	{
+		if ((table)->philo[index].clock)
+		{
+			sem_close((table)->philo[index].clock);
+			sem_unlink((table)->philo[index].semaname);
+			(table)->philo[index].clock = NULL;
+		}
+		index++;
+	}
+}
+
+//
+static void	clean_table(t_tabl *table)
 {
 	int	index;
 
 	index = 0;
 	while (index < SEMP)
 	{
-		unlink(semanames[index]);
+		if ((table)->semaphores[index] != NULL && \
+				(table)->semaphores[index] != SEM_FAILED)
+		{
+			sem_close((table)->semaphores[index]);
+			sem_unlink(semanames[index]);
+			(table)->semaphores[index] = NULL;	
+		}	
 		index++;
-	}
+	}	
 }
 
-static void	sema_cleanup(t_phil *philo, int pcount)
-{
-	int	index;
-
-	index = 0;
-	while (index < pcount)
-	{
-		sem_close(philo[index].clock);
-		sem_unlink(philo[index].semaname);
-		philo[index].clock = NULL;
-		index++;
-	}
-}
+//
 void	cleanup_bonus(t_tabl *table, char *message)
 {
 	int	index;
@@ -46,20 +72,16 @@ void	cleanup_bonus(t_tabl *table, char *message)
 	index = 0;
 	if (table)
 	{	
-		while (index < SEMP)
+		if ((table)->philo)
 		{
-			sem_close(table->semaphores[index]);
-			sem_unlink(semanames[index]);
-			index++;
+			clean_philos(table);
+			free((table)->philo);
+			(table)->philo = NULL;
 		}
-		if (table->philo)		
-		{
-			sema_cleanup(table->philo, table->params[CNT]);
-			free(table->philo);
-			table->philo = NULL;
-		}
+		clean_table(table);
 		free(table);
 		table = NULL;
-		printf("%s\n", message);
+		if (message)
+			printf("%s\n", message);
 	}
 }

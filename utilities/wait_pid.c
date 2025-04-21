@@ -6,25 +6,11 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:38:26 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 12:34:26 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/19 10:29:06 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-static bool	death(t_tabl *table)
-{
-	int	index;
-
-	index = 0;
-	while (index < table->params[CNT])
-	{
-		kill(table->philo[index].pid, SIGINT);
-		index++;
-	}
-	table->sim = false;
-	return (true);
-}
 
 //If the philosopher is full -> kill him with FULL signal
 //If the philosopher is dead -> kill him with DEAD signal
@@ -35,63 +21,30 @@ static bool	death(t_tabl *table)
 //void	waiter(t_tabl *table, int *index, bool *success)
 bool	waiter(t_tabl *table)
 {
-	pid_t	pid;
 	int		index;
 	int		status;
 	int		finished;
 	
 	index = 0;
 	finished = 0;
-	while (index < table->params[CNT])
-	{
-		pid = waitpid(table->philo[index].pid, &status, WNOHANG);	
-		if (pid == 0)
-			continue ;
-		else if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) == DEID)	
-				return (death(table));
-			else if (WEXITSTATUS(status) == FULL)
-				printf("Philo is full of pasta\n");
-			finished++;	
-		}
-		index++;
-	}	
+    while (finished != table->params[CNT])
+    {
+	    index = 0;
+	    finished = 0;
+	    while (index < table->params[CNT])
+	    {
+    		waitpid(table->philo[index].pid, &status, WNOHANG);
+            if (WIFEXITED(status))
+            {
+                if (status < 0)
+					break ;	
+                finished++;
+            }
+		    index++;
+	    }
+		if (finished == table->params[CNT])
+			break ;
+		usleep(TCAP);
+    }
 	return (finished == table->params[CNT]);
 }
-
-/*
-void	create_process(pid_t *pids,	int index)
-{
-	pid_t	current; 
-
-	current = fork();
-	if (current > 0)
-		pids[index] = current;
-	else if (current == 0)
-		index == 7 ? (usleep(10000), exit(DEATH)) : index == 4 ? (usleep(1000), exit(FULL)) : (usleep(100), exit(SUCES));
-}
-
-//test
-int main(int argc, char **argv)
-{
-	pid_t	*pids;
-	int		index = 0;
-
-	if (argc == 2)
-	{
-		int count = atoi(argv[1]);
-		pids = malloc(sizeof(pid_t) * count);
-		if (!pids)
-			return -1;
-		memset(pids, -1, sizeof(pid_t) * count);
-		while (index < count)
-		{
-			create_process(pids, index);
-			index++;
-		}
-		while (!waiter(pids, count))
-			continue ;
-	}
-}
-*/

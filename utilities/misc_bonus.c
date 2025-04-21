@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 12:09:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:00:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ bool	the_sh0w_must_go_on(t_tabl *table)
 {
 	bool	value;
 
-	value = false;
 	sem_wait(table->semaphores[MONT]);
-	value = table->sim;	
+    value = table->sim;	
 	sem_post(table->semaphores[MONT]);
 	return (value);
 }
@@ -27,29 +26,71 @@ bool	the_sh0w_must_go_on(t_tabl *table)
 //
 void	my_usl33p(t_phil *philo, long sleep, long start)
 {
+	bool	sim;
 	long	remainder;
 
 	remainder = 0;
-	//while (the_sh0w_must_go_on(philo->table))
-	while (philo)
+	sim = the_sh0w_must_go_on(philo->table);
+	while (sim)
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
-			break ;
+			return ;
 		if (remainder > TCAP / MSEC)
 			usleep(TCAP);
 		else
 			usleep(remainder * MSEC);
+		sim = the_sh0w_must_go_on(philo->table);
 	}
 }
 
 //
-void	status(t_phil *philo, char *status)
+static void	minitoa(char *message, int *len, int num)
 {
-	sem_wait(philo->clock);
-	printf("%ld %ld %s", get_timestamp() - philo->stats[START], \
-			philo->stats[POSTN], status);
-	sem_post(philo->clock);
+	int		index;
+	char	temp[INT_SIZE];
+
+	index = 0;
+	memset(temp, '\0', sizeof(char) * INT_SIZE);
+	while (num >= 0)
+	{
+		temp[index] = num % 10 + '0';
+		if (num == 0 || num / 10 == 0)
+		{
+			index++;
+			break ;
+		}
+		num = num / 10;
+		index++;
+	}
+	temp[index] = ' ';
+	while (--index >= 0)
+	{
+		message[*len] = temp[index];
+		(*len)++;
+	}
+}
+
+//
+void	status_bonus(t_phil *philo, char *status)
+{
+	int		len;
+	char	message[256];
+
+	len = 0;
+	memset(message, '\0', sizeof(char) * 256);
+	minitoa(message + len, &len, get_timestamp() - philo->stats[START]);
+	message[len] = ' ';
+	len++;	
+	minitoa(message, &len, philo->stats[POSTN]);
+	message[len] = ' ';
+	len++;
+	my_strcpy(message + len, status);
+	len = len + my_strlen(status);	
+	message[len] = '\n';
+    sem_wait(philo->table->semaphores[MONT]);
+    write(STDOUT_FILENO, message, len);
+   	sem_post(philo->table->semaphores[MONT]);
 }
 
 //

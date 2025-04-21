@@ -6,98 +6,75 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 11:23:15 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:56:36 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static void	*monitoring(void *data)
+//
+void	*death_monitor(void *data)
 {
+	long 	die;
 	t_phil	*philo;
 
 	philo = (t_phil *)data;
-	while (1)
+	die = philo->table->params[DIE];
+	while (true)
 	{
-		sem_wait(philo->table->semaphores[DEAD]);
-		if (philo->stats[EATEN] == philo->table->params[EAT])
-			return((void *)FULL);
-		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
-			return((void *)DEATH);
-		sem_post(philo->table->semaphores[DEAD]);
-		usleep(TCAP);
+		sem_wait(philo->clock);
+		if (get_timestamp() - philo->stats[LMEAL] >= die)
+		{
+			sem_post(philo->clock);
+			status_bonus(philo, DIED);
+			sem_wait(philo->table->semaphores[MONT]);
+			philo->table->sim = false;
+			sem_post(philo->table->semaphores[MONT]);
+			sem_post(philo->table->semaphores[DEAD]);	
+			exit(2);
+		}
+  	    sem_post(philo->clock);
+		usleep(MSEC);
 	}
 	return (NULL);
 }
 
-//
-static void	even_routine(t_phil *philo)
-{
-	eating(philo);
-	sleeping(philo);
-	thinking(philo);
-}
 
 //
-static void	uneven_routine(t_phil *philo)
+int		routine(t_phil *philo)
 {
-	thinking(philo);
-	eating(philo);
-	sleeping(philo);
-}
+	pthread_t	death;
 
-//This is an accurate description of an hungover philosopher's routine. At
-//first, they try to grab the fork on their left. If it fails, they pretend life
-// and start regretting all this liquor ingested last night. Once they grab the
-//fork, their focus shifts to grabbing the second fork.
-//After ingesting all those spaghettis, they feel sleepy hence take a nap.
-int	routine(t_phil *philo)
-{
-	pthread_t	monitor;
-
-	sem_wait(philo->table->semaphores[BEGN]);
-
-	philo->stats[START] = philo->table->params[STS];
-	philo->stats[LMEAL] = philo->stats[START];
+	while (get_timestamp() < philo->stats[START])
+		usleep(1);
 	
-	sem_post(philo->table->semaphores[BEGN]);
+	pthread_create(&death, NULL, death_monitor, philo);
+	pthread_detach(death);
 
-	pthread_create(&monitor, NULL, monitoring, philo);
-	pthread_detach(monitor);
-	while (1)
+	if (!(philo->stats[POSTN] & 1))
+		thinking(philo);
+	
+	while (the_sh0w_must_go_on(philo->table))
 	{
-		if (philo->stats[POSTN] & 1)
-			even_routine(philo);
-		else
-			uneven_routine(philo);
-		/*
-		if (philo->stats[EATEN] == philo->table->params[EAT])
-			return(FULL);
-		else if (get_timestamp() - philo->stats[LMEAL] >= philo->table->params[DIE])
-			return(DEID);
-	*/
+		eating(philo);
+	
+		sem_wait(philo->clock);
+		if (philo->table->params[END] > 0 && \
+				philo->stats[EATEN] == philo->table->params[END])
+		{
+			sem_post(philo->clock);
+			philo->table->sim = false;
+			exit (1);
+		}
+		sem_post(philo->clock);
+		
+		if (!the_sh0w_must_go_on(philo->table))
+			break ;
+        sleeping(philo);
+        
+		if (!the_sh0w_must_go_on(philo->table))
+            break ;
+		thinking(philo);
 	}
-	return (MEM);
-}
-
-
-//
-void	create_child_process(t_tabl *table, int index)
-{
-	int		exit_code;
-	t_phil	*philosopher;
-
-	exit_code = 0;
-	philosopher = &table->philo[index];
-	philosopher->pid = fork();
-	if (philosopher->pid < 0)
-	{
-		printf(FORK_ERROR);
-		exit(MEM);
-	}
-	else if (philosopher->pid == 0)
-	{
-		exit_code = routine(philosopher);
-		exit(exit_code);
-	}
+	exit(2);
 }
