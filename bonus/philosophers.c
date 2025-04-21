@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 09:05:59 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:29:44 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,11 @@ static bool wait_for_childs(t_tabl *table)
 		{
 			if (waitpid(table->philo[index].pid, &status, WNOHANG) != 0)
 			{
-				if (WIFEXITED(status))
-				{
-					if (WEXITSTATUS(status) == 2)
-                        return (kill_philos(table->philo, table->params[CNT]) \
-                                , false);
+				if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
+                    return (kill_philos(table->philo, table->params[CNT]) \
+							, false);
+				else if (WIFEXITED(status))
 					full--;
-				}
 			}
 			index++;
 		}
@@ -87,6 +85,6 @@ int	main(int argc, char **argv)
 	cleanup_bonus(&table, NULL);
 	if (type)
 		printf(SUCCESS);
-	return (0);
-//	return (cleanup_bonus(&table, NULL), 0);
+//	return (0);
+	return (cleanup_bonus(&table, NULL), 0);
 }
