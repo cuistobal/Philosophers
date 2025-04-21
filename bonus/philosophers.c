@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 11:42:04 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:58:00 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static bool wait_for_childs(t_tabl *table)
 			if (waitpid(table->philo[index].pid, &status, WNOHANG) != 0)
 			{
 				if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
-                    return (kill_philos(table->philo, table->params[CNT]) \
-							, false);
+				{
+                    kill_philos(table->philo, table->params[CNT]);
+    				return (sem_post(table->semaphores[DEAD]), false);
+				}
 				else if (WIFEXITED(status))
 					full--;
 			}
@@ -57,7 +59,7 @@ static bool	init_processes(t_tabl *table)
 		if (table->philo[index].pid < 0)
             return (write(1, FORK_ERROR, my_strlen(FORK_ERROR)), false);
 		else if (table->philo[index].pid == 0)
-		    exit(routine(&table->philo[index]));
+			routine(&table->philo[index]);
 		index++;
 	}
     return (true);
@@ -68,22 +70,21 @@ int	main(int argc, char **argv)
 {
     bool        type;
 	t_tabl		*table;
-	
+
 	table = NULL;
 	if (argc != 5 && argc != 6)
-		return (cleanup_bonus(&table, ARGC), 0);
+		return (cleanup_bonus(table, ARGC), 0);
 	if (!init_table(&table, argv))
-		return (cleanup_bonus(&table, INIT_TABLE), 0);
+		return (cleanup_bonus(table, INIT_TABLE), 0);
 	
 	if (!init_processes(table))
-		return (cleanup_bonus(&table, INIT_TABLE), 0);	
+		return (cleanup_bonus(table, INIT_TABLE), 0);	
 	
 	type = wait_for_childs(table);
 
 	sem_wait(table->semaphores[DEAD]);
 	
 	if (type)
-		printf(SUCCESS);
-//	return (0);
-	return (cleanup_bonus(&table, NULL), 0);
+		write(1, SUCCESS, strlen(SUCCESS));
+	return (cleanup_bonus(table, NULL), 0);
 }

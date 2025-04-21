@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 09:17:02 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:00:17 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ bool	the_sh0w_must_go_on(t_tabl *table)
 //
 void	my_usl33p(t_phil *philo, long sleep, long start)
 {
+	bool	sim;
 	long	remainder;
 
 	remainder = 0;
-	while (the_sh0w_must_go_on(philo->table))
+	sim = the_sh0w_must_go_on(philo->table);
+	while (sim)
 	{
 		remainder = sleep - (get_timestamp() - start);
 		if (remainder <= 0)
 			return ;
-		else if (remainder > TCAP / MSEC)
+		if (remainder > TCAP / MSEC)
 			usleep(TCAP);
 		else
 			usleep(remainder * MSEC);
+		sim = the_sh0w_must_go_on(philo->table);
 	}
-    exit(2);
 }
 
 //
@@ -86,15 +88,9 @@ void	status_bonus(t_phil *philo, char *status)
 	my_strcpy(message + len, status);
 	len = len + my_strlen(status);	
 	message[len] = '\n';
-	if (!the_sh0w_must_go_on(philo->table))
-        exit(2);
-    else
-    {
-
-	    sem_wait(philo->table->semaphores[MONT]);
-	    write(STDOUT_FILENO, message, len);
-	    sem_post(philo->table->semaphores[MONT]);
-    }
+    sem_wait(philo->table->semaphores[MONT]);
+    write(STDOUT_FILENO, message, len);
+   	sem_post(philo->table->semaphores[MONT]);
 }
 
 //

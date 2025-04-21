@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:38:31 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 09:36:55 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/21 14:06:00 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	the_sh0w_must_go_on(t_tabl *table);
 
 void	unlink_semaphores(void);
 
-void	cleanup_bonus(t_tabl **table, char *message);
+void	cleanup_bonus(t_tabl *table, char *message);
 
 bool	waiter(t_tabl *table);
 
