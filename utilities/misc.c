@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/14 12:50:06 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:35:50 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	the_show_must_go_on(t_phil *philo)
 	return (status);
 }
 
-
+//
 void	my_usleep(t_phil *philo, long sleep, long start)
 {
 	long	remainder;
@@ -71,4 +71,3 @@ long	get_timestamp(void)
 	gettimeofday(&current, NULL);
 	return ((current.tv_sec * MSEC) + (current.tv_usec / MSEC));
 }
-

@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/15 18:48:15 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:39:15 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	thinking(t_phil	*philo)
 	if (the_show_must_go_on(philo))
 	{
 		status(philo, THNK);
-		think =	(philo->table->params[DIE] - \
+		think = (philo->table->params[DIE] - \
 				(philo->table->params[EAT] + philo->table->params[SLP])) >> 1;
 		my_usleep(philo, think, get_timestamp());
 	}

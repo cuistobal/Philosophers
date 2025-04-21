@@ -6,21 +6,21 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 09:58:40 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 14:21:35 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:36:10 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-static const char *semanames[SEMP] = {FORKS, MONIT, DEATH};
+static const char	*g_semanames[SEMP] = {FORKS, MONIT, DEATH};
 
 //
-void    kill_philos(t_phil *philo, int pcount)	
+void	kill_philos(t_phil *philo, int pcount)
 {
-	int index;
+	int	index;
 
 	index = 0;
-	while (index < pcount)	
+	while (index < pcount)
 	{
 		kill(philo[index].pid, SIGINT);
 		index++;
@@ -57,9 +57,9 @@ static void	clean_table(t_tabl *table)
 				(table)->semaphores[index] != SEM_FAILED)
 		{
 			sem_close((table)->semaphores[index]);
-			sem_unlink(semanames[index]);
-			(table)->semaphores[index] = NULL;	
-		}	
+			sem_unlink(g_semanames[index]);
+			(table)->semaphores[index] = NULL;
+		}
 		index++;
 	}	
 }

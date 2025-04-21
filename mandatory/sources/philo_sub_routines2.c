@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:46:15 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 15:09:11 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:40:36 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,42 @@ static bool	release_forks(t_phil *philosopher, bool even)
 }
 
 //Ma forky boiiii
-static bool	pick_forks(t_phil *philosopher, bool even)
+static bool	pick_forks_uneven(t_phil *philosopher)
 {
-	if (even)
+	pthread_mutex_lock(philosopher->rfork);
+	if (!the_show_must_go_on(philosopher))
+		return (pthread_mutex_unlock(philosopher->rfork), false);
+	status(philosopher, FORK);
+	if (philosopher->table->params[CNT] == 1)
 	{
-		pthread_mutex_lock(philosopher->lfork);
-		if (!the_show_must_go_on(philosopher))
-			return (pthread_mutex_unlock(philosopher->lfork), false);
-		status(philosopher, FORK);
-		if (philosopher->table->params[CNT] == 1)
-		{
-			pthread_mutex_unlock(philosopher->rfork);
-			return (my_usleep(philosopher, philosopher->table->params[DIE], \
-						get_timestamp()), false);
-		}
-		pthread_mutex_lock(philosopher->rfork);
-		if (!the_show_must_go_on(philosopher))
-			return (release_forks(philosopher, even), false);
-		status(philosopher, FORK);
-	}
-	else
+		pthread_mutex_unlock(philosopher->rfork);
+		return (my_usleep(philosopher, philosopher->table->params[DIE], \
+					get_timestamp()), false);
+	}	
+	pthread_mutex_lock(philosopher->lfork);
+	if (!the_show_must_go_on(philosopher))
+		return (release_forks(philosopher, false), false);
+	status(philosopher, FORK);
+	return (true);
+}
+
+//Ma forky boiiii
+static bool	pick_forks_even(t_phil *philosopher)
+{
+	pthread_mutex_lock(philosopher->lfork);
+	if (!the_show_must_go_on(philosopher))
+		return (pthread_mutex_unlock(philosopher->lfork), false);
+	status(philosopher, FORK);
+	if (philosopher->table->params[CNT] == 1)
 	{
-		pthread_mutex_lock(philosopher->rfork);
-		if (!the_show_must_go_on(philosopher))
-			return (pthread_mutex_unlock(philosopher->rfork), false);
-		status(philosopher, FORK);
-		if (philosopher->table->params[CNT] == 1)
-		{
-			pthread_mutex_unlock(philosopher->rfork);
-			return (my_usleep(philosopher, philosopher->table->params[DIE], \
-						get_timestamp()), false);
-		}	
-		pthread_mutex_lock(philosopher->lfork);
-		if (!the_show_must_go_on(philosopher))
-			return (release_forks(philosopher, even), false);
-		status(philosopher, FORK);
+		pthread_mutex_unlock(philosopher->rfork);
+		return (my_usleep(philosopher, philosopher->table->params[DIE], \
+					get_timestamp()), false);
 	}
+	pthread_mutex_lock(philosopher->rfork);
+	if (!the_show_must_go_on(philosopher))
+		return (release_forks(philosopher, true), false);
+	status(philosopher, FORK);
 	return (true);
 }
 
@@ -89,7 +89,9 @@ void	eating(t_phil *philosopher, bool even)
 {
 	if (the_show_must_go_on(philosopher))
 	{
-		if (!pick_forks(philosopher, even))
+		if (even && !pick_forks_even(philosopher))
+			return ;
+		if (!even && !pick_forks_uneven(philosopher))
 			return ;
 		if (!the_show_must_go_on(philosopher) || \
 				!scronch_scronch(philosopher, even))
