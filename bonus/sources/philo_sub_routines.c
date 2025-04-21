@@ -6,12 +6,13 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 09:17:26 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/21 08:58:06 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+//
 static void pick_forks(t_phil *philosopher)
 {
 	sem_wait(philosopher->table->semaphores[F0RK]);
@@ -24,25 +25,19 @@ static void pick_forks(t_phil *philosopher)
     status_bonus(philosopher, FORK);	
 }
 
+//
 void	eating(t_phil *philosopher)
 {
 	long	meal_start;
 	
     pick_forks(philosopher);
-
 	sem_wait(philosopher->clock);
-	
 	philosopher->stats[LMEAL] = get_timestamp();
 	meal_start = philosopher->stats[LMEAL];
-			
 	philosopher->stats[EATEN]++;
-
 	sem_post(philosopher->clock);
-	
 	status_bonus(philosopher, EATS);
-	
 	my_usl33p(philosopher, philosopher->table->params[EAT], meal_start);
-
 	sem_post(philosopher->table->semaphores[F0RK]);
 	sem_post(philosopher->table->semaphores[F0RK]);	
 }

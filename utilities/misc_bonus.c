@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/20 09:25:06 by cuistobal        ###   ########.fr       */
+/*   Updated: 2025/04/21 09:17:02 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
     exit(2);
 }
 
+//
 static void	minitoa(char *message, int *len, int num)
 {
 	int		index;
@@ -68,6 +69,7 @@ static void	minitoa(char *message, int *len, int num)
 	}
 }
 
+//
 void	status_bonus(t_phil *philo, char *status)
 {
 	int		len;
@@ -84,10 +86,11 @@ void	status_bonus(t_phil *philo, char *status)
 	my_strcpy(message + len, status);
 	len = len + my_strlen(status);	
 	message[len] = '\n';
-    if (!the_sh0w_must_go_on(philo->table))
+	if (!the_sh0w_must_go_on(philo->table))
         exit(2);
     else
     {
+
 	    sem_wait(philo->table->semaphores[MONT]);
 	    write(STDOUT_FILENO, message, len);
 	    sem_post(philo->table->semaphores[MONT]);
