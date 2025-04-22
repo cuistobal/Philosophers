@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/22 11:02:33 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:13:22 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static bool	append_table_parameters(t_tabl *table, char **argv)
 		table->params[index] = temp;
 		index++;
 	}
-	if (table->params[DIE] > (table->params[EAT] = table->params[SLP]))
+	if (table->params[DIE] > (table->params[EAT] + table->params[SLP]))
 		return (table_semaphores(table));
 	return (false);
 }
