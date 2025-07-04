@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:14:55 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 15:34:01 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:04:32 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	my_usl33p(t_phil *philo, long sleep, long start)
 		sim = the_sh0w_must_go_on(philo->table);
 	}
 }
+
 
 //
 static void	minitoa(char *message, int *len, int num)
@@ -93,6 +94,22 @@ void	status_bonus(t_phil *philo, char *status)
 	sem_post(philo->table->semaphores[MONT]);
 }
 
+/*
+void	status_bonus(t_phil *philo, char *status)
+{
+    long	timestamp;
+
+    sem_wait(philo->table->semaphores[MONT]);
+    if (!philo->table->sim)
+    {
+        sem_post(philo->table->semaphores[MONT]);
+        return;
+    }
+    timestamp = get_timestamp() - philo->stats[START];
+    printf("%ld %ld %s", timestamp, philo->stats[POSTN], status);
+    sem_post(philo->table->semaphores[MONT]);
+}
+*/
 //
 long	get_timestamp(void)
 {

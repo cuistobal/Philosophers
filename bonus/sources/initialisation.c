@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:07:20 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/22 11:13:22 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:54:24 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static bool	table_semaphores(t_tabl *table)
 	sem_unlink(BEGIN);
 	sem_unlink(DEATH);
 	sem_unlink(REPUS);
+	sem_unlink(DEDMS);
 	table->semaphores[F0RK] = sem_open(FORKS, O_CREAT, 0600, \
 			table->params[CNT]);
 	if (table->semaphores[F0RK] == SEM_FAILED)
@@ -70,6 +71,9 @@ static bool	table_semaphores(t_tabl *table)
 		return (false);
 	table->semaphores[DEAD] = sem_open(DEATH, O_CREAT, 0600, 0);
 	if (table->semaphores[DEAD] == SEM_FAILED)
+		return (false);
+	table->semaphores[SEMP - 1] = sem_open(DEDMS, O_CREAT, 0600, 1);
+	if (table->semaphores[SEMP - 1] == SEM_FAILED)
 		return (false);
 	return (true);
 }

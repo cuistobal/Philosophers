@@ -12,7 +12,7 @@
 
 #include "philosophers_bonus.h"
 
-static const char	*g_semanames[SEMP] = {FORKS, MONIT, DEATH};
+static const char	*g_semanames[SEMP] = {FORKS, MONIT, DEATH, "death_msg"};
 
 //
 void	kill_philos(t_phil *philo, int pcount)

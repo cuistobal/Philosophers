@@ -6,7 +6,7 @@
 /*   By: chrleroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:45:59 by chrleroy          #+#    #+#             */
-/*   Updated: 2025/04/21 15:23:06 by chrleroy         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:54:58 by chrleroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ void	*death_monitor(void *data)
 		if (get_timestamp() - philo->stats[LMEAL] >= die)
 		{
 			sem_post(philo->clock);
-			status_bonus(philo, DIED);
-			sem_wait(philo->table->semaphores[MONT]);
-			philo->table->sim = false;
-			sem_post(philo->table->semaphores[MONT]);
-			sem_post(philo->table->semaphores[DEAD]);
+			// Try to be the first to acquire death message semaphore
+			if (sem_trywait(philo->table->semaphores[SEMP - 1]) == 0)
+			{
+				// We are the first to die, display message and signal others
+				status_bonus(philo, DIED);
+				sem_wait(philo->table->semaphores[MONT]);
+				philo->table->sim = false;
+				sem_post(philo->table->semaphores[MONT]);
+				sem_post(philo->table->semaphores[DEAD]);
+			}
+			// In all cases, exit the process
 			exit(2);
 		}
 		sem_post(philo->clock);

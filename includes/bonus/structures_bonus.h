@@ -33,4 +33,15 @@ typedef struct table
 	sem_t		*semaphores[SEMP];
 }	t_tabl;
 
+/* enum e_sem
+{
+	F0RK,
+	MONT,
+	DEAD,
+	BEGN,
+	FULL,
+	DEATH_MSG,
+	SEM_COUNT
+}; */
+
 #endif
